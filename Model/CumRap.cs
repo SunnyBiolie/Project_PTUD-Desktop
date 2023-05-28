@@ -9,10 +9,11 @@
 
 namespace Project_PTUD_Desktop.Model
 {
+    using Project_PTUD_Desktop.ViewModel;
     using System;
     using System.Collections.Generic;
     
-    public partial class CumRap
+    public partial class CumRap : BaseViewModel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public CumRap()
@@ -20,11 +21,15 @@ namespace Project_PTUD_Desktop.Model
             this.KeHoaches = new HashSet<KeHoach>();
             this.Raps = new HashSet<Rap>();
         }
-    
-        public string MaCum { get; set; }
-        public string TenCum { get; set; }
-        public string DiaChi { get; set; }
-    
+
+        private string maCum;
+        private string tenCum;
+        private string diaChi;
+
+        public string MaCum { get => maCum; set { maCum = value; OnPropertyChanged(); } }
+        public string TenCum { get => tenCum; set { tenCum = value; OnPropertyChanged(); } }
+        public string DiaChi { get => diaChi; set { diaChi = value; OnPropertyChanged(); } }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<KeHoach> KeHoaches { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

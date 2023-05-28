@@ -131,6 +131,7 @@
     <Compile Include="ViewModel\ControlBarViewModel.cs" />
     <Compile Include="ViewModel\FilmViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\TheaterClusterViewModel.cs" />
     <Page Include="FilmWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

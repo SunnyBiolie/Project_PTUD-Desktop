@@ -32,8 +32,6 @@ namespace Project_PTUD_Desktop.ViewModel
                     TenPhim = SelectedItem.TenPhim;
                     MaTheLoaiChinh = SelectedItem.MaTheLoaiChinh;
                     ThoiLuong = (int)SelectedItem.ThoiLuong;
-
-
                 }
             }
         }

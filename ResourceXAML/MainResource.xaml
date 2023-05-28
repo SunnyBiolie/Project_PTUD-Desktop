@@ -5,4 +5,5 @@
     <viewmodel:ControlBarViewModel x:Key="ControlBarVM"></viewmodel:ControlBarViewModel>
     <viewmodel:MainViewModel x:Key="MainVM"></viewmodel:MainViewModel>
     <viewmodel:FilmViewModel x:Key="FilmVM"></viewmodel:FilmViewModel>
+    <viewmodel:TheaterClusterViewModel x:Key="TheaterClusterVM"></viewmodel:TheaterClusterViewModel>
 </ResourceDictionary>

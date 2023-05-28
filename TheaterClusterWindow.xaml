@@ -14,10 +14,15 @@
         WindowStartupLocation="CenterScreen"
 
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        TextOptions.TextRenderingMode="Auto"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
         TextOptions.TextFormattingMode="Ideal"
-        TextElement.FontWeight="Regular">
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        
+        DataContext="{StaticResource TheaterClusterVM}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -25,6 +30,125 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <uc:MyControlBar Tag="{Binding Title, ElementName=theaterClusterWindow}"></uc:MyControlBar>
+        </Grid>
+        <Grid Grid.Row="1">
+            <TabControl Style="{StaticResource MaterialDesignNavigationRailTabControl}"
+                                TabStripPlacement="Top"
+                                VerticalAlignment="Stretch" >
+                <TabItem Width="80" Height="50">
+                    <TabItem.Header>
+                        <StackPanel Width="auto" Height="auto">
+                            <materialDesign:PackIcon Width="24" Height="24"
+                                                     HorizontalAlignment="Center" Kind="PlusCircle" />
+                            <TextBlock HorizontalAlignment="Center" Text="Thêm" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <StackPanel Orientation="Horizontal" Width="Auto" Margin="25 0 25 0">
+                                    <TextBox
+                                        VerticalAlignment="Center" MinWidth="120" MaxLength="5" Margin="0 0 40 0"
+                                        materialDesign:HintAssist.Hint="Mã cụm"
+                                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                        Text="{Binding MaCum_add, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                    <TextBox
+                                        VerticalAlignment="Center" MinWidth="200"
+                                        materialDesign:HintAssist.Hint="Tên cụm"
+                                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                        Text="{Binding TenCum_add, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                </StackPanel>
+                            </Grid>
+                            <Grid Grid.Row="1" Margin="25 0 25 0">
+                                <TextBox
+                                    VerticalAlignment="Center" MinWidth="400"
+                                    materialDesign:HintAssist.Hint="Địa chỉ" TextWrapping="Wrap"
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    Text="{Binding DiaChi_add, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                            </Grid>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <Button Command="{Binding AddCommand}"
+                                    Width="200" HorizontalAlignment="Center" VerticalAlignment="Center" >Thêm cụm rạp</Button>
+                        </Grid>
+                    </Grid>
+                </TabItem>
+                <TabItem Width="80" Height="50">
+                    <TabItem.Header>
+                        <StackPanel Width="auto" Height="auto">
+                            <materialDesign:PackIcon Width="24" Height="24"
+                                                     HorizontalAlignment="Center" Kind="TableEdit" />
+                            <TextBlock HorizontalAlignment="Center" Text="Sửa" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0" Margin="0 10 0 10">
+                                <StackPanel Orientation="Horizontal" Width="Auto" Margin="25 0 25 0">
+                                    <TextBox
+                                        VerticalAlignment="Center" MinWidth="120" MaxLength="5" Margin="0 0 40 0"
+                                        materialDesign:HintAssist.Hint="Mã cụm" IsEnabled="False"
+                                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                        Text="{Binding MaCum, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                    <TextBox
+                                        VerticalAlignment="Center" MinWidth="200"
+                                        materialDesign:HintAssist.Hint="Tên cụm"
+                                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                        Text="{Binding TenCum, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                </StackPanel>
+                            </Grid>
+                            <Grid Grid.Row="1" Margin="25 10 25 10">
+                                <TextBox
+                                    VerticalAlignment="Center" MinWidth="400"
+                                    materialDesign:HintAssist.Hint="Địa chỉ" TextWrapping="Wrap"
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    Text="{Binding DiaChi, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                            </Grid>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <Button Command="{Binding EditCommand}"
+                                    Width="160" HorizontalAlignment="Center" VerticalAlignment="Center" >Cập nhật</Button>
+                        </Grid>
+                        <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                            <ListView ItemsSource="{Binding ListCumRap}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="Mã Rạp" DisplayMemberBinding="{Binding MaCum}"></GridViewColumn>
+                                        <GridViewColumn Header="Tên Rạp" DisplayMemberBinding="{Binding TenCum}"></GridViewColumn>
+                                        <GridViewColumn Header="Địa Chỉ" DisplayMemberBinding="{Binding DiaChi}"></GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </ScrollViewer>
+                    </Grid>
+                </TabItem>
+                <TabItem Width="80" Height="50">
+                    <TabItem.Header>
+                        <StackPanel Width="auto" Height="auto">
+                            <materialDesign:PackIcon Width="24" Height="24"
+                                                     HorizontalAlignment="Center" Kind="DeleteEmpty" />
+                            <TextBlock HorizontalAlignment="Center" Text="Xóa" />
+                        </StackPanel>
+                    </TabItem.Header>
+                </TabItem>
+            </TabControl>
         </Grid>
     </Grid>
 </Window>

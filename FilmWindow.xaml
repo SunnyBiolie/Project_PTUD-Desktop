@@ -1,0 +1,144 @@
+﻿<Window x:Class="Project_PTUD_Desktop.FilmWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Project_PTUD_Desktop"
+        mc:Ignorable="d"
+        
+        xmlns:uc="clr-namespace:Project_PTUD_Desktop.MyUserControls"
+        Name="filmWindow"
+        Title="Film" Height="500" Width="650"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextOptions.TextRenderingMode="Auto"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextElement.FontWeight="Regular"
+        
+        DataContext="{StaticResource FilmVM}" >
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <uc:MyControlBar Tag="{Binding Title, ElementName=filmWindow}"></uc:MyControlBar>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Margin="30 0 30 10">
+                <Grid.Resources>
+                    <Style TargetType="Grid">
+                        <Setter Property="Margin" Value="10 0 10 0"></Setter>
+                    </Style>
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid Grid.Column="0" Grid.Row="0">
+                    <TextBox Text="{Binding MaPhim, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                    VerticalAlignment="Center"
+                    materialDesign:HintAssist.Hint="Mã Phim"
+                    MaxLength="10"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                </Grid>
+                <Grid  Grid.Column="1" Grid.Row="0">
+                    <TextBox Text="{Binding TenPhim, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                    VerticalAlignment="Center"
+                    materialDesign:HintAssist.Hint="Tên Phim"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                </Grid>
+                <Grid  Grid.Column="0" Grid.Row="1">
+                    <TextBox Text="{Binding MaTheLoaiChinh, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                    VerticalAlignment="Center"
+                    materialDesign:HintAssist.Hint="Mã Thể Loại Chính"
+                    MaxLength="5"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                </Grid>
+                <Grid  Grid.Column="1" Grid.Row="1">
+                    <TextBox Text="{Binding ThoiLuong, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                    VerticalAlignment="Center"
+                    materialDesign:HintAssist.Hint="Thời Lượng"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                </Grid>
+                <Grid  Grid.Column="0" Grid.Row="2">
+                    <StackPanel>
+                        <ComboBox
+                            x:Name="OutlinedComboBox"
+                            Width="200"
+                            materialDesign:HintAssist.Hint="Some item"
+                            ItemsSource="{Binding ListTheLoai}" DisplayMemberPath="TenTheLoai"
+                            Style="{StaticResource MaterialDesignOutlinedComboBox}" />
+                    </StackPanel>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="1" Margin="5 10 5 5">
+                <Rectangle Panel.ZIndex="1"
+                       RadiusX="5" RadiusY="5"
+                       Width="355px" Height="55px"
+                       Stroke="White" StrokeThickness="4px">
+                    <Rectangle.BitmapEffect>
+                        <DropShadowBitmapEffect
+                        Color="#ccc"
+                        Direction="-50"
+                        ShadowDepth="8"
+                        Softness="1"/>
+                    </Rectangle.BitmapEffect>
+                </Rectangle>
+
+                <Grid 
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="350" Height="50"
+                    Background="White"
+                    Panel.ZIndex="2" >
+
+                    <WrapPanel HorizontalAlignment="Center"
+                               VerticalAlignment="Center">
+                        <WrapPanel.Resources>
+                            <Style TargetType="Button">
+                                <Setter Property="Width" Value="90"></Setter>
+                                <Setter Property="Height" Value="Auto"></Setter>
+                                <Setter Property="Margin" Value="5"></Setter>
+                                <Setter Property="Padding" Value="0 5 0 5"></Setter>
+                                <Setter Property="Background" Value="Azure"></Setter>
+                            </Style>
+                        </WrapPanel.Resources>
+                        <Button Command="{Binding AddCommand}">Them</Button>
+                        <Button Command="{Binding EditCommand}">Sua</Button>
+                        <Button Command="{Binding DeleteCommand}">Xoa</Button>
+                    </WrapPanel>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="2" VerticalAlignment="Stretch">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                    <ListView ItemsSource="{Binding ListPhim}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}" d:ItemsSource="{d:SampleData ItemCount=5}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Mã Phim" DisplayMemberBinding="{Binding MaPhim}"></GridViewColumn>
+                                <GridViewColumn Header="Tên Phim" DisplayMemberBinding="{Binding TenPhim}"></GridViewColumn>
+                                <GridViewColumn Header="Mã Thể Loại Chính" DisplayMemberBinding="{Binding MaTheLoaiChinh}"></GridViewColumn>
+                                <GridViewColumn Header="Thời Lượng" DisplayMemberBinding="{Binding ThoiLuong}"></GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

@@ -5,8 +5,244 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Project_PTUD_Desktop"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
         
+        xmlns:uc="clr-namespace:Project_PTUD_Desktop.MyUserControls"
+        Name="mainWindow"
+        Title="Form Chinh" Height="576" Width="1024"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        
+        DataContext="{StaticResource MainVM}"
+        
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" >
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction
+                Command="{Binding LoadedWindowCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <uc:MyControlBar Tag="{Binding Title, ElementName=mainWindow}"></uc:MyControlBar>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition ></ColumnDefinition>
+                <!--<ColumnDefinition Width="Auto"></ColumnDefinition>-->
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition ></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <TabControl Style="{StaticResource MaterialDesignNavigationRailTabControl}"
+                                TabStripPlacement="Top"
+                                VerticalAlignment="Stretch"
+                                Margin="10 0 0 0">
+                        <TabItem Width="90">
+                            <TabItem.Header>
+                                <StackPanel Width="auto" Height="auto">
+                                    <materialDesign:PackIcon Width="24" Height="24"
+                                                             HorizontalAlignment="Center"
+                                                             Kind="Folder" />
+                                    <TextBlock HorizontalAlignment="Center" Text="Cụm Rạp" />
+                                </StackPanel>
+                            </TabItem.Header>
+                            <TabControl Style="{StaticResource MaterialDesignNavigationRailTabControl}"
+                                        TabStripPlacement="Right">
+                                <TabItem>
+                                    <TabItem.Header>
+                                        <StackPanel Width="auto" Height="auto">
+                                            <materialDesign:PackIcon Width="24" Height="24"
+                                                             HorizontalAlignment="Center"
+                                                             Kind="Folder" />
+                                            <TextBlock HorizontalAlignment="Center" Text="All Files" />
+                                        </StackPanel>
+                                    </TabItem.Header>
+                                    <Button Command="{Binding OpenTheaterClusterWindowCommand}"></Button>
+                                </TabItem>
+                                <TabItem>
+                                    <TabItem.Header>
+                                        <StackPanel Width="auto" Height="auto">
+                                            <materialDesign:PackIcon Width="24" Height="24"
+                                                             HorizontalAlignment="Center"
+                                                             Kind="Folder" />
+                                            <TextBlock HorizontalAlignment="Center" Text="All Files" />
+                                        </StackPanel>
+                                    </TabItem.Header>
+                                    <TextBlock>
+                                        <Run Text="tab 1 content. Default look and behaviors." />
+                                        <LineBreak />
+                                        <LineBreak />
+                                        <Run FontStyle="Italic">
+                                            Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...
+                                        </Run>
+                                    </TextBlock>
+                                </TabItem>
+                            </TabControl>
+                        </TabItem>
+                        <TabItem Width="90">
+                            <TabItem.Header>
+                                <StackPanel Width="auto" Height="auto">
+                                    <materialDesign:PackIcon Width="24" Height="24"
+                                            HorizontalAlignment="Center" Kind="Theater" />
+                                    <TextBlock HorizontalAlignment="Center" Text="Rạp" />
+                                </StackPanel>
+                            </TabItem.Header>
+                            <TextBlock>
+                                <Run Text="tab 2 content. Default look and behaviors." />
+                                <LineBreak />
+                                <LineBreak />
+                                <Run FontStyle="Italic">
+                                    Praesent sed dui arcu. Vivamus porta auctor sagittis
+                                </Run>
+                            </TextBlock>
+                        </TabItem>
+                        <TabItem Width="90">
+                            <TabItem.Header>
+                                <StackPanel Width="auto" Height="auto">
+                                    <materialDesign:PackIcon Width="24" Height="24"
+                                            HorizontalAlignment="Center" Kind="MovieOpen" />
+                                    <TextBlock HorizontalAlignment="Center" Text="Phim" />
+                                </StackPanel>
+                            </TabItem.Header>
+                            <TabControl Style="{StaticResource MaterialDesignNavigationRailTabControl}"
+                                        TabStripPlacement="Right">
+                                <TabItem Width="85">
+                                    <TabItem.Header>
+                                        <StackPanel Width="auto" Height="auto">
+                                            <materialDesign:PackIcon Width="24" Height="24"
+                                                             HorizontalAlignment="Center"
+                                                             Kind="ViewListOutline" />
+                                            <TextBlock HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" Text="Danh sách Film" />
+                                        </StackPanel>
+                                    </TabItem.Header>
+                                    <TextBlock>
+                                        <Run Text="tab 2 content. Default look and behaviors." />
+                                        <Button Command="{Binding OpenFilmWindowCommand}"></Button>
+                                        <LineBreak />
+                                        <LineBreak />
+                                        <Run FontStyle="Italic">
+                                            Praesent sed dui arcu. Vivamus porta auctor sagittis
+                                        </Run>
+                                    </TextBlock>
+                                </TabItem>
+                                <TabItem Width="85">
+                                    <TabItem.Header>
+                                        <StackPanel Width="auto" Height="auto">
+                                            <materialDesign:PackIcon Width="24" Height="24"
+                                                             HorizontalAlignment="Center"
+                                                             Kind="Folder" />
+                                            <TextBlock HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" Text="Kế Hoạch Chiếu" />
+                                        </StackPanel>
+                                    </TabItem.Header>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="62"></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Canvas Grid.Column="0" Height="auto">
+                                            <Button Panel.ZIndex="2" 
+                                                    Canvas.Left="267.5" Canvas.Top="13"
+                                                    Width="40" Height="34" Padding="0,0,0,0">
+                                                <materialDesign:PackIcon Kind="Magnify" 
+                                                                         Width="24" Height="24"
+                                                                         HorizontalAlignment="Center"
+                                                                         VerticalAlignment="Bottom"/>
+                                            </Button>
+                                            <TextBox Panel.ZIndex="1" 
+                                                materialDesign:HintAssist.Hint="Tim kiếm"
+                                                Style="{StaticResource MaterialDesignOutlinedTextBox}" 
+                                                Width="300px" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                Margin="10 10 0 10" Padding="10 12 10 12" />
+                                        </Canvas>
+                                        <Grid Grid.Row="1">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" DataContext="{StaticResource FilmVM}">
+                                                <ListView ItemsSource="{Binding ListPhim}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}" d:ItemsSource="{d:SampleData ItemCount=5}">
+                                                    <ListView.View>
+                                                        <GridView>
+                                                            <GridViewColumn Header="Mã Phim" DisplayMemberBinding="{Binding MaPhim}"></GridViewColumn>
+                                                            <GridViewColumn Header="Tên Phim" DisplayMemberBinding="{Binding TenPhim}" ></GridViewColumn>
+                                                        </GridView>
+                                                    </ListView.View>
+                                                </ListView>
+                                            </ScrollViewer>
+                                            <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Width="2"/>
+                                            <Grid Grid.Column="2">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <StackPanel Grid.Row="0">
+                                                    <TextBlock Text="{Binding MaPhim}" />
+                                                </StackPanel>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                </TabItem>
+                            </TabControl>
+                        </TabItem>
+                        <TabItem Width="90">
+                            <TabItem.Header>
+                                <StackPanel Width="auto" Height="auto">
+                                    <materialDesign:PackIcon Width="24" Height="24"
+                                            HorizontalAlignment="Center" Kind="ClockOutline" />
+                                    <TextBlock HorizontalAlignment="Center" Text="Thể Loại" />
+                                </StackPanel>
+                            </TabItem.Header>
+                            <TextBlock>
+                                <Run Text="tab 2 content. Default look and behaviors." />
+                                <LineBreak />
+                                <LineBreak />
+                                <Run FontStyle="Italic">
+                                    Praesent sed dui arcu. Vivamus porta auctor sagittis
+                                </Run>
+                            </TextBlock>
+                        </TabItem>
+                        <TabItem Width="90">
+                            <TabItem.Header>
+                                <StackPanel Width="auto" Height="auto">
+                                    <materialDesign:PackIcon Width="24" Height="24"
+                                            HorizontalAlignment="Center" Kind="TimerSettings" />
+                                    <TextBlock HorizontalAlignment="Center" Text="Suất Chiếu" />
+                                </StackPanel>
+                            </TabItem.Header>
+                            <TextBlock>
+                                <Run Text="tab 2 content. Default look and behaviors." />
+                                <LineBreak />
+                                <LineBreak />
+                                <Run FontStyle="Italic">
+                                    Praesent sed dui arcu. Vivamus porta auctor sagittis
+                                </Run>
+                            </TextBlock>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>

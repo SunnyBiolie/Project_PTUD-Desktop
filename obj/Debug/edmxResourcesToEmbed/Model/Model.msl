@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="QLDLRapPhimModelStoreContainer" CdmEntityContainer="QLDLRapPhimEntities">
+    <EntitySetMapping Name="CumRaps">
+      <EntityTypeMapping TypeName="QLDLRapPhimModel.CumRap">
+        <MappingFragment StoreEntitySet="CumRap">
+          <ScalarProperty Name="MaCum" ColumnName="MaCum" />
+          <ScalarProperty Name="TenCum" ColumnName="TenCum" />
+          <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="KeHoaches">
+      <EntityTypeMapping TypeName="QLDLRapPhimModel.KeHoach">
+        <MappingFragment StoreEntitySet="KeHoach">
+          <ScalarProperty Name="MaPhim" ColumnName="MaPhim" />
+          <ScalarProperty Name="MaCum" ColumnName="MaCum" />
+          <ScalarProperty Name="NgayKhoiChieu" ColumnName="NgayKhoiChieu" />
+          <ScalarProperty Name="NgayKetThuc" ColumnName="NgayKetThuc" />
+          <ScalarProperty Name="GhiChu" ColumnName="GhiChu" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Phims">
+      <EntityTypeMapping TypeName="QLDLRapPhimModel.Phim">
+        <MappingFragment StoreEntitySet="Phim">
+          <ScalarProperty Name="MaPhim" ColumnName="MaPhim" />
+          <ScalarProperty Name="TenPhim" ColumnName="TenPhim" />
+          <ScalarProperty Name="MaTheLoaiChinh" ColumnName="MaTheLoaiChinh" />
+          <ScalarProperty Name="ThoiLuong" ColumnName="ThoiLuong" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Raps">
+      <EntityTypeMapping TypeName="QLDLRapPhimModel.Rap">
+        <MappingFragment StoreEntitySet="Rap">
+          <ScalarProperty Name="MaRap" ColumnName="MaRap" />
+          <ScalarProperty Name="TongGhe" ColumnName="TongGhe" />
+          <ScalarProperty Name="MaCum" ColumnName="MaCum" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SuatChieux">
+      <EntityTypeMapping TypeName="QLDLRapPhimModel.SuatChieu">
+        <MappingFragment StoreEntitySet="SuatChieu">
+          <ScalarProperty Name="MaSuat" ColumnName="MaSuat" />
+          <ScalarProperty Name="GioBatDau" ColumnName="GioBatDau" />
+          <ScalarProperty Name="PhutBatDau" ColumnName="PhutBatDau" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TheLoais">
+      <EntityTypeMapping TypeName="QLDLRapPhimModel.TheLoai">
+        <MappingFragment StoreEntitySet="TheLoai">
+          <ScalarProperty Name="MaTheLoai" ColumnName="MaTheLoai" />
+          <ScalarProperty Name="TenTheLoai" ColumnName="TenTheLoai" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LichChieux">
+      <EntityTypeMapping TypeName="QLDLRapPhimModel.LichChieu">
+        <MappingFragment StoreEntitySet="LichChieu">
+          <ScalarProperty Name="MaPhim" ColumnName="MaPhim" />
+          <ScalarProperty Name="MaRap" ColumnName="MaRap" />
+          <ScalarProperty Name="NgayChieu" ColumnName="NgayChieu" />
+          <ScalarProperty Name="ChuoiMaSuat" ColumnName="ChuoiMaSuat" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="PhimTheLoaiPhu" TypeName="QLDLRapPhimModel.PhimTheLoaiPhu" StoreEntitySet="PhimTheLoaiPhu">
+      <EndProperty Name="Phim">
+        <ScalarProperty Name="MaPhim" ColumnName="MaPhim" />
+      </EndProperty>
+      <EndProperty Name="TheLoai">
+        <ScalarProperty Name="MaTheLoai" ColumnName="MaTheLoai" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

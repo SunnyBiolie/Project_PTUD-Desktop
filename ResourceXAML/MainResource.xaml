@@ -6,4 +6,6 @@
     <viewmodel:MainViewModel x:Key="MainVM"></viewmodel:MainViewModel>
     <viewmodel:FilmViewModel x:Key="FilmVM"></viewmodel:FilmViewModel>
     <viewmodel:TheaterClusterViewModel x:Key="TheaterClusterVM"></viewmodel:TheaterClusterViewModel>
+
+    <viewmodel:ScreeningsViewModel x:Key="ScreeningsVM"></viewmodel:ScreeningsViewModel>
 </ResourceDictionary>

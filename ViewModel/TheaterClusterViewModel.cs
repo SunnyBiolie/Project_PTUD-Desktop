@@ -14,6 +14,7 @@ namespace Project_PTUD_Desktop.ViewModel
     {
         public ICommand AddCommand { get; set; }
         public ICommand EditCommand { get; set; }
+        public ICommand DeleteCommand { get; set; }
 
         private ObservableCollection<CumRap> listCumRap;
         public ObservableCollection<CumRap> ListCumRap { get => listCumRap; set { listCumRap = value; OnPropertyChanged(); } }
@@ -56,6 +57,36 @@ namespace Project_PTUD_Desktop.ViewModel
                     maCum_curr_edit = SelectedItem.MaCum;
                     tenCum_curr_edit = selectedItem.TenCum;
                     diaChi_curr_edit = selectedItem.DiaChi;
+
+                    MaCum_delete = SelectedItem.MaCum;
+                    TenCum_delete = SelectedItem.TenCum;
+                    DiaChi_delete = SelectedItem.DiaChi;
+                }
+            }
+        }
+        #endregion
+
+        #region properties and fields for delete
+        private string maCum_delete;
+        private string tenCum_delete;
+        private string diaChi_delete;
+        public string MaCum_delete { get => maCum_delete; set { maCum_delete = value; OnPropertyChanged(); } }
+        public string TenCum_delete { get => tenCum_delete; set { tenCum_delete = value; OnPropertyChanged(); } }
+        public string DiaChi_delete { get => diaChi_delete; set { diaChi_delete = value; OnPropertyChanged(); } }
+
+        private CumRap selectedItem_delete;
+        public CumRap SelectedItem_delete
+        {
+            get => selectedItem_delete;
+            set
+            {
+                selectedItem_delete = value;
+                OnPropertyChanged();
+                if (SelectedItem_delete != null)
+                {
+                    MaCum_delete = SelectedItem_delete.MaCum;
+                    TenCum_delete = SelectedItem_delete.TenCum;
+                    DiaChi_delete = SelectedItem_delete.DiaChi;
                 }
             }
         }
@@ -79,17 +110,19 @@ namespace Project_PTUD_Desktop.ViewModel
                     var theaterCluster = new CumRap() { MaCum = MaCum_add, TenCum = TenCum_add, DiaChi = DiaChi_add };
                     DataProvider.Instance.Database.CumRaps.Add(theaterCluster);
                     DataProvider.Instance.Database.SaveChanges();
-                    listCumRap.Add(theaterCluster);
+                    ListCumRap.Add(theaterCluster);
                 }
             );
 
             EditCommand = new RelayCommand<object>(
-                (para) => {
+                (para) =>
+                {
                     if (string.IsNullOrEmpty(MaCum)) return false;
                     if (string.Compare(TenCum, tenCum_curr_edit, true) == 0 && string.Compare(DiaChi, diaChi_curr_edit, true) == 0)
                         return false;
                     return true;
-                }, (para) =>
+                },
+                (para) =>
                 {
                     var theaterCluster = DataProvider.Instance.Database.CumRaps.Where(ele => ele.MaCum == SelectedItem.MaCum).FirstOrDefault();
                     theaterCluster.TenCum = TenCum;
@@ -98,6 +131,30 @@ namespace Project_PTUD_Desktop.ViewModel
 
                     tenCum_curr_edit = TenCum;
                     diaChi_curr_edit = DiaChi;
+
+                    TenCum_delete = TenCum;
+                    DiaChi_delete = DiaChi;
+                }
+            );
+
+            DeleteCommand = new RelayCommand<object>(
+                para =>
+                {
+                    return true;
+                },
+                para =>
+                {
+                    if (MessageBox.Show($"Bạn có chắc muốn xóa cụm rạp {SelectedItem.TenCum}", "Xác nhận xóa?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    {
+                        var theaterCluster = DataProvider.Instance.Database.CumRaps.Where(ele => ele.MaCum == SelectedItem.MaCum).FirstOrDefault();
+                        if (theaterCluster != null)
+                        {
+                            DataProvider.Instance.Database.CumRaps.Remove(theaterCluster);
+                            DataProvider.Instance.Database.SaveChanges();
+                            ListCumRap.Remove(theaterCluster);
+                            SelectedItem = ListCumRap.First();
+                        }
+                    }
                 }
             );
         }

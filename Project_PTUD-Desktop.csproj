@@ -124,6 +124,9 @@
     <Compile Include="MyUserControls\MyControlBar.xaml.cs">
       <DependentUpon>MyControlBar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ScreeningsWindow.xaml.cs">
+      <DependentUpon>ScreeningsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TheaterClusterWindow.xaml.cs">
       <DependentUpon>TheaterClusterWindow.xaml</DependentUpon>
     </Compile>
@@ -131,6 +134,7 @@
     <Compile Include="ViewModel\ControlBarViewModel.cs" />
     <Compile Include="ViewModel\FilmViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\ScreeningsViewModel.cs" />
     <Compile Include="ViewModel\TheaterClusterViewModel.cs" />
     <Page Include="FilmWindow.xaml">
       <SubType>Designer</SubType>
@@ -153,6 +157,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ResourceXAML\MainResource.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ScreeningsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

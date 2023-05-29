@@ -57,53 +57,41 @@
                                 TabStripPlacement="Top"
                                 VerticalAlignment="Stretch"
                                 Margin="10 0 0 0">
-                        <TabItem Width="90">
+                        <!--XAML for tab CumRap-->
+                        <TabItem Width="90" x:Name="tabCumRap">
                             <TabItem.Header>
                                 <StackPanel Width="auto" Height="auto">
                                     <materialDesign:PackIcon Width="24" Height="24"
-                                                             HorizontalAlignment="Center"
-                                                             Kind="Folder" />
+                                                             HorizontalAlignment="Center" Kind="Theater" />
                                     <TextBlock HorizontalAlignment="Center" Text="Cụm Rạp" />
                                 </StackPanel>
                             </TabItem.Header>
-                            <TabControl Style="{StaticResource MaterialDesignNavigationRailTabControl}"
-                                        TabStripPlacement="Right">
-                                <TabItem>
-                                    <TabItem.Header>
-                                        <StackPanel Width="auto" Height="auto">
-                                            <materialDesign:PackIcon Width="24" Height="24"
-                                                             HorizontalAlignment="Center"
-                                                             Kind="Folder" />
-                                            <TextBlock HorizontalAlignment="Center" Text="All Files" />
-                                        </StackPanel>
-                                    </TabItem.Header>
-                                    <Button Command="{Binding OpenTheaterClusterWindowCommand}"></Button>
-                                </TabItem>
-                                <TabItem>
-                                    <TabItem.Header>
-                                        <StackPanel Width="auto" Height="auto">
-                                            <materialDesign:PackIcon Width="24" Height="24"
-                                                             HorizontalAlignment="Center"
-                                                             Kind="Folder" />
-                                            <TextBlock HorizontalAlignment="Center" Text="All Files" />
-                                        </StackPanel>
-                                    </TabItem.Header>
-                                    <TextBlock>
-                                        <Run Text="tab 1 content. Default look and behaviors." />
-                                        <LineBreak />
-                                        <LineBreak />
-                                        <Run FontStyle="Italic">
-                                            Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...
-                                        </Run>
-                                    </TextBlock>
-                                </TabItem>
-                            </TabControl>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" DataContext="{StaticResource TheaterClusterVM}">
+                                    <ListView ItemsSource="{Binding ListCumRap}">
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn Header="Mã Cụm" DisplayMemberBinding="{Binding MaCum}"></GridViewColumn>
+                                                <GridViewColumn Header="Tên Cụm" DisplayMemberBinding="{Binding TenCum}"></GridViewColumn>
+                                                <GridViewColumn Header="Địa Chỉ" DisplayMemberBinding="{Binding DiaChi}"></GridViewColumn>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                </ScrollViewer>
+                                <Button Grid.Row="1" Width="400" Margin="0 20 0 20" Content="Chỉnh sửa danh sách cụm rạp"
+                                        Command="{Binding OpenTheaterClusterWindowCommand}" />
+                            </Grid>
                         </TabItem>
-                        <TabItem Width="90">
+                        <!--XAML for tab Rap-->
+                        <TabItem Width="90" x:Name="tabRap">
                             <TabItem.Header>
                                 <StackPanel Width="auto" Height="auto">
                                     <materialDesign:PackIcon Width="24" Height="24"
-                                            HorizontalAlignment="Center" Kind="Theater" />
+                                            HorizontalAlignment="Center" Kind="VideoVintage" />
                                     <TextBlock HorizontalAlignment="Center" Text="Rạp" />
                                 </StackPanel>
                             </TabItem.Header>
@@ -116,7 +104,8 @@
                                 </Run>
                             </TextBlock>
                         </TabItem>
-                        <TabItem Width="90">
+                        <!--XAML for tab Phim-->
+                        <TabItem Width="90" x:Name="tabPhim">
                             <TabItem.Header>
                                 <StackPanel Width="auto" Height="auto">
                                     <materialDesign:PackIcon Width="24" Height="24"
@@ -206,11 +195,12 @@
                                 </TabItem>
                             </TabControl>
                         </TabItem>
-                        <TabItem Width="90">
+                        <!--XAML for tab TheLoai-->
+                        <TabItem Width="90" x:Name="tabTheLoai">
                             <TabItem.Header>
                                 <StackPanel Width="auto" Height="auto">
                                     <materialDesign:PackIcon Width="24" Height="24"
-                                            HorizontalAlignment="Center" Kind="ClockOutline" />
+                                            HorizontalAlignment="Center" Kind="PaletteSwatch" />
                                     <TextBlock HorizontalAlignment="Center" Text="Thể Loại" />
                                 </StackPanel>
                             </TabItem.Header>
@@ -223,7 +213,8 @@
                                 </Run>
                             </TextBlock>
                         </TabItem>
-                        <TabItem Width="90">
+                        <!--XAML for tab SuatChieu-->
+                        <TabItem Width="90" x:Name="tabSuatChieu">
                             <TabItem.Header>
                                 <StackPanel Width="auto" Height="auto">
                                     <materialDesign:PackIcon Width="24" Height="24"
@@ -231,14 +222,25 @@
                                     <TextBlock HorizontalAlignment="Center" Text="Suất Chiếu" />
                                 </StackPanel>
                             </TabItem.Header>
-                            <TextBlock>
-                                <Run Text="tab 2 content. Default look and behaviors." />
-                                <LineBreak />
-                                <LineBreak />
-                                <Run FontStyle="Italic">
-                                    Praesent sed dui arcu. Vivamus porta auctor sagittis
-                                </Run>
-                            </TextBlock>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" DataContext="{StaticResource ScreeningsVM}">
+                                    <ListView ItemsSource="{Binding ListSuatChieu}">
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn Header="Mã Suất" DisplayMemberBinding="{Binding MaSuat}"></GridViewColumn>
+                                                <GridViewColumn Header="Giờ Bắt Đầu" DisplayMemberBinding="{Binding GioBatDau}"></GridViewColumn>
+                                                <GridViewColumn Header="Phút Bắt Đầu" DisplayMemberBinding="{Binding PhutBatDau}"></GridViewColumn>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                </ScrollViewer>
+                                <Button Grid.Row="1" Width="400" Margin="0 20 0 20" Content="Chỉnh sửa danh sách suất chiếu"
+                                        Command="{Binding OpenScreeningsWindowCommand}" />
+                            </Grid>
                         </TabItem>
                     </TabControl>
                 </Grid>

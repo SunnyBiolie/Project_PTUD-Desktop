@@ -7,17 +7,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.ComponentModel;
 
 namespace Project_PTUD_Desktop.ViewModel
 {
     public class ScreeningsViewModel : BaseViewModel
     {
         public ICommand AddCommand { get; set; }
-        public ICommand EditCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
 
         private ObservableCollection<SuatChieu> listSuatChieu;
         public ObservableCollection<SuatChieu> ListSuatChieu { get => listSuatChieu; set { listSuatChieu = value; OnPropertyChanged(); } }
+
+        private ObservableCollection<int> hoursList;
+        private ObservableCollection<int> minutesList;
+        public ObservableCollection<int> HoursList { get => hoursList; set { hoursList = value; OnPropertyChanged(); } }
+        public ObservableCollection<int> MinutesList { get => minutesList; set { minutesList = value; OnPropertyChanged(); } }
 
         #region properties and fields for add
         private string maSuat_add;
@@ -26,19 +33,39 @@ namespace Project_PTUD_Desktop.ViewModel
         public string MaSuat_add { get => maSuat_add; set { maSuat_add = value; OnPropertyChanged(); } }
         public int GioBatDau_add { get => gioBatDau_add; set { gioBatDau_add = value; OnPropertyChanged(); } }
         public int PhutBatDau_add { get => phutBatDau_add; set { phutBatDau_add = value; OnPropertyChanged(); } }
+
+        private int selectedHourForAdd;
+        private int selectedMinuteForAdd;
+        public int SelectedHourForAdd
+        {
+            get => selectedHourForAdd;
+            set
+            {
+                selectedHourForAdd = value;
+                OnPropertyChanged();
+                GioBatDau_add = SelectedHourForAdd;
+            }
+        }
+        public int SelectedMinuteForAdd
+        {
+            get => selectedMinuteForAdd;
+            set
+            {
+                selectedMinuteForAdd = value;
+                OnPropertyChanged();
+                PhutBatDau_add = SelectedMinuteForAdd;
+            }
+        }
         #endregion
 
-        #region properties and fields for edit
-        private string maSuat_edit;
-        private int gioBatDau_edit;
-        private int phutBatDau_edit;
-        public string MaSuat_edit { get => maSuat_edit; set { maSuat_edit = value; OnPropertyChanged(); } }
-        public int GioBatDau_edit { get => gioBatDau_edit; set { gioBatDau_edit = value; OnPropertyChanged(); } }
-        public int PhutBatDau_edit { get => phutBatDau_edit; set { phutBatDau_edit = value; OnPropertyChanged(); } }
 
-        private string maSuat_curr_edit;
-        private int gioBatDau_curr_edit;
-        private int phutBatDau_curr_edit;
+        #region properties and fields for delete
+        private string maSuat_delete;
+        private int gioBatDau_delete;
+        private int phutBatDau_delete;
+        public string MaSuat_delete { get => maSuat_delete; set { maSuat_delete = value; OnPropertyChanged(); } }
+        public int GioBatDau_delete { get => gioBatDau_delete; set { gioBatDau_delete = value; OnPropertyChanged(); } }
+        public int PhutBatDau_delete { get => phutBatDau_delete; set { phutBatDau_delete = value; OnPropertyChanged(); } }
 
         private SuatChieu selectedItem;
         public SuatChieu SelectedItem
@@ -50,14 +77,6 @@ namespace Project_PTUD_Desktop.ViewModel
                 OnPropertyChanged();
                 if (SelectedItem != null)
                 {
-                    MaSuat_edit = SelectedItem.MaSuat;
-                    GioBatDau_edit = (int)SelectedItem.GioBatDau;
-                    PhutBatDau_edit = (int)SelectedItem.PhutBatDau;
-
-                    maSuat_curr_edit = SelectedItem.MaSuat;
-                    gioBatDau_curr_edit = (int)selectedItem.GioBatDau;
-                    phutBatDau_curr_edit = (int)selectedItem.PhutBatDau;
-
                     MaSuat_delete = SelectedItem.MaSuat;
                     GioBatDau_delete = (int)SelectedItem.GioBatDau;
                     PhutBatDau_delete = (int)SelectedItem.PhutBatDau;
@@ -66,42 +85,30 @@ namespace Project_PTUD_Desktop.ViewModel
         }
         #endregion
 
-        #region properties and fields for delete
-        private string maSuat_delete;
-        private int gioBatDau_delete;
-        private int phutBatDau_delete;
-        public string MaSuat_delete { get => maSuat_delete; set { maSuat_delete = value; OnPropertyChanged(); } }
-        public int GioBatDau_delete { get => gioBatDau_delete; set { gioBatDau_delete = value; OnPropertyChanged(); } }
-        public int PhutBatDau_delete { get => phutBatDau_delete; set { phutBatDau_delete = value; OnPropertyChanged(); } }
-
-        private SuatChieu selectedItem_delete;
-        public SuatChieu SelectedItem_delete
-        {
-            get => selectedItem_delete;
-            set
-            {
-                selectedItem_delete = value;
-                OnPropertyChanged();
-                if (SelectedItem_delete != null)
-                {
-                    MaSuat_delete = SelectedItem_delete.MaSuat;
-                    GioBatDau_delete = (int)SelectedItem_delete.GioBatDau;
-                    PhutBatDau_delete = (int)SelectedItem_delete.PhutBatDau;
-                }
-            }
-        }
-        #endregion
-
         public ScreeningsViewModel()
         {
+            HoursList = new ObservableCollection<int>();
+            for (int i = 8; i <= 23; i++) hoursList.Add(i);
+            MinutesList = new ObservableCollection<int>();
+            for (int i = 0; i <= 59; i+=10) minutesList.Add(i);
             ListSuatChieu = new ObservableCollection<SuatChieu>(DataProvider.Instance.Database.SuatChieux);
 
+            SelectedHourForAdd = HoursList.First();
+            SelectedMinuteForAdd = minutesList.First();
+
+            // Sắp xếp ListSuatChieu để các ListView Binding đến nó cũng sẽ được sắp xếp
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListSuatChieu);
+            view.SortDescriptions.Add(new SortDescription("GioBatDau", ListSortDirection.Ascending));
+            view.SortDescriptions.Add(new SortDescription("PhutBatDau", ListSortDirection.Ascending));
+
             AddCommand = new RelayCommand<object>(
-                (para) =>
-                {
-                    if (string.IsNullOrEmpty(MaSuat_add)) return false;
+            (para) =>
+            {
+                if (string.IsNullOrEmpty(MaSuat_add)) return false;
                     var listMaSuat = DataProvider.Instance.Database.SuatChieux.Where(ele => ele.MaSuat == MaSuat_add);
                     if (listMaSuat == null || listMaSuat.Count() != 0) return false;
+                    foreach (var suat in ListSuatChieu)
+                        if (GioBatDau_add == (int)suat.GioBatDau && PhutBatDau_add == (int)suat.PhutBatDau) return false;
 
                     return true;
                 },
@@ -114,34 +121,15 @@ namespace Project_PTUD_Desktop.ViewModel
                 }
             );
 
-            EditCommand = new RelayCommand<object>(
-                (para) =>
-                {
-                    if (string.IsNullOrEmpty(MaSuat_edit)) return false;
-                    if (GioBatDau_edit == gioBatDau_curr_edit && PhutBatDau_edit == phutBatDau_curr_edit)
-                        return false;
-                    return true;
-                },
-                (para) =>
-                {
-                    var screenings = DataProvider.Instance.Database.SuatChieux.Where(ele => ele.MaSuat == SelectedItem.MaSuat).FirstOrDefault();
-                    screenings.GioBatDau = GioBatDau_edit;
-                    screenings.PhutBatDau = PhutBatDau_edit;
-                    DataProvider.Instance.Database.SaveChanges();
-
-                    // Để kiểm tra điều kiện active nút "Cập nhật" Sau khi update
-                    gioBatDau_curr_edit = GioBatDau_edit;
-                    phutBatDau_curr_edit = PhutBatDau_edit;
-
-                    // Do cùng có một SelectedItem và một ListView nên cần đồng bộ hiển thị giữa Tab edit và delete
-                    GioBatDau_delete = GioBatDau_edit;
-                    PhutBatDau_delete = PhutBatDau_edit;
-                }
-            );
-
             DeleteCommand = new RelayCommand<object>(
                 para =>
                 {
+                    //ObservableCollection<LichChieu> listLichChieu = new ObservableCollection<LichChieu>(DataProvider.Instance.Database.LichChieux.Where(ele => ele.);
+                    //foreach (var lichchieu in listLichChieu)
+                    //{
+                    //    lichchieu.ChuoiMaSuat
+                    //}
+
                     return true;
                 },
                 para =>

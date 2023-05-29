@@ -71,7 +71,8 @@
                                     <RowDefinition></RowDefinition>
                                     <RowDefinition Height="Auto"></RowDefinition>
                                 </Grid.RowDefinitions>
-                                <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" DataContext="{StaticResource TheaterClusterVM}">
+                                <ScrollViewer Grid.Row="0" Margin="0 0 10 0"
+                                              VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" DataContext="{StaticResource TheaterClusterVM}">
                                     <ListView ItemsSource="{Binding ListCumRap}">
                                         <ListView.View>
                                             <GridView>
@@ -227,7 +228,9 @@
                                     <RowDefinition></RowDefinition>
                                     <RowDefinition Height="Auto"></RowDefinition>
                                 </Grid.RowDefinitions>
-                                <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" DataContext="{StaticResource ScreeningsVM}">
+                                <ScrollViewer Grid.Row="0" Margin="30 0 40 0"
+                                              VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                                              DataContext="{StaticResource ScreeningsVM}">
                                     <ListView ItemsSource="{Binding ListSuatChieu}">
                                         <ListView.View>
                                             <GridView>

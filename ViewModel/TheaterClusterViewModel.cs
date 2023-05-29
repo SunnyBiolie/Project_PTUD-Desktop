@@ -74,22 +74,24 @@ namespace Project_PTUD_Desktop.ViewModel
         public string TenCum_delete { get => tenCum_delete; set { tenCum_delete = value; OnPropertyChanged(); } }
         public string DiaChi_delete { get => diaChi_delete; set { diaChi_delete = value; OnPropertyChanged(); } }
 
-        private CumRap selectedItem_delete;
-        public CumRap SelectedItem_delete
-        {
-            get => selectedItem_delete;
-            set
-            {
-                selectedItem_delete = value;
-                OnPropertyChanged();
-                if (SelectedItem_delete != null)
-                {
-                    MaCum_delete = SelectedItem_delete.MaCum;
-                    TenCum_delete = SelectedItem_delete.TenCum;
-                    DiaChi_delete = SelectedItem_delete.DiaChi;
-                }
-            }
-        }
+        // Edit & Delete cùng binding đến một List và SelectedItem được dùng chung cho cả hai nên ko cần thêm 1 selecteditem cho delete
+
+        //private CumRap selectedItem_delete;
+        //public CumRap SelectedItem_delete
+        //{
+        //    get => selectedItem_delete;
+        //    set
+        //    {
+        //        selectedItem_delete = value;
+        //        OnPropertyChanged();
+        //        if (SelectedItem_delete != null)
+        //        {
+        //            MaCum_delete = SelectedItem_delete.MaCum;
+        //            TenCum_delete = SelectedItem_delete.TenCum;
+        //            DiaChi_delete = SelectedItem_delete.DiaChi;
+        //        }
+        //    }
+        //}
         #endregion
 
         public TheaterClusterViewModel()

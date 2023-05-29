@@ -8,7 +8,7 @@
         
         xmlns:uc="clr-namespace:Project_PTUD_Desktop.MyUserControls"
         Name="screeningsWindow"
-        Title="Chỉnh sửa danh sách suất chiếu" Height="450" Width="550"
+        Title="Chỉnh sửa danh sách suất chiếu" Height="450" Width="500"
         ResizeMode="NoResize"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
@@ -53,20 +53,20 @@
                             <Grid>
                                 <StackPanel Orientation="Horizontal" Width="Auto" Margin="25 0 25 0">
                                     <TextBox
-                                        VerticalAlignment="Center" MinWidth="100" MaxLength="3" Margin="0 0 40 0"
+                                        VerticalAlignment="Center" MinWidth="100" MaxLength="3" Margin="0 0 30 0"
                                         materialDesign:HintAssist.Hint="Mã suất"
                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                         Text="{Binding MaSuat_add, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" />
-                                    <TextBox
-                                        VerticalAlignment="Center" MinWidth="120" Margin="0 0 40 0"
+                                    <ComboBox MinWidth="120" Margin="0 0 30 0"
                                         materialDesign:HintAssist.Hint="Giờ bắt đầu"
-                                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                        Text="{Binding GioBatDau_add, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" />
-                                    <TextBox
-                                        VerticalAlignment="Center" MinWidth="120"
+                                        ItemsSource="{Binding HoursList}"
+                                        Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                        SelectedItem="{Binding SelectedHourForAdd, Mode=TwoWay}" />
+                                    <ComboBox MinWidth="120" Margin="0 0 30 0"
                                         materialDesign:HintAssist.Hint="Phút bắt đầu"
-                                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                        Text="{Binding PhutBatDau_add, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" />
+                                        ItemsSource="{Binding MinutesList}"
+                                        Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                        SelectedItem="{Binding SelectedMinuteForAdd, Mode=TwoWay}" />
                                 </StackPanel>
                             </Grid>
                         </Grid>
@@ -76,71 +76,11 @@
                         </Grid>
                     </Grid>
                 </TabItem>
-                <!--XAML for edit tab-->
-                <TabItem Width="80" Height="50" x:Name="tabEdit">
-                    <TabItem.Header>
-                        <StackPanel Width="auto" Height="auto">
-                            <materialDesign:PackIcon Width="24" Height="24"
-                                                     HorizontalAlignment="Center" Kind="TableEdit" />
-                            <TextBlock HorizontalAlignment="Center" Text="Sửa" />
-                        </StackPanel>
-                    </TabItem.Header>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Grid Grid.Row="0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid Grid.Row="0" Margin="0 10 0 10">
-                                <StackPanel Orientation="Horizontal" Width="Auto" Margin="25 0 25 0">
-                                    <TextBox
-                                        VerticalAlignment="Center" MinWidth="120" MaxLength="3" Margin="0 0 40 0"
-                                        materialDesign:HintAssist.Hint="Mã suất" IsEnabled="False"
-                                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                        Text="{Binding MaSuat_edit, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                                    <TextBox
-                                        VerticalAlignment="Center" MinWidth="200"
-                                        materialDesign:HintAssist.Hint="Giờ bắt đầu"
-                                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                        Text="{Binding GioBatDau_edit, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                                </StackPanel>
-                            </Grid>
-                            <Grid Grid.Row="1" Margin="25 10 25 10">
-                                <TextBox
-                                    VerticalAlignment="Center" MinWidth="400"
-                                    materialDesign:HintAssist.Hint="Phút bắt đầu" TextWrapping="Wrap"
-                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                    Text="{Binding PhutBatDau_edit, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                            </Grid>
-                        </Grid>
-                        <Grid Grid.Row="1">
-                            <Button Command="{Binding EditCommand}" IsDefault="True"
-                                    Width="160" HorizontalAlignment="Center" VerticalAlignment="Center" >Cập nhật</Button>
-                        </Grid>
-                        <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                            <ListView ItemsSource="{Binding ListSuatChieu}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}">
-                                <ListView.View>
-                                    <GridView>
-                                        <GridViewColumn Header="Mã Suất" DisplayMemberBinding="{Binding MaSuat}"></GridViewColumn>
-                                        <GridViewColumn Header="Giờ Bắt Đầu" DisplayMemberBinding="{Binding GioBatDau}"></GridViewColumn>
-                                        <GridViewColumn Header="Phút Bắt Đầu" DisplayMemberBinding="{Binding PhutBatDau}"></GridViewColumn>
-                                    </GridView>
-                                </ListView.View>
-                            </ListView>
-                        </ScrollViewer>
-                    </Grid>
-                </TabItem>
                 <!--XAML for delete tab-->
                 <TabItem Width="80" Height="50" x:Name="tabDelete">
                     <TabItem.Header>
                         <StackPanel Width="auto" Height="auto">
-                            <materialDesign:PackIcon Width="24" Height="24"
-                                                     HorizontalAlignment="Center" Kind="DeleteEmpty" />
+                            <materialDesign:PackIcon Width="24" Height="24" HorizontalAlignment="Center" Kind="DeleteEmpty" />
                             <TextBlock HorizontalAlignment="Center" Text="Xóa" />
                         </StackPanel>
                     </TabItem.Header>
@@ -151,30 +91,24 @@
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid Grid.Row="0" Margin="0 10 0 10">
+                            <Grid Margin="0 10 0 10">
                                 <StackPanel Orientation="Horizontal" Width="Auto" Margin="25 0 25 0">
                                     <TextBox
-                                        VerticalAlignment="Center" MinWidth="120" MaxLength="3" Margin="0 0 40 0"
+                                        VerticalAlignment="Center" MinWidth="100" MaxLength="3" Margin="0 0 30 0"
                                         materialDesign:HintAssist.Hint="Mã suất" IsEnabled="False"
                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                         Text="{Binding MaSuat_delete, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
                                     <TextBox
-                                        VerticalAlignment="Center" MinWidth="200"
+                                        VerticalAlignment="Center" MinWidth="120" Margin="0 0 30 0"
                                         materialDesign:HintAssist.Hint="Giờ bắt đầu" IsEnabled="False"
                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                         Text="{Binding GioBatDau_delete, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+                                    <TextBox
+                                        VerticalAlignment="Center" MinWidth="120"
+                                        materialDesign:HintAssist.Hint="Phút bắt đầu" TextWrapping="Wrap" IsEnabled="False"
+                                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                        Text="{Binding PhutBatDau_delete, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
                                 </StackPanel>
-                            </Grid>
-                            <Grid Grid.Row="1" Margin="25 10 25 10">
-                                <TextBox
-                                    VerticalAlignment="Center" MinWidth="400"
-                                    materialDesign:HintAssist.Hint="Phút bắt đầu" TextWrapping="Wrap" IsEnabled="False"
-                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                    Text="{Binding PhutBatDau_delete, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
                             </Grid>
                         </Grid>
                         <Grid Grid.Row="1">

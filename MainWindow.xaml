@@ -146,6 +146,7 @@
                             </TabItem.Header>
                             <TabControl Style="{StaticResource MaterialDesignNavigationRailTabControl}"
                                         TabStripPlacement="Right">
+                                <!--XAML for tab Danh Sach Phim-->
                                 <TabItem Width="85">
                                     <TabItem.Header>
                                         <StackPanel Width="auto" Height="auto">
@@ -155,23 +156,114 @@
                                             <TextBlock HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" Text="Danh sách Film" />
                                         </StackPanel>
                                     </TabItem.Header>
-                                    <TextBlock>
-                                        <Run Text="tab 2 content. Default look and behaviors." />
-                                        <Button Command="{Binding OpenFilmWindowCommand}"></Button>
-                                        <LineBreak />
-                                        <LineBreak />
-                                        <Run FontStyle="Italic">
-                                            Praesent sed dui arcu. Vivamus porta auctor sagittis
-                                        </Run>
-                                    </TextBlock>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="62"></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition Height="Auto"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Canvas Grid.Column="0" Height="auto">
+                                            <Button Panel.ZIndex="2" 
+                                                    Canvas.Left="267.5" Canvas.Top="13"
+                                                    Width="40" Height="34" Padding="0,0,0,0">
+                                                <materialDesign:PackIcon Kind="Magnify" 
+                                                                         Width="24" Height="24"
+                                                                         HorizontalAlignment="Center"
+                                                                         VerticalAlignment="Bottom"/>
+                                            </Button>
+                                            <TextBox Panel.ZIndex="1" 
+                                                materialDesign:HintAssist.Hint="Tim kiếm"
+                                                Style="{StaticResource MaterialDesignOutlinedTextBox}" 
+                                                Width="300px" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                Margin="10 10 0 10" Padding="10 12 10 12" />
+                                        </Canvas>
+                                        <Grid Grid.Row="1">
+                                            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" DataContext="{StaticResource FilmVM}">
+                                                <ListView ItemsSource="{Binding ListPhim}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}" d:ItemsSource="{d:SampleData ItemCount=5}">
+                                                    <ListView.View>
+                                                        <GridView>
+                                                            <GridViewColumn Header="Mã Phim" DisplayMemberBinding="{Binding MaPhim}"></GridViewColumn>
+                                                            <GridViewColumn Header="Tên Phim" DisplayMemberBinding="{Binding TenPhim}" ></GridViewColumn>
+                                                            <GridViewColumn Header="Thể Loại" DisplayMemberBinding="{Binding MaTheLoaiChinh}" ></GridViewColumn>
+                                                            <GridViewColumn Header="Thời Lượng" DisplayMemberBinding="{Binding ThoiLuong}" ></GridViewColumn>
+                                                        </GridView>
+                                                    </ListView.View>
+                                                </ListView>
+                                            </ScrollViewer>
+                                        </Grid>
+                                        <Grid Grid.Row="2">
+                                            <Button Width="400" Margin="0 20 0 20" Command="{Binding OpenFilmWindowCommand}">Chỉnh sửa danh sách phim</Button>
+                                        </Grid>
+                                    </Grid>
                                 </TabItem>
+                                <!--XAML for tab Ke Hoach Chieu-->
                                 <TabItem Width="85">
                                     <TabItem.Header>
                                         <StackPanel Width="auto" Height="auto">
                                             <materialDesign:PackIcon Width="24" Height="24"
                                                              HorizontalAlignment="Center"
-                                                             Kind="Folder" />
+                                                             Kind="NotebookMultiple" />
                                             <TextBlock HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" Text="Kế Hoạch Chiếu" />
+                                        </StackPanel>
+                                    </TabItem.Header>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="62"></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Canvas Grid.Column="0" Height="auto">
+                                            <Button Panel.ZIndex="2" 
+                                                    Canvas.Left="267.5" Canvas.Top="13"
+                                                    Width="40" Height="34" Padding="0,0,0,0">
+                                                <materialDesign:PackIcon Kind="Magnify" 
+                                                                         Width="24" Height="24"
+                                                                         HorizontalAlignment="Center"
+                                                                         VerticalAlignment="Bottom"/>
+                                            </Button>
+                                            <TextBox Panel.ZIndex="1" 
+                                                materialDesign:HintAssist.Hint="Tim kiếm"
+                                                Style="{StaticResource MaterialDesignOutlinedTextBox}" 
+                                                Width="300px" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                Margin="10 10 0 10" Padding="10 12 10 12" />
+                                        </Canvas>
+                                        <Grid Grid.Row="1">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" DataContext="{StaticResource FilmVM}">
+                                                <ListView ItemsSource="{Binding ListPhim}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}" d:ItemsSource="{d:SampleData ItemCount=5}">
+                                                    <ListView.View>
+                                                        <GridView>
+                                                            <GridViewColumn Header="Mã Phim" DisplayMemberBinding="{Binding MaPhim}"></GridViewColumn>
+                                                            <GridViewColumn Header="Tên Phim" DisplayMemberBinding="{Binding TenPhim}" ></GridViewColumn>
+                                                        </GridView>
+                                                    </ListView.View>
+                                                </ListView>
+                                            </ScrollViewer>
+                                            <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Width="2"/>
+                                            <Grid Grid.Column="2">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <StackPanel Grid.Row="0">
+                                                    <TextBlock Text="{Binding MaPhim}" />
+                                                </StackPanel>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                </TabItem>
+                                <!--XAML  for tab Lich Chieu-->
+                                <TabItem Width="85">
+                                    <TabItem.Header>
+                                        <StackPanel Width="auto" Height="auto">
+                                            <materialDesign:PackIcon Width="24" Height="24"
+                                                             HorizontalAlignment="Center"
+                                                             Kind="CalendarTextOutline" />
+                                            <TextBlock HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" Text="Lịch Chiếu" />
                                         </StackPanel>
                                     </TabItem.Header>
                                     <Grid>

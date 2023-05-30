@@ -9,10 +9,11 @@
 
 namespace Project_PTUD_Desktop.Model
 {
+    using Project_PTUD_Desktop.ViewModel;
     using System;
     using System.Collections.Generic;
     
-    public partial class Phim
+    public partial class Phim : BaseViewModel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Phim()
@@ -21,12 +22,17 @@ namespace Project_PTUD_Desktop.Model
             this.LichChieux = new HashSet<LichChieu>();
             this.TheLoais = new HashSet<TheLoai>();
         }
-    
-        public string MaPhim { get; set; }
-        public string TenPhim { get; set; }
-        public string MaTheLoaiChinh { get; set; }
-        public Nullable<int> ThoiLuong { get; set; }
-    
+
+        private string maPhim;
+        private string tenPhim;
+        private string maTheLoaiChinh;
+        private Nullable<int> thoiLuong;
+
+        public string MaPhim { get => maPhim; set { maPhim = value; OnPropertyChanged(); } }
+        public string TenPhim { get => tenPhim; set { tenPhim = value; OnPropertyChanged(); } }
+        public string MaTheLoaiChinh { get => maTheLoaiChinh; set { maTheLoaiChinh = value; OnPropertyChanged(); } }
+        public Nullable<int> ThoiLuong { get => thoiLuong; set { thoiLuong = value; OnPropertyChanged(); } }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<KeHoach> KeHoaches { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

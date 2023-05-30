@@ -43,3 +43,5 @@ D:\Code\University\Dự án\Project_PTUD-Desktop\obj\Debug\TheaterClusterWindow.
 D:\Code\University\Dự án\Project_PTUD-Desktop\obj\Debug\TheaterClusterWindow.baml
 D:\Code\University\Dự án\Project_PTUD-Desktop\obj\Debug\ScreeningsWindow.g.cs
 D:\Code\University\Dự án\Project_PTUD-Desktop\obj\Debug\ScreeningsWindow.baml
+D:\Code\University\Dự án\Project_PTUD-Desktop\obj\Debug\CategoryWindow.g.cs
+D:\Code\University\Dự án\Project_PTUD-Desktop\obj\Debug\CategoryWindow.baml

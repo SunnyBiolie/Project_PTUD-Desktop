@@ -1,4 +1,4 @@
-﻿<Window x:Class="Project_PTUD_Desktop.TheaterClusterWindow"
+﻿<Window x:Class="Project_PTUD_Desktop.CategoryWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,8 +7,8 @@
         mc:Ignorable="d"
         
         xmlns:uc="clr-namespace:Project_PTUD_Desktop.MyUserControls"
-        Name="theaterClusterWindow"
-        Title="Chỉnh sửa danh sách cụm rạp" Height="450" Width="550"
+        Name="screeningsWindow"
+        Title="Chỉnh sửa danh sách suất chiếu" Height="450" Width="450"
         ResizeMode="NoResize"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
@@ -22,20 +22,20 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         
-        DataContext="{StaticResource TheaterClusterVM}">
+        DataContext="{StaticResource CategoryVM}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <uc:MyControlBar Tag="{Binding Title, ElementName=theaterClusterWindow}"></uc:MyControlBar>
+            <uc:MyControlBar Tag="{Binding Title, ElementName=screeningsWindow}"></uc:MyControlBar>
         </Grid>
         <Grid Grid.Row="1">
             <TabControl Style="{StaticResource MaterialDesignNavigationRailTabControl}"
                                 TabStripPlacement="Top"
                                 VerticalAlignment="Stretch" >
-                <!--XAML for tab add-->
+                <!--XAML for add tab-->
                 <TabItem Width="80" Height="50" x:Name="tabAdd">
                     <TabItem.Header>
                         <StackPanel Width="auto" Height="auto">
@@ -50,35 +50,24 @@
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid Grid.Row="0">
+                            <Grid>
                                 <StackPanel Orientation="Horizontal" Width="Auto" Margin="25 0 25 0">
                                     <TextBox
-                                        VerticalAlignment="Center" MinWidth="120" MaxLength="5" Margin="0 0 40 0"
-                                        materialDesign:HintAssist.Hint="Mã cụm"
+                                        VerticalAlignment="Center" MinWidth="100" MaxLength="5" Margin="0 0 30 0"
+                                        materialDesign:HintAssist.Hint="Mã thể loại"
                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                        Text="{Binding MaCum_add, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" />
+                                        Text="{Binding MaTheLoai_add, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" />
                                     <TextBox
-                                        VerticalAlignment="Center" MinWidth="200"
-                                        materialDesign:HintAssist.Hint="Tên cụm"
+                                        VerticalAlignment="Center" MinWidth="150" Margin="0 0 30 0"
+                                        materialDesign:HintAssist.Hint="Tên thể loại"
                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                        Text="{Binding TenCum_add, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" />
+                                        Text="{Binding TenTheLoai_add, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" />
                                 </StackPanel>
-                            </Grid>
-                            <Grid Grid.Row="1" Margin="25 0 25 0">
-                                <TextBox
-                                    VerticalAlignment="Center" MinWidth="400"
-                                    materialDesign:HintAssist.Hint="Địa chỉ" TextWrapping="Wrap"
-                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                    Text="{Binding DiaChi_add, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" />
                             </Grid>
                         </Grid>
                         <Grid Grid.Row="1">
                             <Button Command="{Binding AddCommand}" IsDefault="True"
-                                    Width="200" HorizontalAlignment="Center" VerticalAlignment="Center" >Thêm cụm rạp</Button>
+                                    Width="200" HorizontalAlignment="Center" VerticalAlignment="Center" >Thêm thể loại</Button>
                         </Grid>
                     </Grid>
                 </TabItem>
@@ -98,30 +87,19 @@
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid Grid.Row="0" Margin="0 10 0 10">
+                            <Grid Margin="0 10 0 20">
                                 <StackPanel Orientation="Horizontal" Width="Auto" Margin="25 0 25 0">
                                     <TextBox
-                                        VerticalAlignment="Center" MinWidth="120" MaxLength="5" Margin="0 0 40 0"
-                                        materialDesign:HintAssist.Hint="Mã cụm" IsEnabled="False"
+                                        VerticalAlignment="Center" MinWidth="100" MaxLength="5" Margin="0 0 30 0"
+                                        materialDesign:HintAssist.Hint="Mã thể loại" IsEnabled="False"
                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                        Text="{Binding MaCum, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                        Text="{Binding MaTheLoai_edit, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                                     <TextBox
-                                        VerticalAlignment="Center" MinWidth="200"
-                                        materialDesign:HintAssist.Hint="Tên cụm"
+                                        VerticalAlignment="Center" MinWidth="150" Margin="0 0 30 0"
+                                        materialDesign:HintAssist.Hint="Tên thể loại"
                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                        Text="{Binding TenCum, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                        Text="{Binding TenTheLoai_edit, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                                 </StackPanel>
-                            </Grid>
-                            <Grid Grid.Row="1" Margin="25 10 25 10">
-                                <TextBox
-                                    VerticalAlignment="Center" MinWidth="400"
-                                    materialDesign:HintAssist.Hint="Địa chỉ" TextWrapping="Wrap"
-                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                    Text="{Binding DiaChi, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                             </Grid>
                         </Grid>
                         <Grid Grid.Row="1">
@@ -129,24 +107,22 @@
                                     Width="160" HorizontalAlignment="Center" VerticalAlignment="Center" >Cập nhật</Button>
                         </Grid>
                         <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                            <ListView ItemsSource="{Binding ListCumRap}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}">
+                            <ListView ItemsSource="{Binding ListTheLoai}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}">
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn Header="Mã Rạp" DisplayMemberBinding="{Binding MaCum}"></GridViewColumn>
-                                        <GridViewColumn Header="Tên Rạp" DisplayMemberBinding="{Binding TenCum}"></GridViewColumn>
-                                        <GridViewColumn Header="Địa Chỉ" DisplayMemberBinding="{Binding DiaChi}"></GridViewColumn>
+                                        <GridViewColumn Header="Mã Thể Loại" DisplayMemberBinding="{Binding MaTheLoai}"></GridViewColumn>
+                                        <GridViewColumn Header="Tên Thể Loại" DisplayMemberBinding="{Binding TenTheLoai}"></GridViewColumn>
                                     </GridView>
                                 </ListView.View>
                             </ListView>
                         </ScrollViewer>
                     </Grid>
                 </TabItem>
-                <!--XAML for tab delete-->
+                <!--XAML for delete tab-->
                 <TabItem Width="80" Height="50" x:Name="tabDelete">
                     <TabItem.Header>
                         <StackPanel Width="auto" Height="auto">
-                            <materialDesign:PackIcon Width="24" Height="24"
-                                                     HorizontalAlignment="Center" Kind="DeleteEmpty" />
+                            <materialDesign:PackIcon Width="24" Height="24" HorizontalAlignment="Center" Kind="DeleteEmpty" />
                             <TextBlock HorizontalAlignment="Center" Text="Xóa" />
                         </StackPanel>
                     </TabItem.Header>
@@ -157,43 +133,31 @@
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid Grid.Row="0" Margin="0 10 0 10">
+                            <Grid Margin="0 10 0 20">
                                 <StackPanel Orientation="Horizontal" Width="Auto" Margin="25 0 25 0">
                                     <TextBox
-                                        VerticalAlignment="Center" MinWidth="120" MaxLength="5" Margin="0 0 40 0"
-                                        materialDesign:HintAssist.Hint="Mã cụm" IsEnabled="False"
+                                        VerticalAlignment="Center" MinWidth="100" MaxLength="5" Margin="0 0 30 0"
+                                        materialDesign:HintAssist.Hint="Mã thể loại" IsEnabled="False"
                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                        Text="{Binding MaCum_delete, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+                                        Text="{Binding MaTheLoai_delete, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                                     <TextBox
-                                        VerticalAlignment="Center" MinWidth="200"
-                                        materialDesign:HintAssist.Hint="Tên cụm" IsEnabled="False"
+                                        VerticalAlignment="Center" MinWidth="150" Margin="0 0 30 0"
+                                        materialDesign:HintAssist.Hint="Tên thể loại" IsEnabled="False"
                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                        Text="{Binding TenCum_delete, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+                                        Text="{Binding TenTheLoai_delete, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                                 </StackPanel>
-                            </Grid>
-                            <Grid Grid.Row="1" Margin="25 10 25 10">
-                                <TextBox
-                                    VerticalAlignment="Center" MinWidth="400"
-                                    materialDesign:HintAssist.Hint="Địa chỉ" TextWrapping="Wrap" IsEnabled="False"
-                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                    Text="{Binding DiaChi_delete, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
                             </Grid>
                         </Grid>
                         <Grid Grid.Row="1">
                             <Button Command="{Binding DeleteCommand}" IsDefault="True"
-                                    Width="180" HorizontalAlignment="Center" VerticalAlignment="Center" >Xoá cụm rạp</Button>
+                                    Width="180" HorizontalAlignment="Center" VerticalAlignment="Center" >Xoá thể loại</Button>
                         </Grid>
                         <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                            <ListView ItemsSource="{Binding ListCumRap}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}">
+                            <ListView ItemsSource="{Binding ListTheLoai}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}">
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn Header="Mã Rạp" DisplayMemberBinding="{Binding MaCum}"></GridViewColumn>
-                                        <GridViewColumn Header="Tên Rạp" DisplayMemberBinding="{Binding TenCum}"></GridViewColumn>
-                                        <GridViewColumn Header="Địa Chỉ" DisplayMemberBinding="{Binding DiaChi}"></GridViewColumn>
+                                        <GridViewColumn Header="Mã Thể Loại" DisplayMemberBinding="{Binding MaTheLoai}"></GridViewColumn>
+                                        <GridViewColumn Header="Tên Thể Loại" DisplayMemberBinding="{Binding TenTheLoai}"></GridViewColumn>
                                     </GridView>
                                 </ListView.View>
                             </ListView>

@@ -105,6 +105,36 @@
                                 </Run>
                             </TextBlock>
                         </TabItem>
+                        <!--XAML for tab TheLoai-->
+                        <TabItem Width="90" x:Name="tabTheLoai">
+                            <TabItem.Header>
+                                <StackPanel Width="auto" Height="auto">
+                                    <materialDesign:PackIcon Width="24" Height="24"
+                                            HorizontalAlignment="Center" Kind="PaletteSwatch" />
+                                    <TextBlock HorizontalAlignment="Center" Text="Thể Loại" />
+                                </StackPanel>
+                            </TabItem.Header>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <ScrollViewer Grid.Row="0" Margin="50 0 60 0"
+                                              VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                                              DataContext="{StaticResource CategoryVM}">
+                                    <ListView ItemsSource="{Binding ListTheLoai}">
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn Header="Mã Thể Loại" DisplayMemberBinding="{Binding MaTheLoai}"></GridViewColumn>
+                                                <GridViewColumn Header="Tên Thể Loại" DisplayMemberBinding="{Binding TenTheLoai}"></GridViewColumn>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                </ScrollViewer>
+                                <Button Grid.Row="1" Width="400" Margin="0 20 0 20" Content="Chỉnh sửa danh sách thể loại"
+                                        Command="{Binding OpenCategoryWindowCommand}" />
+                            </Grid>
+                        </TabItem>
                         <!--XAML for tab Phim-->
                         <TabItem Width="90" x:Name="tabPhim">
                             <TabItem.Header>
@@ -195,24 +225,6 @@
                                     </Grid>
                                 </TabItem>
                             </TabControl>
-                        </TabItem>
-                        <!--XAML for tab TheLoai-->
-                        <TabItem Width="90" x:Name="tabTheLoai">
-                            <TabItem.Header>
-                                <StackPanel Width="auto" Height="auto">
-                                    <materialDesign:PackIcon Width="24" Height="24"
-                                            HorizontalAlignment="Center" Kind="PaletteSwatch" />
-                                    <TextBlock HorizontalAlignment="Center" Text="Thể Loại" />
-                                </StackPanel>
-                            </TabItem.Header>
-                            <TextBlock>
-                                <Run Text="tab 2 content. Default look and behaviors." />
-                                <LineBreak />
-                                <LineBreak />
-                                <Run FontStyle="Italic">
-                                    Praesent sed dui arcu. Vivamus porta auctor sagittis
-                                </Run>
-                            </TextBlock>
                         </TabItem>
                         <!--XAML for tab SuatChieu-->
                         <TabItem Width="90" x:Name="tabSuatChieu">

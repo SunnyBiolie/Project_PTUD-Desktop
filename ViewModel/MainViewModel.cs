@@ -12,6 +12,7 @@ namespace Project_PTUD_Desktop.ViewModel
         public ICommand OpenTheaterClusterWindowCommand { get; set; }
         public ICommand OpenFilmWindowCommand { get; set; }
         public ICommand OpenScreeningsWindowCommand { get; set; }
+        public ICommand OpenCategoryWindowCommand { get; set; }
 
         public MainViewModel()
         {
@@ -27,6 +28,11 @@ namespace Project_PTUD_Desktop.ViewModel
             {
                 ScreeningsWindow sw = new ScreeningsWindow();
                 sw.ShowDialog();
+            });
+            OpenCategoryWindowCommand = new RelayCommand<object>(para => { return true; }, para =>
+            {
+                CategoryWindow cw = new CategoryWindow();
+                cw.ShowDialog();
             });
         }
     }

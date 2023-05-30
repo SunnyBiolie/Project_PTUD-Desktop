@@ -8,4 +8,5 @@
     <viewmodel:TheaterClusterViewModel x:Key="TheaterClusterVM"></viewmodel:TheaterClusterViewModel>
 
     <viewmodel:ScreeningsViewModel x:Key="ScreeningsVM"></viewmodel:ScreeningsViewModel>
+    <viewmodel:CategoryViewModel x:Key="CategoryVM"></viewmodel:CategoryViewModel>
 </ResourceDictionary>

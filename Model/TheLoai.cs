@@ -9,10 +9,11 @@
 
 namespace Project_PTUD_Desktop.Model
 {
+    using Project_PTUD_Desktop.ViewModel;
     using System;
     using System.Collections.Generic;
-    
-    public partial class TheLoai
+
+    public partial class TheLoai : BaseViewModel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TheLoai()
@@ -20,9 +21,11 @@ namespace Project_PTUD_Desktop.Model
             this.Phims = new HashSet<Phim>();
             this.Phims1 = new HashSet<Phim>();
         }
-    
-        public string MaTheLoai { get; set; }
-        public string TenTheLoai { get; set; }
+
+        private string maTheLoai;
+        private string tenTheLoai;
+        public string MaTheLoai { get => maTheLoai; set { maTheLoai = value; OnPropertyChanged(); } }
+        public string TenTheLoai { get => tenTheLoai; set { tenTheLoai = value; OnPropertyChanged(); } }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Phim> Phims { get; set; }

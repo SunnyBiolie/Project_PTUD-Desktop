@@ -36,7 +36,6 @@ namespace Project_PTUD_Desktop.ViewModel
         public string TenCum { get => tenCum; set { tenCum = value; OnPropertyChanged(); } }
         public string DiaChi { get => diaChi; set { diaChi = value; OnPropertyChanged(); } }
 
-        private string maCum_curr_edit;
         private string tenCum_curr_edit;
         private string diaChi_curr_edit;
 
@@ -54,7 +53,6 @@ namespace Project_PTUD_Desktop.ViewModel
                     TenCum = SelectedItem.TenCum;
                     DiaChi = SelectedItem.DiaChi;
 
-                    maCum_curr_edit = SelectedItem.MaCum;
                     tenCum_curr_edit = selectedItem.TenCum;
                     diaChi_curr_edit = selectedItem.DiaChi;
 

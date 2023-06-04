@@ -8,7 +8,7 @@
         
         xmlns:uc="clr-namespace:Project_PTUD_Desktop.MyUserControls"
         Name="filmWindow"
-        Title="Film" Height="530" Width="650"
+        Title="Film" Height="550" Width="650"
         ResizeMode="NoResize"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
@@ -18,6 +18,7 @@
         TextElement.FontSize="13"
         TextOptions.TextFormattingMode="Ideal"
         TextElement.FontWeight="Regular"
+        Background="{DynamicResource MaterialDesignPaper}"
         
         DataContext="{StaticResource FilmVM}" >
 
@@ -44,8 +45,8 @@
                     </TabItem.Header>
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition></RowDefinition>
                             <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
                             <Grid.RowDefinitions>
@@ -81,20 +82,20 @@
                                         Text="{Binding ThoiLuong_add, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" />
                                 </StackPanel>
                             </Grid>
-                            <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="30 0 30 0" Height="Auto">
+                            <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="30 0 30 0" Height="Auto" MaxHeight="200">
                                 <ComboBox VerticalAlignment="Top"
                                           SelectedItem="{Binding SelectedSubCategory_add, Mode=TwoWay}"
                                     Width="200" Padding="8" Margin="0 18 15 0"
                                     materialDesign:HintAssist.Hint="Thể loại phụ"
                                     ItemsSource="{ Binding ListTheLoai}" DisplayMemberPath="TenTheLoai"
                                     Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
-                                <GroupBox Margin="16" Header="Thể loại phụ" Width="320" Height="Auto">
+                                <GroupBox Margin="16" Header="Danh sách thể loại phụ (nếu có)" Width="320" Height="Auto">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition></RowDefinition>
                                             <RowDefinition Height="Auto"></RowDefinition>
                                         </Grid.RowDefinitions>
-                                        <TextBlock Grid.Row="0" TextWrapping="Wrap" Text="{Binding ChuoiTenTheLoaiPhu_add}" />
+                                        <TextBlock Grid.Row="0" TextWrapping="Wrap" MinHeight="40" Text="{Binding ChuoiTenTheLoaiPhu_add}" />
                                         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
                                             <Button Command="{Binding AddSubCategory_Add}" Width="70" Height="30" FontSize="12" FontWeight="Light" Margin="0 0 10 0">Thêm</Button>
                                             <Button Command="{Binding RemoveSubCategory_Add}" Width="70" Height="30" FontSize="12" FontWeight="Light" Margin="0 0 10 0">Xóa</Button>
@@ -106,7 +107,7 @@
                         </Grid>
                         <Grid Grid.Row="1" Margin="0 10 0 20">
                             <Button Command="{Binding AddCommand}" IsDefault="True"
-                                    Width="200" HorizontalAlignment="Center" VerticalAlignment="Center" >Thêm cụm rạp</Button>
+                                    Width="200" HorizontalAlignment="Center" VerticalAlignment="Center" >Thêm phim</Button>
                         </Grid>
                     </Grid>
                 </TabItem>
@@ -127,48 +128,75 @@
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
                             <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
-                            <Grid Grid.Row="0" Margin="10 10 25 10">
-                                <StackPanel Orientation="Horizontal" Width="Auto" Margin="25 5 25 5">
+                            <Grid Grid.Row="0" Margin="10">
+                                <StackPanel Orientation="Horizontal" Width="Auto" Margin="20 0 20 0">
                                     <TextBox
                                         VerticalAlignment="Center" MinWidth="100" MaxLength="5" Margin="0 0 30 0"
                                         materialDesign:HintAssist.Hint="Mã phim" IsEnabled="False"
                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                         Text="{Binding MaPhim_edit, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                                     <TextBox
-                                        VerticalAlignment="Center" MinWidth="350"
+                                        VerticalAlignment="Center" MinWidth="380"
                                         materialDesign:HintAssist.Hint="Tên phim" TextWrapping="Wrap"
                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                         Text="{Binding TenPhim_edit, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                                 </StackPanel>
                             </Grid>
-                            <Grid Grid.Row="1" Margin="10 0 10 0">
-                                <StackPanel Orientation="Horizontal" Width="Auto" Margin="25 10 25 10" >
-                                    <ComboBox DataContext="{StaticResource CategoryVM}"
-                                        Width="200" Padding="10" Margin="0 0 30 0"
-                                        materialDesign:HintAssist.Hint="Thể loại chính"
-                                        DisplayMemberPath="TenTheLoai"
-                                        IsEnabled="{Binding Path=IsChecked, ElementName=OutlinedComboBoxEnabledCheckBox}"
-                                        ItemsSource="{Binding ListTheLoai}"
-                                        Style="{StaticResource MaterialDesignOutlinedComboBox}" />
-                                    <TextBox
-                                        VerticalAlignment="Center" MinWidth="120"
-                                        materialDesign:HintAssist.Hint="Thời lượng" TextWrapping="Wrap"
-                                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                        Text="{Binding ThoiLuong_edit, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                                    <TextBox
-                                        VerticalAlignment="Center" MinWidth="120"
-                                        materialDesign:HintAssist.Hint="Thời lượng" TextWrapping="Wrap"
-                                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                        Text="{Binding ChuoiTenTheLoaiPhu, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0" Margin="10 0 10 0">
+                                    <StackPanel Orientation="Vertical" Width="Auto" Margin="20 10 20 10" >
+                                        <ComboBox SelectedItem="{Binding SelectedCategory_edit, Mode=TwoWay}"
+                                                  HorizontalAlignment="Left"
+                                            Width="200" Padding="8" Margin="0 0 0 10"
+                                            materialDesign:HintAssist.Hint="Thể loại chính"
+                                            ItemsSource="{Binding ListTheLoai}" DisplayMemberPath="TenTheLoai"
+                                            Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
+                                        <TextBox
+                                            HorizontalAlignment="Left" Width="120"
+                                            materialDesign:HintAssist.Hint="Thời lượng" TextWrapping="Wrap"
+                                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                            Text="{Binding ThoiLuong_edit, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                        <ComboBox HorizontalAlignment="Left"
+                                            SelectedItem="{Binding SelectedSubCategory_edit, Mode=TwoWay}"
+                                            Width="200" Padding="8" Margin="0 10 15 0"
+                                            materialDesign:HintAssist.Hint="Thể loại phụ"
+                                            ItemsSource="{ Binding ListTheLoai}" DisplayMemberPath="TenTheLoai"
+                                            Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
+                                    </StackPanel>
+                                </Grid>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="0 0 30 0" Height="Auto">
+                                    <GroupBox Margin="8" Padding="5" Header="Danh sách thể loại phụ (nếu có)" Width="320" Height="Auto">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition></RowDefinition>
+                                                <RowDefinition Height="Auto"></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+                                                <TextBlock TextWrapping="Wrap" Text="{Binding ChuoiTenTheLoaiPhu_edit, Mode=OneWay}" />
+                                            </ScrollViewer>
+                                            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                                                <Button Command="{Binding AddSubCategory_Edit}" Width="70" Height="30" FontSize="12" FontWeight="Light" Margin="0 0 10 0">Thêm</Button>
+                                                <Button Command="{Binding RemoveSubCategory_Edit}" Width="70" Height="30" FontSize="12" FontWeight="Light" Margin="0 0 10 0">Xóa</Button>
+                                                <Button Command="{Binding ClearAllSubCategory_Edit}" Width="70" Height="30" FontSize="12" FontWeight="Light">Clear</Button>
+                                            </StackPanel>
+                                        </Grid>
+                                    </GroupBox>
                                 </StackPanel>
                             </Grid>
                         </Grid>
                         <Grid Grid.Row="1" Margin="0 5 0 5">
-                            <Button Command="{Binding AddCommand}" IsDefault="True"
+                            <Button Command="{Binding EditCommand}" IsDefault="True"
                                     Width="200" HorizontalAlignment="Center" VerticalAlignment="Center" >Cập nhật</Button>
+                            <Button HorizontalAlignment="Right" Command="{Binding CheckCommand}" IsDefault="True"
+                                    Width="200" VerticalAlignment="Center" >Check</Button>
                         </Grid>
                         <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                             <ListView ItemsSource="{Binding ListPhim}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}">
@@ -176,7 +204,8 @@
                                     <GridView>
                                         <GridViewColumn Header="Mã Phim" DisplayMemberBinding="{Binding MaPhim}"></GridViewColumn>
                                         <GridViewColumn Header="Tên Phim" DisplayMemberBinding="{Binding TenPhim}"></GridViewColumn>
-                                        <GridViewColumn Header="Mã Thể Loại Chính" DisplayMemberBinding="{Binding MaTheLoaiChinh}"></GridViewColumn>
+                                        <GridViewColumn Header="Thể Loại Chính" DisplayMemberBinding="{Binding TheLoaiChinh.TenTheLoai}"></GridViewColumn>
+                                        <GridViewColumn Header="Thể Loại Phụ" DisplayMemberBinding="{Binding ChuoiTenTheLoaiPhu}"></GridViewColumn>
                                         <GridViewColumn Header="Thời Lượng" DisplayMemberBinding="{Binding ThoiLuong}"></GridViewColumn>
                                     </GridView>
                                 </ListView.View>
@@ -201,42 +230,71 @@
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
                             <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
-                            <Grid Grid.Row="0" Margin="0 10 0 10">
-                                <StackPanel Orientation="Horizontal" Width="Auto" Margin="25 0 25 0">
+                            <Grid Grid.Row="0" Margin="10">
+                                <StackPanel Orientation="Horizontal" Width="Auto" Margin="20 0 20 0">
                                     <TextBox
-                                        VerticalAlignment="Center" MinWidth="120" MaxLength="5" Margin="0 0 40 0"
-                                        materialDesign:HintAssist.Hint="Mã cụm" IsEnabled="False"
+                                        VerticalAlignment="Center" MinWidth="100" MaxLength="5" Margin="0 0 30 0"
+                                        materialDesign:HintAssist.Hint="Mã phim" IsEnabled="False"
                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                        Text="{Binding MaCum_delete, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+                                        Text="{Binding MaPhim_delete, UpdateSourceTrigger=PropertyChanged}" />
                                     <TextBox
-                                        VerticalAlignment="Center" MinWidth="200"
-                                        materialDesign:HintAssist.Hint="Tên cụm" IsEnabled="False"
+                                        VerticalAlignment="Center" MinWidth="380"
+                                        materialDesign:HintAssist.Hint="Tên phim" IsEnabled="False" TextWrapping="Wrap"
                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                        Text="{Binding TenCum_delete, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+                                        Text="{Binding TenPhim_delete, UpdateSourceTrigger=PropertyChanged}" />
                                 </StackPanel>
                             </Grid>
-                            <Grid Grid.Row="1" Margin="25 10 25 10">
-                                <TextBox
-                                    VerticalAlignment="Center" MinWidth="400"
-                                    materialDesign:HintAssist.Hint="Địa chỉ" TextWrapping="Wrap" IsEnabled="False"
-                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                    Text="{Binding DiaChi_delete, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0" Margin="10 0 10 0">
+                                    <StackPanel Orientation="Vertical" Width="Auto" Margin="20 10 20 10" >
+                                        <TextBox
+                                            HorizontalAlignment="Left" Width="140" IsEnabled="False"
+                                            materialDesign:HintAssist.Hint="Thể loại chính" Margin="0 0 0 10"
+                                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                            Text="{Binding TenTheLoaiChinh_delete, UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBox
+                                            HorizontalAlignment="Left" Width="140" IsEnabled="False"
+                                            materialDesign:HintAssist.Hint="Thời lượng" Margin="0 10 0 0"
+                                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                            Text="{Binding ThoiLuong_delete, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Grid.Column="1" Margin="0 0 30 0" Height="Auto">
+                                    <GroupBox Margin="8" Padding="5" Header="Danh sách thể loại phụ (nếu có)" Width="340" Height="Auto">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition></RowDefinition>
+                                                <RowDefinition Height="Auto"></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+                                                <TextBlock TextWrapping="Wrap" Text="{Binding ChuoiTenTheLoaiPhu_delete, Mode=OneWay}" />
+                                            </ScrollViewer>
+                                        </Grid>
+                                    </GroupBox>
+                                </Grid>
                             </Grid>
                         </Grid>
-                        <Grid Grid.Row="1">
+                        <Grid Grid.Row="1" Margin="0 5 0 5">
                             <Button Command="{Binding DeleteCommand}" IsDefault="True"
-                                    Width="180" HorizontalAlignment="Center" VerticalAlignment="Center" >Xoá cụm rạp</Button>
+                                    Width="200" HorizontalAlignment="Center" VerticalAlignment="Center" >Xóa Phim</Button>
                         </Grid>
                         <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                            <ListView ItemsSource="{Binding ListCumRap}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}">
+                            <ListView ItemsSource="{Binding ListPhim}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}">
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn Header="Mã Rạp" DisplayMemberBinding="{Binding MaCum}"></GridViewColumn>
-                                        <GridViewColumn Header="Tên Rạp" DisplayMemberBinding="{Binding TenCum}"></GridViewColumn>
-                                        <GridViewColumn Header="Địa Chỉ" DisplayMemberBinding="{Binding DiaChi}"></GridViewColumn>
+                                        <GridViewColumn Header="Mã Phim" DisplayMemberBinding="{Binding MaPhim}"></GridViewColumn>
+                                        <GridViewColumn Header="Tên Phim" DisplayMemberBinding="{Binding TenPhim}"></GridViewColumn>
+                                        <GridViewColumn Header="Thể Loại Chính" DisplayMemberBinding="{Binding TheLoaiChinh.TenTheLoai}"></GridViewColumn>
+                                        <GridViewColumn Header="Thể Loại Phụ" DisplayMemberBinding="{Binding ChuoiTenTheLoaiPhu}"></GridViewColumn>
+                                        <GridViewColumn Header="Thời Lượng" DisplayMemberBinding="{Binding ThoiLuong}"></GridViewColumn>
                                     </GridView>
                                 </ListView.View>
                             </ListView>

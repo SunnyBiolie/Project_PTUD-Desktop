@@ -42,11 +42,7 @@
             <uc:MyControlBar Tag="{Binding Title, ElementName=mainWindow}"></uc:MyControlBar>
         </Grid>
         <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition ></ColumnDefinition>
-                <!--<ColumnDefinition Width="Auto"></ColumnDefinition>-->
-            </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0">
+            <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition ></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
@@ -96,14 +92,52 @@
                                     <TextBlock HorizontalAlignment="Center" Text="Rạp" />
                                 </StackPanel>
                             </TabItem.Header>
-                            <TextBlock>
-                                <Run Text="tab 2 content. Default look and behaviors." />
-                                <LineBreak />
-                                <LineBreak />
-                                <Run FontStyle="Italic">
-                                    Praesent sed dui arcu. Vivamus porta auctor sagittis
-                                </Run>
-                            </TextBlock>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <ScrollViewer Grid.Row="0" Margin="50 0 60 0"
+                                              VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                                              DataContext="{StaticResource TheaterVM}">
+                                    <ListView ItemsSource="{Binding ListRap}">
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn Header="Mã Rạp" DisplayMemberBinding="{Binding MaRap}"></GridViewColumn>
+                                                <GridViewColumn Header="Tổng Ghế" DisplayMemberBinding="{Binding TongGhe}"></GridViewColumn>
+                                                <GridViewColumn Header="Mã Cụm" DisplayMemberBinding="{Binding MaCum}"></GridViewColumn>
+                                            </GridView>
+                                        </ListView.View>
+                                        <ListView.GroupStyle>
+                                            <GroupStyle>
+                                                <GroupStyle.ContainerStyle>
+                                                    <Style TargetType="{x:Type GroupItem}">
+                                                        <Setter Property="Template">
+                                                            <Setter.Value>
+                                                                <ControlTemplate>
+                                                                    <Expander IsExpanded="true">
+                                                                        <Expander.Header>
+                                                                            <StackPanel Orientation="Horizontal">
+                                                                                <TextBlock Text="Cụm " FontSize="20" FontWeight="Bold" Foreground="Gray" VerticalAlignment="Bottom" />
+                                                                                <TextBlock Text="{Binding Name}" FontWeight="Bold" Foreground="Gray" FontSize="20" VerticalAlignment="Bottom" />
+                                                                                <TextBlock Text="{Binding ItemCount}" FontSize="16" Foreground="Silver" FontWeight="Bold" FontStyle="Italic" Margin="10,0,0,0" VerticalAlignment="Bottom" />
+                                                                                <TextBlock Text=" rạp" FontSize="16" Foreground="Silver" FontStyle="Italic" VerticalAlignment="Bottom" />
+                                                                            </StackPanel>
+                                                                        </Expander.Header>
+                                                                        <ItemsPresenter />
+                                                                    </Expander>
+                                                                </ControlTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Style>
+                                                </GroupStyle.ContainerStyle>
+                                            </GroupStyle>
+                                        </ListView.GroupStyle>
+                                    </ListView>
+                                </ScrollViewer>
+                                <Button Grid.Row="1" Width="400" Margin="0 20 0 20" Content="Chỉnh sửa danh sách rạp"
+                                        Command="{Binding OpenTheaterWindowCommand}" />
+                            </Grid>
                         </TabItem>
                         <!--XAML for tab TheLoai-->
                         <TabItem Width="90" x:Name="tabTheLoai">
@@ -179,13 +213,14 @@
                                         </Canvas>
                                         <Grid Grid.Row="1">
                                             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" DataContext="{StaticResource FilmVM}">
-                                                <ListView ItemsSource="{Binding ListPhim}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}" d:ItemsSource="{d:SampleData ItemCount=5}">
+                                                <ListView ItemsSource="{Binding ListPhim}">
                                                     <ListView.View>
                                                         <GridView>
                                                             <GridViewColumn Header="Mã Phim" DisplayMemberBinding="{Binding MaPhim}"></GridViewColumn>
-                                                            <GridViewColumn Header="Tên Phim" DisplayMemberBinding="{Binding TenPhim}" ></GridViewColumn>
-                                                            <GridViewColumn Header="Thể Loại" DisplayMemberBinding="{Binding MaTheLoaiChinh}" ></GridViewColumn>
-                                                            <GridViewColumn Header="Thời Lượng" DisplayMemberBinding="{Binding ThoiLuong}" ></GridViewColumn>
+                                                            <GridViewColumn Header="Tên Phim" DisplayMemberBinding="{Binding TenPhim}"></GridViewColumn>
+                                                            <GridViewColumn Header="Thể Loại Chính" DisplayMemberBinding="{Binding TheLoaiChinh.TenTheLoai}"></GridViewColumn>
+                                                            <GridViewColumn Header="Thể Loại Phụ" DisplayMemberBinding="{Binding ChuoiTenTheLoaiPhu}"></GridViewColumn>
+                                                            <GridViewColumn Header="Thời Lượng" DisplayMemberBinding="{Binding ThoiLuong}"></GridViewColumn>
                                                         </GridView>
                                                     </ListView.View>
                                                 </ListView>

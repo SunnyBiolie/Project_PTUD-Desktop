@@ -87,43 +87,21 @@
     <Compile Include="FilmWindow.xaml.cs">
       <DependentUpon>FilmWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\CumRap.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\DataProvider.cs" />
-    <Compile Include="Model\KeHoach.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\LichChieu.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Model.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Model.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Model.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Phim.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Rap.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\SuatChieu.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\TheLoai.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Model\DAO\CumRapDAO.cs" />
+    <Compile Include="Model\DAO\DataProvider.cs" />
+    <Compile Include="Model\DAO\KeHoachDAO.cs" />
+    <Compile Include="Model\DAO\LichChieuDAO.cs" />
+    <Compile Include="Model\DAO\PhimDAO.cs" />
+    <Compile Include="Model\DAO\RapDAO.cs" />
+    <Compile Include="Model\DAO\SuatChieuDAO.cs" />
+    <Compile Include="Model\DAO\TheLoaiDAO.cs" />
+    <Compile Include="Model\DTO\CumRap.cs" />
+    <Compile Include="Model\DTO\KeHoach.cs" />
+    <Compile Include="Model\DTO\LichChieu.cs" />
+    <Compile Include="Model\DTO\SuatChieu.cs" />
+    <Compile Include="Model\DTO\Phim.cs" />
+    <Compile Include="Model\DTO\Rap.cs" />
+    <Compile Include="Model\DTO\TheLoai.cs" />
     <Compile Include="MyUserControls\MyControlBar.xaml.cs">
       <DependentUpon>MyControlBar.xaml</DependentUpon>
     </Compile>
@@ -133,6 +111,9 @@
     <Compile Include="TheaterClusterWindow.xaml.cs">
       <DependentUpon>TheaterClusterWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TheaterWindow.xaml.cs">
+      <DependentUpon>TheaterWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\CategoryViewModel.cs" />
     <Compile Include="ViewModel\ControlBarViewModel.cs" />
@@ -140,6 +121,7 @@
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ScreeningsViewModel.cs" />
     <Compile Include="ViewModel\TheaterClusterViewModel.cs" />
+    <Compile Include="ViewModel\TheaterViewModel.cs" />
     <Page Include="CategoryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -176,6 +158,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="TheaterWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -195,13 +181,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="Model\Model.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="Model\Model.edmx.diagram">
-      <DependentUpon>Model.edmx</DependentUpon>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -212,18 +191,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <Content Include="Model\Model.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Model.Context.cs</LastGenOutput>
-      <DependentUpon>Model.edmx</DependentUpon>
-    </Content>
-    <Content Include="Model\Model.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model.edmx</DependentUpon>
-      <LastGenOutput>Model.cs</LastGenOutput>
-    </Content>
-  </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>

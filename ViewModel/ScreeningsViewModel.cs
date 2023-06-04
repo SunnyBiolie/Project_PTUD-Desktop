@@ -1,4 +1,6 @@
-﻿using Project_PTUD_Desktop.Model;
+﻿using Project_PTUD_Desktop.Model.DAO;
+using Project_PTUD_Desktop.Model.DTO;
+using Project_PTUD_Desktop.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -91,21 +93,18 @@ namespace Project_PTUD_Desktop.ViewModel
             for (int i = 8; i <= 23; i++) hoursList.Add(i);
             MinutesList = new ObservableCollection<int>();
             for (int i = 0; i <= 59; i+=10) minutesList.Add(i);
-            ListSuatChieu = new ObservableCollection<SuatChieu>(DataProvider.Instance.Database.SuatChieux);
+            LoadListSuatChieu();
 
             SelectedHourForAdd = HoursList.First();
             SelectedMinuteForAdd = minutesList.First();
 
-            // Sắp xếp ListSuatChieu để các ListView Binding đến nó cũng sẽ được sắp xếp
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListSuatChieu);
-            view.SortDescriptions.Add(new SortDescription("GioBatDau", ListSortDirection.Ascending));
-            view.SortDescriptions.Add(new SortDescription("PhutBatDau", ListSortDirection.Ascending));
-
             AddCommand = new RelayCommand<object>(
-            (para) =>
-            {
-                if (string.IsNullOrEmpty(MaSuat_add)) return false;
-                    var listMaSuat = DataProvider.Instance.Database.SuatChieux.Where(ele => ele.MaSuat == MaSuat_add);
+                (para) =>
+                {
+                    if (string.IsNullOrEmpty(MaSuat_add)) return false;
+                        var listMaSuat = from suatChieu in ListSuatChieu
+                                         where suatChieu.MaSuat.ToUpper() == MaSuat_add.ToUpper()
+                                         select suatChieu;
                     if (listMaSuat == null || listMaSuat.Count() != 0) return false;
                     foreach (var suat in ListSuatChieu)
                         if (GioBatDau_add == (int)suat.GioBatDau && PhutBatDau_add == (int)suat.PhutBatDau) return false;
@@ -114,39 +113,44 @@ namespace Project_PTUD_Desktop.ViewModel
                 },
                 (para) =>
                 {
-                    var screenigs = new SuatChieu() { MaSuat = MaSuat_add, GioBatDau = GioBatDau_add, PhutBatDau = PhutBatDau_add };
-                    DataProvider.Instance.Database.SuatChieux.Add(screenigs);
-                    DataProvider.Instance.Database.SaveChanges();
-                    ListSuatChieu.Add(screenigs);
+                    SuatChieu screenigs = new SuatChieu(MaSuat_add, GioBatDau_add, PhutBatDau_add);
+                    if (SuatChieuDAO.Instance.InsertSuatChieu(screenigs))
+                        LoadListSuatChieu();
+                    else MessageBox.Show($"Thêm suất chiếu mới không thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             );
 
             DeleteCommand = new RelayCommand<object>(
                 para =>
                 {
-                    //ObservableCollection<LichChieu> listLichChieu = new ObservableCollection<LichChieu>(DataProvider.Instance.Database.LichChieux.Where(ele => ele.);
-                    //foreach (var lichchieu in listLichChieu)
-                    //{
-                    //    lichchieu.ChuoiMaSuat
-                    //}
-
+                    if (string.IsNullOrEmpty(MaSuat_delete)) return false;
                     return true;
                 },
                 para =>
                 {
-                    if (MessageBox.Show($"Bạn có chắc muốn xóa suất chiếu có mã: {SelectedItem.MaSuat}", "Xác nhận xóa?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    if (MessageBox.Show($"Bạn có chắc muốn xóa suất chiếu có mã: {SelectedItem.MaSuat}", "Xác nhận xóa?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
-                        var screenings = DataProvider.Instance.Database.SuatChieux.Where(ele => ele.MaSuat == SelectedItem.MaSuat).FirstOrDefault();
+                        var screenings = ListSuatChieu.FirstOrDefault(suatChieu => suatChieu.MaSuat == MaSuat_delete);
                         if (screenings != null)
                         {
-                            DataProvider.Instance.Database.SuatChieux.Remove(screenings);
-                            DataProvider.Instance.Database.SaveChanges();
-                            ListSuatChieu.Remove(screenings);
-                            SelectedItem = ListSuatChieu.First();
+                            if (SuatChieuDAO.Instance.DeleteSuatChieu(MaSuat_delete))
+                            {
+                                LoadListSuatChieu();
+                                SelectedItem = ListSuatChieu.First();
+                            }
+                            else MessageBox.Show($"Xóa suất chiếu không thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                     }
                 }
             );
+        }
+        private void LoadListSuatChieu()
+        {
+            ListSuatChieu = SuatChieuDAO.Instance.GetListSuatChieus();
+            // Sắp xếp ListSuatChieu để các ListView Binding đến nó cũng sẽ được sắp xếp
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListSuatChieu);
+            view.SortDescriptions.Add(new SortDescription("GioBatDau", ListSortDirection.Ascending));
+            view.SortDescriptions.Add(new SortDescription("PhutBatDau", ListSortDirection.Ascending));
         }
     }
 }

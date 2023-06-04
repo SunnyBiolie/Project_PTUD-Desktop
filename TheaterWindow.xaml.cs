@@ -15,15 +15,13 @@ using System.Windows.Shapes;
 namespace Project_PTUD_Desktop
 {
     /// <summary>
-    /// Interaction logic for TheaterClusterWindow.xaml
+    /// Interaction logic for TheaterWindow.xaml
     /// </summary>
-    public partial class TheaterClusterWindow : Window
+    public partial class TheaterWindow : Window
     {
-        public TheaterClusterWindow()
+        public TheaterWindow()
         {
             InitializeComponent();
-
-            string some = "hg";
         }
     }
 }

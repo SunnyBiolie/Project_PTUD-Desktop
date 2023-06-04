@@ -4,9 +4,10 @@
 
     <viewmodel:ControlBarViewModel x:Key="ControlBarVM"></viewmodel:ControlBarViewModel>
     <viewmodel:MainViewModel x:Key="MainVM"></viewmodel:MainViewModel>
-    <viewmodel:FilmViewModel x:Key="FilmVM"></viewmodel:FilmViewModel>
     <viewmodel:TheaterClusterViewModel x:Key="TheaterClusterVM"></viewmodel:TheaterClusterViewModel>
-
-    <viewmodel:ScreeningsViewModel x:Key="ScreeningsVM"></viewmodel:ScreeningsViewModel>
+    <viewmodel:TheaterViewModel x:Key="TheaterVM"></viewmodel:TheaterViewModel>
     <viewmodel:CategoryViewModel x:Key="CategoryVM"></viewmodel:CategoryViewModel>
+    <viewmodel:FilmViewModel x:Key="FilmVM"></viewmodel:FilmViewModel>
+    <viewmodel:ScreeningsViewModel x:Key="ScreeningsVM"></viewmodel:ScreeningsViewModel>
+
 </ResourceDictionary>

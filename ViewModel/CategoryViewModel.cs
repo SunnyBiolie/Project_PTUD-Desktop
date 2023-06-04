@@ -1,4 +1,5 @@
-﻿using Project_PTUD_Desktop.Model;
+﻿using Project_PTUD_Desktop.Model.DTO;
+using Project_PTUD_Desktop.Model.DAO;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -65,23 +66,25 @@ namespace Project_PTUD_Desktop.ViewModel
 
         public CategoryViewModel()
         {
-            ListTheLoai = new ObservableCollection<TheLoai>(DataProvider.Instance.Database.TheLoais);
+            ListTheLoai = TheLoaiDAO.Instance.GetListTheLoais();
 
             AddCommand = new RelayCommand<object>(
                 para =>
                 {
                     if (string.IsNullOrEmpty(maTheLoai_add)) return false;
-                    var listTheLoai = DataProvider.Instance.Database.TheLoais.Where(ele => ele.MaTheLoai == MaTheLoai_add);
-                    if (listTheLoai == null || listTheLoai.Count() != 0) return false;
+                    var listMaTheLoai = from theloai in ListTheLoai
+                                        where theloai.MaTheLoai == MaTheLoai_add
+                                        select theloai;
+                    if (listMaTheLoai == null || listMaTheLoai.Count() != 0) return false;
 
                     return true;
                 },
                 para =>
                 {
-                    var category = new TheLoai() { MaTheLoai = MaTheLoai_add, TenTheLoai = TenTheLoai_add};
-                    DataProvider.Instance.Database.TheLoais.Add(category);
-                    DataProvider.Instance.Database.SaveChanges();
-                    listTheLoai.Add(category);
+                    var category = new TheLoai(MaTheLoai_add, TenTheLoai_add);
+                    if (TheLoaiDAO.Instance.InsertTheLoai(category))
+                        ListTheLoai = TheLoaiDAO.Instance.GetListTheLoais();
+                    else MessageBox.Show($"Thêm thể loại mới không thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             );
 
@@ -95,32 +98,42 @@ namespace Project_PTUD_Desktop.ViewModel
                 },
                 (para) =>
                 {
-                    var category = DataProvider.Instance.Database.TheLoais.Where(ele => ele.MaTheLoai == SelectedItem.MaTheLoai).FirstOrDefault();
-                    category.TenTheLoai = TenTheLoai_edit;
-                    DataProvider.Instance.Database.SaveChanges();
+                    if (TheLoaiDAO.Instance.UpdateInfoTheLoai(TenTheLoai_edit, MaTheLoai_edit))
+                    {
+                        tenTheLoai_curr_edit = TenTheLoai_edit;
 
-                    tenTheLoai_curr_edit = TenTheLoai_edit;
+                        TenTheLoai_delete = TenTheLoai_edit;
 
-                    TenTheLoai_delete = TenTheLoai_edit;
+                        ListTheLoai = TheLoaiDAO.Instance.GetListTheLoais();
+                    }
+                    else MessageBox.Show($"Cập nhật thông tin không thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             );
 
             DeleteCommand = new RelayCommand<object>(
                 para =>
                 {
+                    if (string.IsNullOrEmpty(MaTheLoai_delete)) return false;
                     return true;
                 },
                 para =>
                 {
+                    if (PhimDAO.Instance.GetListPhimsByMaTheLoaiChinh(MaTheLoai_delete).Count != 0 || PhimDAO.Instance.GetListPhimsByMaTheLoaiPhu(MaTheLoai_delete).Count != 0)
+                    {
+                        MessageBox.Show($"Chỉ có thể xóa thể loại khi không còn phim nào tham chiếu đến", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
                     if (MessageBox.Show($"Bạn có chắc muốn xóa thể loại {SelectedItem.TenTheLoai}", "Xác nhận xóa?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
-                        var category = DataProvider.Instance.Database.TheLoais.Where(ele => ele.MaTheLoai == SelectedItem.MaTheLoai).FirstOrDefault();
+                        var category = TheLoaiDAO.Instance.GetTheLoaiByMaTheLoaiChinh(MaTheLoai_delete);
                         if (category != null)
                         {
-                            DataProvider.Instance.Database.TheLoais.Remove(category);
-                            DataProvider.Instance.Database.SaveChanges();
-                            ListTheLoai.Remove(category);
-                            SelectedItem = ListTheLoai.First();
+                            if (TheLoaiDAO.Instance.DeleteTheLoai(MaTheLoai_delete))
+                            {
+                                ListTheLoai = TheLoaiDAO.Instance.GetListTheLoais();
+                                SelectedItem = ListTheLoai.First();
+                            }
+                            else MessageBox.Show($"Xóa thể loại không thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                     }
                 }

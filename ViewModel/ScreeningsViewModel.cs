@@ -1,5 +1,6 @@
-﻿using Project_PTUD_Desktop.Model.DAO;
-using Project_PTUD_Desktop.Model.DTO;
+﻿//using Project_PTUD_Desktop.Model.DAO;
+//using Project_PTUD_Desktop.Model.DTO;
+using Project_PTUD_Desktop.ModelEntity;
 using Project_PTUD_Desktop.Model;
 using System;
 using System.Collections.Generic;
@@ -20,40 +21,40 @@ namespace Project_PTUD_Desktop.ViewModel
         public ICommand AddCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
 
-        private ObservableCollection<SuatChieu> listSuatChieu;
-        public ObservableCollection<SuatChieu> ListSuatChieu { get => listSuatChieu; set { listSuatChieu = value; OnPropertyChanged(); } }
+        private ObservableCollection<SuatChieu> _listSuatChieu;
+        public ObservableCollection<SuatChieu> ListSuatChieu { get => _listSuatChieu; set { _listSuatChieu = value; OnPropertyChanged(); } }
 
-        private ObservableCollection<int> hoursList;
-        private ObservableCollection<int> minutesList;
-        public ObservableCollection<int> HoursList { get => hoursList; set { hoursList = value; OnPropertyChanged(); } }
-        public ObservableCollection<int> MinutesList { get => minutesList; set { minutesList = value; OnPropertyChanged(); } }
+        private ObservableCollection<int> _hoursList;
+        private ObservableCollection<int> _minutesList;
+        public ObservableCollection<int> HoursList { get => _hoursList; set { _hoursList = value; OnPropertyChanged(); } }
+        public ObservableCollection<int> MinutesList { get => _minutesList; set { _minutesList = value; OnPropertyChanged(); } }
 
         #region properties and fields for add
-        private string maSuat_add;
-        private int gioBatDau_add;
-        private int phutBatDau_add;
-        public string MaSuat_add { get => maSuat_add; set { maSuat_add = value; OnPropertyChanged(); } }
-        public int GioBatDau_add { get => gioBatDau_add; set { gioBatDau_add = value; OnPropertyChanged(); } }
-        public int PhutBatDau_add { get => phutBatDau_add; set { phutBatDau_add = value; OnPropertyChanged(); } }
+        private string _maSuat_add;
+        private int _gioBatDau_add;
+        private int _phutBatDau_add;
+        public string MaSuat_add { get => _maSuat_add; set { _maSuat_add = value; OnPropertyChanged(); } }
+        public int GioBatDau_add { get => _gioBatDau_add; set { _gioBatDau_add = value; OnPropertyChanged(); } }
+        public int PhutBatDau_add { get => _phutBatDau_add; set { _phutBatDau_add = value; OnPropertyChanged(); } }
 
-        private int selectedHourForAdd;
-        private int selectedMinuteForAdd;
+        private int _selectedHourForAdd;
+        private int _selectedMinuteForAdd;
         public int SelectedHourForAdd
         {
-            get => selectedHourForAdd;
+            get => _selectedHourForAdd;
             set
             {
-                selectedHourForAdd = value;
+                _selectedHourForAdd = value;
                 OnPropertyChanged();
                 GioBatDau_add = SelectedHourForAdd;
             }
         }
         public int SelectedMinuteForAdd
         {
-            get => selectedMinuteForAdd;
+            get => _selectedMinuteForAdd;
             set
             {
-                selectedMinuteForAdd = value;
+                _selectedMinuteForAdd = value;
                 OnPropertyChanged();
                 PhutBatDau_add = SelectedMinuteForAdd;
             }
@@ -62,20 +63,20 @@ namespace Project_PTUD_Desktop.ViewModel
 
 
         #region properties and fields for delete
-        private string maSuat_delete;
-        private int gioBatDau_delete;
-        private int phutBatDau_delete;
-        public string MaSuat_delete { get => maSuat_delete; set { maSuat_delete = value; OnPropertyChanged(); } }
-        public int GioBatDau_delete { get => gioBatDau_delete; set { gioBatDau_delete = value; OnPropertyChanged(); } }
-        public int PhutBatDau_delete { get => phutBatDau_delete; set { phutBatDau_delete = value; OnPropertyChanged(); } }
+        private string _maSuat_delete;
+        private int _gioBatDau_delete;
+        private int _phutBatDau_delete;
+        public string MaSuat_delete { get => _maSuat_delete; set { _maSuat_delete = value; OnPropertyChanged(); } }
+        public int GioBatDau_delete { get => _gioBatDau_delete; set { _gioBatDau_delete = value; OnPropertyChanged(); } }
+        public int PhutBatDau_delete { get => _phutBatDau_delete; set { _phutBatDau_delete = value; OnPropertyChanged(); } }
 
-        private SuatChieu selectedItem;
+        private SuatChieu _selectedItem;
         public SuatChieu SelectedItem
         {
-            get => selectedItem;
+            get => _selectedItem;
             set
             {
-                selectedItem = value;
+                _selectedItem = value;
                 OnPropertyChanged();
                 if (SelectedItem != null)
                 {
@@ -90,13 +91,13 @@ namespace Project_PTUD_Desktop.ViewModel
         public ScreeningsViewModel()
         {
             HoursList = new ObservableCollection<int>();
-            for (int i = 8; i <= 23; i++) hoursList.Add(i);
+            for (int i = 8; i <= 23; i++) _hoursList.Add(i);
             MinutesList = new ObservableCollection<int>();
-            for (int i = 0; i <= 59; i+=10) minutesList.Add(i);
+            for (int i = 0; i <= 59; i+=10) _minutesList.Add(i);
             LoadListSuatChieu();
 
             SelectedHourForAdd = HoursList.First();
-            SelectedMinuteForAdd = minutesList.First();
+            SelectedMinuteForAdd = _minutesList.First();
 
             AddCommand = new RelayCommand<object>(
                 (para) =>
@@ -113,10 +114,13 @@ namespace Project_PTUD_Desktop.ViewModel
                 },
                 (para) =>
                 {
-                    SuatChieu screenigs = new SuatChieu(MaSuat_add, GioBatDau_add, PhutBatDau_add);
-                    if (SuatChieuDAO.Instance.InsertSuatChieu(screenigs))
-                        LoadListSuatChieu();
-                    else MessageBox.Show($"Thêm suất chiếu mới không thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                    SuatChieu screenigs = new SuatChieu() { MaSuat = MaSuat_add, GioBatDau = GioBatDau_add, PhutBatDau = PhutBatDau_add };
+                    //if (SuatChieuDTO.Instance.InsertSuatChieu(screenigs))
+                    //    LoadListSuatChieu();
+                    //else MessageBox.Show($"Thêm suất chiếu mới không thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                    DataProvider.Instance.Database.SuatChieux.Add(screenigs);
+                    DataProvider.Instance.Database.SaveChanges();
+                    ListSuatChieu.Add(screenigs);
                 }
             );
 
@@ -128,25 +132,34 @@ namespace Project_PTUD_Desktop.ViewModel
                 },
                 para =>
                 {
+                    //if (MessageBox.Show($"Bạn có chắc muốn xóa suất chiếu có mã: {SelectedItem.MaSuat}", "Xác nhận xóa?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    //{
+                    //    var screenings = ListSuatChieu.FirstOrDefault(suatChieu => suatChieu.MaSuat == MaSuat_delete);
+                    //    if (screenings != null)
+                    //    {
+                    //        if (SuatChieuDAO.Instance.DeleteSuatChieu(MaSuat_delete))
+                    //        {
+                    //            LoadListSuatChieu();
+                    //            SelectedItem = ListSuatChieu.First();
+                    //        }
+                    //        else MessageBox.Show($"Xóa suất chiếu không thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                    //    }
+                    //}
+
                     if (MessageBox.Show($"Bạn có chắc muốn xóa suất chiếu có mã: {SelectedItem.MaSuat}", "Xác nhận xóa?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
-                        var screenings = ListSuatChieu.FirstOrDefault(suatChieu => suatChieu.MaSuat == MaSuat_delete);
-                        if (screenings != null)
-                        {
-                            if (SuatChieuDAO.Instance.DeleteSuatChieu(MaSuat_delete))
-                            {
-                                LoadListSuatChieu();
-                                SelectedItem = ListSuatChieu.First();
-                            }
-                            else MessageBox.Show($"Xóa suất chiếu không thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
+                        SuatChieu screenings = DataProvider.Instance.Database.SuatChieux.FirstOrDefault(suatChieu => suatChieu.MaSuat == MaSuat_delete);
+                        DataProvider.Instance.Database.SuatChieux.Remove(screenings);
+                        DataProvider.Instance.Database.SaveChanges();
+                        ListSuatChieu.Remove(screenings);
                     }
                 }
             );
         }
         private void LoadListSuatChieu()
         {
-            ListSuatChieu = SuatChieuDAO.Instance.GetListSuatChieus();
+            //ListSuatChieu = SuatChieuDAO.Instance.GetListSuatChieus();
+            ListSuatChieu = new ObservableCollection<SuatChieu>(DataProvider.Instance.Database.SuatChieux);
             // Sắp xếp ListSuatChieu để các ListView Binding đến nó cũng sẽ được sắp xếp
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListSuatChieu);
             view.SortDescriptions.Add(new SortDescription("GioBatDau", ListSortDirection.Ascending));

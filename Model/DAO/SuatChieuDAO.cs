@@ -23,23 +23,23 @@ namespace Project_PTUD_Desktop.Model.DAO
         }
         private SuatChieuDAO() { }
 
-        public ObservableCollection<SuatChieu> GetListSuatChieus()
+        public ObservableCollection<SuatChieuDTO> GetListSuatChieus()
         {
-            ObservableCollection<SuatChieu> list = new ObservableCollection<SuatChieu>();
+            ObservableCollection<SuatChieuDTO> list = new ObservableCollection<SuatChieuDTO>();
 
             string query = "select * from SuatChieu";
             DataTable dataTable = DataProvider.Instance.ExecuteQuery(query);
 
             foreach (DataRow row in dataTable.Rows)
             {
-                SuatChieu suatChieu = new SuatChieu(row);
+                SuatChieuDTO suatChieu = new SuatChieuDTO(row);
                 list.Add(suatChieu);
             }
 
             return list;
         }
 
-        public bool InsertSuatChieu(SuatChieu suatChieu)
+        public bool InsertSuatChieu(SuatChieuDTO suatChieu)
         {
             string query = $"insert SuatChieu (MaSuat, GioBatDau, PhutBatDau) values ( @maSuat , @gioBatDau , @suatBatDau )";
             int result = DataProvider.Instance.ExecuteNonQuery(query, new object[] { suatChieu.MaSuat, suatChieu.GioBatDau, suatChieu.PhutBatDau });

@@ -87,6 +87,49 @@
     <Compile Include="FilmWindow.xaml.cs">
       <DependentUpon>FilmWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ModelEntity\CumRap.cs">
+      <DependentUpon>ModelQLDL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelEntity\DataProvider.cs" />
+    <Compile Include="ModelEntity\EntityDAO\CategoryDAO.cs" />
+    <Compile Include="ModelEntity\EntityDAO\FilmDAO.cs" />
+    <Compile Include="ModelEntity\EntityDTO\FilmDTO.cs" />
+    <Compile Include="ModelEntity\KeHoach.cs">
+      <DependentUpon>ModelQLDL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelEntity\LichChieu.cs">
+      <DependentUpon>ModelQLDL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelEntity\ModelQLDL.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelQLDL.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelEntity\ModelQLDL.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelQLDL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelEntity\ModelQLDL.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelQLDL.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="ModelEntity\Phim.cs">
+      <DependentUpon>ModelQLDL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelEntity\Rap.cs">
+      <DependentUpon>ModelQLDL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelEntity\SuatChieu.cs">
+      <DependentUpon>ModelQLDL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelEntity\sysdiagram.cs">
+      <DependentUpon>ModelQLDL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelEntity\TheLoai.cs">
+      <DependentUpon>ModelQLDL.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\DAO\CumRapDAO.cs" />
     <Compile Include="Model\DAO\DataProvider.cs" />
     <Compile Include="Model\DAO\KeHoachDAO.cs" />
@@ -98,7 +141,7 @@
     <Compile Include="Model\DTO\CumRap.cs" />
     <Compile Include="Model\DTO\KeHoach.cs" />
     <Compile Include="Model\DTO\LichChieu.cs" />
-    <Compile Include="Model\DTO\SuatChieu.cs" />
+    <Compile Include="Model\DTO\SuatChieuDTO.cs" />
     <Compile Include="Model\DTO\Phim.cs" />
     <Compile Include="Model\DTO\Rap.cs" />
     <Compile Include="Model\DTO\TheLoai.cs" />
@@ -107,6 +150,9 @@
     </Compile>
     <Compile Include="ScreeningsWindow.xaml.cs">
       <DependentUpon>ScreeningsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ShowTimesWindow.xaml.cs">
+      <DependentUpon>ShowTimesWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="TheaterClusterWindow.xaml.cs">
       <DependentUpon>TheaterClusterWindow.xaml</DependentUpon>
@@ -120,6 +166,7 @@
     <Compile Include="ViewModel\FilmViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ScreeningsViewModel.cs" />
+    <Compile Include="ViewModel\ShowTimesViewModel.cs" />
     <Compile Include="ViewModel\TheaterClusterViewModel.cs" />
     <Compile Include="ViewModel\TheaterViewModel.cs" />
     <Page Include="CategoryWindow.xaml">
@@ -154,6 +201,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ShowTimesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="TheaterClusterWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -181,6 +232,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EntityDeploy Include="ModelEntity\ModelQLDL.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelQLDL.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="ModelEntity\ModelQLDL.edmx.diagram">
+      <DependentUpon>ModelQLDL.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -190,7 +248,18 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="ModelEntity\ModelQLDL.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelQLDL.edmx</DependentUpon>
+      <LastGenOutput>ModelQLDL.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="ModelEntity\ModelQLDL.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelQLDL.edmx</DependentUpon>
+      <LastGenOutput>ModelQLDL.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>

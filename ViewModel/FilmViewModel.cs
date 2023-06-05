@@ -1,80 +1,82 @@
-﻿using Project_PTUD_Desktop.Model.DAO;
-using Project_PTUD_Desktop.Model.DTO;
-using Project_PTUD_Desktop.Model;
-using System;
+﻿//using Project_PTUD_Desktop.Model.DAO;
+//using Project_PTUD_Desktop.Model.DTO;
+using Project_PTUD_Desktop.ModelEntity;
+using Project_PTUD_Desktop.ModelEntity.EntityDAO;
+using Project_PTUD_Desktop.ModelEntity.EntityDTO;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Navigation;
+using System.Windows.Media;
 
 namespace Project_PTUD_Desktop.ViewModel
 {
     public class FilmViewModel : BaseViewModel
     {
+        private string _searchString;
+        public string SearchString { get => _searchString; set { _searchString = value; OnPropertyChanged(); } }
+        public ICommand SearchFilmCommand { get; set; }
 
-        public ICommand CheckCommand { get; set; }
+        //public ICommand CheckCommand { get; set; }
 
-
+        #region For FilmWindow 
         public ICommand AddCommand { get; set; }
         public ICommand EditCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
 
-        private ObservableCollection<Phim> listFilm;
-        public ObservableCollection<Phim> ListPhim { get => listFilm; set { listFilm = value; OnPropertyChanged(); } }
+        private ObservableCollection<Phim> _listFilm;
+        public ObservableCollection<Phim> ListPhim { get => _listFilm; set { _listFilm = value; OnPropertyChanged(); } }
 
         #region command, properties and fields for tab add
         public ICommand AddSubCategory_Add { get; set; }
         public ICommand RemoveSubCategory_Add { get; set; }
         public ICommand ClearAllSubCategory_Add { get; set; }
 
-        private string maPhim_add;
-        private string tenPhim_add;
-        private string maTheLoaiChinh_add;
-        private int thoiLuong_add;
+        private string _maPhim_add;
+        private string _tenPhim_add;
+        private string _maTheLoaiChinh_add;
+        private int _thoiLuong_add;
 
-        private string tenTheLoaiChinh_add;
-        private string tenTheLoaiPhu_add;
-        private string chuoiTenTheLoaiPhu_add;
-        private ObservableCollection<TheLoai> listTheLoaiPhu_add;
+        private string _tenTheLoaiChinh_add;
+        private string _tenTheLoaiPhu_add;
+        private string _chuoiTenTheLoaiPhu_add;
+        private ObservableCollection<TheLoai> _listTheLoaiPhu_add;
 
-        public string MaPhim_add { get => maPhim_add; set { maPhim_add = value; OnPropertyChanged(); } }
-        public string TenPhim_add { get => tenPhim_add; set { tenPhim_add = value; OnPropertyChanged(); } }
-        public string MaTheLoaiChinh_add { get => maTheLoaiChinh_add; set { maTheLoaiChinh_add = value; OnPropertyChanged(); } }
-        public int ThoiLuong_add { get => thoiLuong_add; set { thoiLuong_add = value; OnPropertyChanged(); } }
+        public string MaPhim_add { get => _maPhim_add; set { _maPhim_add = value; OnPropertyChanged(); } }
+        public string TenPhim_add { get => _tenPhim_add; set { _tenPhim_add = value; OnPropertyChanged(); } }
+        public string MaTheLoaiChinh_add { get => _maTheLoaiChinh_add; set { _maTheLoaiChinh_add = value; OnPropertyChanged(); } }
+        public int ThoiLuong_add { get => _thoiLuong_add; set { _thoiLuong_add = value; OnPropertyChanged(); } }
 
-        public string TenTheLoaiChinh_add { get => tenTheLoaiChinh_add; set { tenTheLoaiChinh_add = value; OnPropertyChanged(); } }
-        public string TenTheLoaiPhu_add { get => tenTheLoaiPhu_add; set { tenTheLoaiPhu_add = value; OnPropertyChanged(); } }
-        public string ChuoiTenTheLoaiPhu_add { get => chuoiTenTheLoaiPhu_add; set { chuoiTenTheLoaiPhu_add = value; OnPropertyChanged(); } }
-        public ObservableCollection<TheLoai> ListTheLoaiPhu_add { get => listTheLoaiPhu_add; set { listTheLoaiPhu_add = value; OnPropertyChanged(); } }
+        public string TenTheLoaiChinh_add { get => _tenTheLoaiChinh_add; set { _tenTheLoaiChinh_add = value; OnPropertyChanged(); } }
+        public string TenTheLoaiPhu_add { get => _tenTheLoaiPhu_add; set { _tenTheLoaiPhu_add = value; OnPropertyChanged(); } }
+        public string ChuoiTenTheLoaiPhu_add { get => _chuoiTenTheLoaiPhu_add; set { _chuoiTenTheLoaiPhu_add = value; OnPropertyChanged(); } }
+        public ObservableCollection<TheLoai> ListTheLoaiPhu_add { get => _listTheLoaiPhu_add; set { _listTheLoaiPhu_add = value; OnPropertyChanged(); } }
 
-        private TheLoai selectedCategory_add;
+        private TheLoai _selectedCategory_add;
         public TheLoai SelectedCategory_add
         {
-            get => selectedCategory_add;
+            get => _selectedCategory_add;
             set
             {
-                selectedCategory_add = value;
+                _selectedCategory_add = value;
                 OnPropertyChanged();
-                if (selectedCategory_add != null)
+                if (SelectedCategory_add != null)
                 {
-                    MaTheLoaiChinh_add = selectedCategory_add.MaTheLoai;
-                    TenTheLoaiChinh_add = selectedCategory_add.TenTheLoai;
+                    MaTheLoaiChinh_add = SelectedCategory_add.MaTheLoai;
+                    TenTheLoaiChinh_add = SelectedCategory_add.TenTheLoai;
                 }
             }
         }
 
-        private TheLoai selectedSubCategory_add;
+        private TheLoai _selectedSubCategory_add;
         public TheLoai SelectedSubCategory_add
         {
-            get => selectedSubCategory_add;
+            get => _selectedSubCategory_add;
             set
             {
-                selectedSubCategory_add = value;
+                _selectedSubCategory_add = value;
                 OnPropertyChanged();
                 if (SelectedSubCategory_add != null)
                 {
@@ -85,47 +87,47 @@ namespace Project_PTUD_Desktop.ViewModel
         #endregion
 
         #region command, properties and fields for tab edit
-        private ObservableCollection<TheLoai> listTheLoai;
-        public ObservableCollection<TheLoai> ListTheLoai { get => listTheLoai; set { listTheLoai = value; OnPropertyChanged(); } }
+        private ObservableCollection<TheLoai> _listTheLoai;
+        public ObservableCollection<TheLoai> ListTheLoai { get => _listTheLoai; set { _listTheLoai = value; OnPropertyChanged(); } }
 
         public ICommand AddSubCategory_Edit { get; set; }
         public ICommand RemoveSubCategory_Edit { get; set; }
         public ICommand ClearAllSubCategory_Edit { get; set; }
 
-        private string maPhim_edit;
-        private string tenPhim_edit;
-        private string maTheLoaiChinh_edit;
-        private int thoiLuong_edit;
-        private ObservableCollection<TheLoai> listTheLoaiPhu_edit;
+        private string _maPhim_edit;
+        private string _tenPhim_edit;
+        private string _maTheLoaiChinh_edit;
+        private int _thoiLuong_edit;
+        private ObservableCollection<TheLoai> _listTheLoaiPhu_edit;
 
-        private string chuoiTenTheLoaiPhu_edit;
-        private string tenTheLoaiChinh_edit;
-        private string tenTheLoaiPhu_edit;
+        private string _chuoiTenTheLoaiPhu_edit;
+        private string _tenTheLoaiChinh_edit;
+        private string _tenTheLoaiPhu_edit;
 
-        public string MaPhim_edit { get => maPhim_edit; set { maPhim_edit = value; OnPropertyChanged(); } }
-        public string TenPhim_edit { get => tenPhim_edit; set { tenPhim_edit = value; OnPropertyChanged(); } }
-        public string MaTheLoaiChinh_edit { get => maTheLoaiChinh_edit; set { maTheLoaiChinh_edit = value; OnPropertyChanged(); } }
-        public int ThoiLuong_edit { get => thoiLuong_edit; set { thoiLuong_edit = value; OnPropertyChanged(); } }
-        public ObservableCollection<TheLoai> ListTheLoaiPhu_edit { get => listTheLoaiPhu_edit; set { listTheLoaiPhu_edit = value; OnPropertyChanged(); } }
+        public string MaPhim_edit { get => _maPhim_edit; set { _maPhim_edit = value; OnPropertyChanged(); } }
+        public string TenPhim_edit { get => _tenPhim_edit; set { _tenPhim_edit = value; OnPropertyChanged(); } }
+        public string MaTheLoaiChinh_edit { get => _maTheLoaiChinh_edit; set { _maTheLoaiChinh_edit = value; OnPropertyChanged(); } }
+        public int ThoiLuong_edit { get => _thoiLuong_edit; set { _thoiLuong_edit = value; OnPropertyChanged(); } }
+        public ObservableCollection<TheLoai> ListTheLoaiPhu_edit { get => _listTheLoaiPhu_edit; set { _listTheLoaiPhu_edit = value; OnPropertyChanged(); } }
 
-        public string ChuoiTenTheLoaiPhu_edit { get => chuoiTenTheLoaiPhu_edit; set { chuoiTenTheLoaiPhu_edit = value; OnPropertyChanged(); } }
-        public string TenTheLoaiChinh_edit { get => tenTheLoaiChinh_edit; set { tenTheLoaiChinh_edit = value; OnPropertyChanged(); } }
-        public string TenTheLoaiPhu_edit { get => tenTheLoaiPhu_edit; set { tenTheLoaiPhu_edit = value; OnPropertyChanged(); } }
+        public string ChuoiTenTheLoaiPhu_edit { get => _chuoiTenTheLoaiPhu_edit; set { _chuoiTenTheLoaiPhu_edit = value; OnPropertyChanged(); } }
+        public string TenTheLoaiChinh_edit { get => _tenTheLoaiChinh_edit; set { _tenTheLoaiChinh_edit = value; OnPropertyChanged(); } }
+        public string TenTheLoaiPhu_edit { get => _tenTheLoaiPhu_edit; set { _tenTheLoaiPhu_edit = value; OnPropertyChanged(); } }
 
-        private string tenPhim_curr_edit;
-        private string maTheLoaiChinh_curr_edit;
-        private int thoiLuong_curr_edit;
-        private ObservableCollection<TheLoai> listTheLoaiPhu_curr_edit;
+        private string _tenPhim_curr_edit;
+        private string _maTheLoaiChinh_curr_edit;
+        private int _thoiLuong_curr_edit;
+        private ObservableCollection<TheLoai> _listTheLoaiPhu_curr_edit;
 
-        private TheLoai selectedCategory_edit;
+        private TheLoai _selectedCategory_edit;
         public TheLoai SelectedCategory_edit
         {
-            get => selectedCategory_edit;
+            get => _selectedCategory_edit;
             set
             {
-                selectedCategory_edit = value;
+                _selectedCategory_edit = value;
                 OnPropertyChanged();
-                if (selectedCategory_edit != null)
+                if (SelectedCategory_edit != null)
                 {
                     MaTheLoaiChinh_edit = SelectedCategory_edit.MaTheLoai;
                     TenTheLoaiChinh_edit = SelectedCategory_edit.TenTheLoai;
@@ -133,13 +135,13 @@ namespace Project_PTUD_Desktop.ViewModel
             }
         }
 
-        private TheLoai selectedSubCategory_edit;
+        private TheLoai _selectedSubCategory_edit;
         public TheLoai SelectedSubCategory_edit
         {
-            get => selectedSubCategory_edit;
+            get => _selectedSubCategory_edit;
             set
             {
-                selectedSubCategory_edit = value;
+                _selectedSubCategory_edit = value;
                 OnPropertyChanged();
                 if (SelectedSubCategory_edit != null)
                 {
@@ -148,43 +150,48 @@ namespace Project_PTUD_Desktop.ViewModel
             }
         }
 
-        private Phim selectedItem;
+        private Phim _selectedItem;
         public Phim SelectedItem
         {
-            get => selectedItem;
+            get => _selectedItem;
             set
             {
-                selectedItem = value;
+                _selectedItem = value;
                 OnPropertyChanged();
-                if (selectedItem != null)
+                if (SelectedItem != null)
                 {
                     MaPhim_edit = SelectedItem.MaPhim;
                     TenPhim_edit = SelectedItem.TenPhim;
                     MaTheLoaiChinh_edit = SelectedItem.MaTheLoaiChinh;
-                    ThoiLuong_edit = SelectedItem.ThoiLuong;
+                    ThoiLuong_edit = (int)SelectedItem.ThoiLuong;
                     SelectedCategory_edit = ListTheLoai.FirstOrDefault(theLoai => theLoai.MaTheLoai == SelectedItem.MaTheLoaiChinh);
 
-                    tenPhim_curr_edit = SelectedItem.TenPhim;
-                    maTheLoaiChinh_curr_edit = SelectedItem.MaTheLoaiChinh;
-                    thoiLuong_curr_edit = SelectedItem.ThoiLuong;
+                    _tenPhim_curr_edit = SelectedItem.TenPhim;
+                    _maTheLoaiChinh_curr_edit = SelectedItem.MaTheLoaiChinh;
+                    _thoiLuong_curr_edit = (int)SelectedItem.ThoiLuong;
 
-                    listTheLoaiPhu_curr_edit.Clear();
+                    _listTheLoaiPhu_curr_edit.Clear();
                     ListTheLoaiPhu_edit.Clear();
-                    foreach (TheLoai tl in TheLoaiDAO.Instance.GetListTheLoaiPhusByMaPhim(MaPhim_edit))
+                    //foreach (TheLoai tl in TheLoaiDAO.Instance.GetTheLoaiPhusByMaPhim(MaPhim_edit))
+                    foreach (TheLoai theLoai in DataProvider.Instance.Database.Phims.Where(phim => phim.MaPhim == MaPhim_edit).FirstOrDefault().TheLoais)
                     {
-                        listTheLoaiPhu_curr_edit.Add(tl);
-                        ListTheLoaiPhu_edit.Add(tl);
+                        _listTheLoaiPhu_curr_edit.Add(theLoai);
+                        ListTheLoaiPhu_edit.Add(theLoai);
                     }
-                    ChuoiTenTheLoaiPhu_edit = string.Join(", ", TheLoaiDAO.Instance.GetListTenTheLoaisByListTheLoais(ListTheLoaiPhu_edit));
+                    //ChuoiTenTheLoaiPhu_edit = string.Join(", ", TheLoaiDAO.Instance.GetListTenTheLoaisByListTheLoais(ListTheLoaiPhu_edit));
+                    ChuoiTenTheLoaiPhu_edit = string.Join(", ", CategoryDAO.Instance.GetListTenTheLoaisFromListTheLoais(ListTheLoaiPhu_edit));
 
 
                     MaPhim_delete = SelectedItem.MaPhim;
                     TenPhim_delete = SelectedItem.TenPhim;
                     MaTheLoaiChinh_delete = SelectedItem.MaTheLoaiChinh;
-                    ThoiLuong_delete = SelectedItem.ThoiLuong;
-                    TenTheLoaiChinh_delete = TheLoaiDAO.Instance.GetTheLoaiByMaTheLoaiChinh(MaTheLoaiChinh_delete).TenTheLoai;
-                    ListTheLoaiPhu_delete = TheLoaiDAO.Instance.GetListTheLoaiPhusByMaPhim(MaPhim_delete);
-                    ChuoiTenTheLoaiPhu_delete = string.Join(", ", TheLoaiDAO.Instance.GetListTenTheLoaisByListTheLoais(ListTheLoaiPhu_delete));
+                    ThoiLuong_delete = (int)SelectedItem.ThoiLuong;
+                    //TenTheLoaiChinh_delete = TheLoaiDAO.Instance.GetTheLoaiByMaTheLoaiChinh(MaTheLoaiChinh_delete).TenTheLoai;
+                    //ListTheLoaiPhu_delete = TheLoaiDAO.Instance.GetListTheLoaiPhusByMaPhim(MaPhim_delete);
+                    //ChuoiTenTheLoaiPhu_delete = string.Join(", ", TheLoaiDAO.Instance.GetListTenTheLoaisByListTheLoais(ListTheLoaiPhu_delete));
+                    TenTheLoaiChinh_delete = ListTheLoai.FirstOrDefault(theLoai => theLoai.MaTheLoai == MaTheLoaiChinh_delete).TenTheLoai;
+                    ListTheLoaiPhu_delete = ListPhim.FirstOrDefault(phim => phim.MaPhim == MaPhim_delete).TheLoais;
+                    ChuoiTenTheLoaiPhu_delete = string.Join(", ", CategoryDAO.Instance.GetListTenTheLoaisFromListTheLoais(ListTheLoaiPhu_delete));
                 }
             }
         }
@@ -195,7 +202,8 @@ namespace Project_PTUD_Desktop.ViewModel
         private string tenPhim_delete;
         private string maTheLoaiChinh_delete;
         private int thoiLuong_delete;
-        private ObservableCollection<TheLoai> listTheLoaiPhu_delete;
+        //private ObservableCollection<TheLoai> listTheLoaiPhu_delete;
+        private ICollection<TheLoai> listTheLoaiPhu_delete;
 
         private string chuoiTenTheLoaiPhu_delete;
         private string tenTheLoaiChinh_delete;
@@ -204,20 +212,29 @@ namespace Project_PTUD_Desktop.ViewModel
         public string TenPhim_delete { get => tenPhim_delete; set { tenPhim_delete = value; OnPropertyChanged(); } }
         public string MaTheLoaiChinh_delete { get => maTheLoaiChinh_delete; set { maTheLoaiChinh_delete = value; OnPropertyChanged(); } }
         public int ThoiLuong_delete { get => thoiLuong_delete; set { thoiLuong_delete = value; OnPropertyChanged(); } }
-        public ObservableCollection<TheLoai> ListTheLoaiPhu_delete { get => listTheLoaiPhu_delete; set { listTheLoaiPhu_delete = value; OnPropertyChanged(); } }
+        //public ObservableCollection<TheLoai> ListTheLoaiPhu_delete { get => listTheLoaiPhu_delete; set { listTheLoaiPhu_delete = value; OnPropertyChanged(); } }
+        public ICollection<TheLoai> ListTheLoaiPhu_delete { get => listTheLoaiPhu_delete; set { listTheLoaiPhu_delete = value; OnPropertyChanged(); } }
 
         public string ChuoiTenTheLoaiPhu_delete { get => chuoiTenTheLoaiPhu_delete; set { chuoiTenTheLoaiPhu_delete = value; OnPropertyChanged(); } }
         public string TenTheLoaiChinh_delete { get => tenTheLoaiChinh_delete; set { tenTheLoaiChinh_delete = value; OnPropertyChanged(); } }
         #endregion
 
+        private ObservableCollection<FilmDTO> _listFilmDTO;
+        public ObservableCollection<FilmDTO> ListFilmDTO { get => _listFilmDTO; set { _listFilmDTO = value; OnPropertyChanged(); } }
+        #endregion
+
         public FilmViewModel()
         {
-            ListPhim = PhimDAO.Instance.GetListPhims();
-            ListTheLoai = new ObservableCollection<TheLoai>(TheLoaiDAO.Instance.GetListTheLoais());
+            #region For FilmWindow
+            //ListPhim = PhimDAO.Instance.GetListPhims();
+            //ListTheLoai = new ObservableCollection<TheLoai>(TheLoaiDAO.Instance.GetListTheLoais());
+            ListPhim = new ObservableCollection<Phim>(DataProvider.Instance.Database.Phims);
+            ListFilmDTO = FilmDAO.Instance.GetMoreDetailListFilmFromListPhim(ListPhim);
+            ListTheLoai = new ObservableCollection<TheLoai>(DataProvider.Instance.Database.TheLoais);
 
             ListTheLoaiPhu_add = new ObservableCollection<TheLoai>();
             ListTheLoaiPhu_edit = new ObservableCollection<TheLoai>();
-            listTheLoaiPhu_curr_edit = new ObservableCollection<TheLoai>();
+            _listTheLoaiPhu_curr_edit = new ObservableCollection<TheLoai>();
             ListTheLoaiPhu_delete = new ObservableCollection<TheLoai>();
             SelectedItem = ListPhim.First();
 
@@ -227,18 +244,20 @@ namespace Project_PTUD_Desktop.ViewModel
                 {
                     if (string.IsNullOrEmpty(TenTheLoaiPhu_add)) return false;
                     if (string.Compare(TenTheLoaiPhu_add, TenTheLoaiChinh_add, 0) == 0) return false;
-                    foreach (string ten in TheLoaiDAO.Instance.GetListTenTheLoaisByListTheLoais(ListTheLoaiPhu_add))
-                        if (TenTheLoaiPhu_add == ten) return false;
+                    //foreach (string ten in TheLoaiDAO.Instance.GetListTenTheLoaisByListTheLoais(ListTheLoaiPhu_add))
+                    foreach (string tenTheLoai in CategoryDAO.Instance.GetListTenTheLoaisFromListTheLoais(ListTheLoaiPhu_add))
+                        if (TenTheLoaiPhu_add == tenTheLoai) return false;
                     return true;
                 },
                 para => {
                     ListTheLoaiPhu_add.Add(SelectedSubCategory_add);
-                    ChuoiTenTheLoaiPhu_add = string.Join(", ", TheLoaiDAO.Instance.GetListTenTheLoaisByListTheLoais(ListTheLoaiPhu_add));
+                    //ChuoiTenTheLoaiPhu_add = string.Join(", ", TheLoaiDAO.Instance.GetListTenTheLoaisByListTheLoais(ListTheLoaiPhu_add));
+                    ChuoiTenTheLoaiPhu_add = string.Join(", ", CategoryDAO.Instance.GetListTenTheLoaisFromListTheLoais(ListTheLoaiPhu_add));
                 }
             );
             RemoveSubCategory_Add = new RelayCommand<object>(
                 para =>
-                {   
+                {
                     foreach (TheLoai theloai in ListTheLoaiPhu_add)
                         if (SelectedSubCategory_add == theloai) return true;
                     return false;
@@ -246,7 +265,8 @@ namespace Project_PTUD_Desktop.ViewModel
                 para =>
                 {
                     ListTheLoaiPhu_add.Remove(SelectedSubCategory_add);
-                    ChuoiTenTheLoaiPhu_add = string.Join(", ", TheLoaiDAO.Instance.GetListTenTheLoaisByListTheLoais(ListTheLoaiPhu_add));
+                    //ChuoiTenTheLoaiPhu_add = string.Join(", ", TheLoaiDAO.Instance.GetListTenTheLoaisByListTheLoais(ListTheLoaiPhu_add));
+                    ChuoiTenTheLoaiPhu_add = string.Join(", ", CategoryDAO.Instance.GetListTenTheLoaisFromListTheLoais(ListTheLoaiPhu_add));
                 }
             );
             ClearAllSubCategory_Add = new RelayCommand<object>(
@@ -274,15 +294,25 @@ namespace Project_PTUD_Desktop.ViewModel
                 },
                 para =>
                 {
-                    Phim film = new Phim(MaPhim_add, TenPhim_add, MaTheLoaiChinh_add, ThoiLuong_add);
-                    if (!PhimDAO.Instance.InsertPhim(film))
-                        MessageBox.Show($"Thêm phim mới không thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
-                    foreach (TheLoai theloai in ListTheLoaiPhu_add)
-                    {
-                        if (!TheLoaiDAO.Instance.InsertTheLoaiPhuIntoPhim(theloai.MaTheLoai, MaPhim_add))
-                            MessageBox.Show($"Xảy ra lỗi khi thêm thể loại phụ cho phim", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                    ListPhim = PhimDAO.Instance.GetListPhims();
+                    #region code for ADO.NET
+                    //Phim film = new Phim(MaPhim_add, TenPhim_add, MaTheLoaiChinh_add, ThoiLuong_add);
+                    //if (!PhimDAO.Instance.InsertPhim(film))
+                    //    MessageBox.Show($"Thêm phim mới không thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                    //foreach (TheLoai theloai in ListTheLoaiPhu_add)
+                    //{
+                    //    if (!TheLoaiDAO.Instance.InsertTheLoaiPhuIntoPhim(theloai.MaTheLoai, MaPhim_add))
+                    //        MessageBox.Show($"Xảy ra lỗi khi thêm thể loại phụ cho phim", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                    //}
+                    //ListPhim = PhimDAO.Instance.GetListPhims();
+                    #endregion
+
+                    Phim film = new Phim() { MaPhim = MaPhim_add, TenPhim = TenPhim_add, MaTheLoaiChinh = MaTheLoaiChinh_add, ThoiLuong = ThoiLuong_add };
+                    DataProvider.Instance.Database.Phims.Add(film);
+                    foreach (TheLoai theLoai in ListTheLoaiPhu_add)
+                        film.TheLoais.Add(theLoai);
+                    DataProvider.Instance.Database.SaveChanges();
+                    ListPhim.Add(film);
+                    ListFilmDTO = FilmDAO.Instance.GetMoreDetailListFilmFromListPhim(ListPhim);
                 }
             );
             #endregion
@@ -293,20 +323,23 @@ namespace Project_PTUD_Desktop.ViewModel
                 {
                     if (string.IsNullOrEmpty(TenTheLoaiPhu_edit)) return false;
                     if (string.Compare(TenTheLoaiPhu_edit, TenTheLoaiChinh_edit, 0) == 0) return false;
-                    foreach (string ten in TheLoaiDAO.Instance.GetListTenTheLoaisByListTheLoais(ListTheLoaiPhu_edit))
-                        if (TenTheLoaiPhu_edit == ten) return false;
+                    //foreach (string ten in TheLoaiDAO.Instance.GetListTenTheLoaisByListTheLoais(ListTheLoaiPhu_edit))
+                    foreach (string tenTheLoai in CategoryDAO.Instance.GetListTenTheLoaisFromListTheLoais(ListTheLoaiPhu_edit))
+                        if (TenTheLoaiPhu_edit == tenTheLoai) return false;
                     return true;
                 },
                 para => {
                     ListTheLoaiPhu_edit.Add(SelectedSubCategory_edit);
-                    ChuoiTenTheLoaiPhu_edit = string.Join(", ", TheLoaiDAO.Instance.GetListTenTheLoaisByListTheLoais(ListTheLoaiPhu_edit));
+                    //ChuoiTenTheLoaiPhu_edit = string.Join(", ", TheLoaiDAO.Instance.GetListTenTheLoaisByListTheLoais(ListTheLoaiPhu_edit));
+                    ChuoiTenTheLoaiPhu_edit = string.Join(", ", CategoryDAO.Instance.GetListTenTheLoaisFromListTheLoais(ListTheLoaiPhu_edit));
                 }
             );
             RemoveSubCategory_Edit = new RelayCommand<object>(
                 para =>
                 {
-                    foreach (string ten in TheLoaiDAO.Instance.GetListTenTheLoaisByListTheLoais(ListTheLoaiPhu_edit))
-                        if (TenTheLoaiPhu_edit == ten) return true;
+                    //foreach (string ten in TheLoaiDAO.Instance.GetListTenTheLoaisByListTheLoais(ListTheLoaiPhu_edit))
+                    foreach (string tenTheLoai in CategoryDAO.Instance.GetListTenTheLoaisFromListTheLoais(ListTheLoaiPhu_edit))
+                        if (TenTheLoaiPhu_edit == tenTheLoai) return true;
 
                     return false;
                 },
@@ -316,7 +349,8 @@ namespace Project_PTUD_Desktop.ViewModel
                         if (tl.MaTheLoai == SelectedSubCategory_edit.MaTheLoai)
                             ListTheLoaiPhu_edit.Remove(tl);
 
-                    ChuoiTenTheLoaiPhu_edit = string.Join(", ", TheLoaiDAO.Instance.GetListTenTheLoaisByListTheLoais(ListTheLoaiPhu_edit));
+                    //ChuoiTenTheLoaiPhu_edit = string.Join(", ", TheLoaiDAO.Instance.GetListTenTheLoaisByListTheLoais(ListTheLoaiPhu_edit));
+                    ChuoiTenTheLoaiPhu_edit = string.Join(", ", CategoryDAO.Instance.GetListTenTheLoaisFromListTheLoais(ListTheLoaiPhu_edit));
                 }
             );
             ClearAllSubCategory_Edit = new RelayCommand<object>(
@@ -335,10 +369,10 @@ namespace Project_PTUD_Desktop.ViewModel
                 para =>
                 {
                     if (string.IsNullOrEmpty(MaPhim_edit)) return false;
-                    if (string.Compare(TenPhim_edit, tenPhim_curr_edit, 0) == 0 &&
-                        string.Compare(MaTheLoaiChinh_edit, maTheLoaiChinh_curr_edit, 0) == 0 &&
-                        ThoiLuong_edit == thoiLuong_curr_edit &&
-                        (listTheLoaiPhu_curr_edit.Except(ListTheLoaiPhu_edit).Count() == 0) && (ListTheLoaiPhu_edit.Except(listTheLoaiPhu_curr_edit).Count() == 0))
+                    if (string.Compare(TenPhim_edit, _tenPhim_curr_edit, 0) == 0 &&
+                        string.Compare(MaTheLoaiChinh_edit, _maTheLoaiChinh_curr_edit, 0) == 0 &&
+                        ThoiLuong_edit == _thoiLuong_curr_edit &&
+                        (_listTheLoaiPhu_curr_edit.Except(ListTheLoaiPhu_edit).Count() == 0) && (ListTheLoaiPhu_edit.Except(_listTheLoaiPhu_curr_edit).Count() == 0))
                         return false;
                     foreach (TheLoai tl in ListTheLoaiPhu_edit)
                         if (MaTheLoaiChinh_edit == tl.MaTheLoai) return false;
@@ -346,34 +380,69 @@ namespace Project_PTUD_Desktop.ViewModel
                 },
                 para =>
                 {
-                    Phim film = new Phim(MaPhim_edit, TenPhim_edit, MaTheLoaiChinh_edit, ThoiLuong_edit);
-                    if (PhimDAO.Instance.UpdateInfoPhim(film))
-                    {
-                        IEnumerable<TheLoai> listAddTheLoaiPhu = ListTheLoaiPhu_edit.Where(theloai => !listTheLoaiPhu_curr_edit.Contains(theloai));
-                        IEnumerable<TheLoai> listRemoveTheLoaiPhu = listTheLoaiPhu_curr_edit.Where(theloai => !ListTheLoaiPhu_edit.Contains(theloai));
-                        if (listAddTheLoaiPhu.Count() != 0)
-                        {
-                            foreach (TheLoai tl in listAddTheLoaiPhu)
-                                if (!TheLoaiDAO.Instance.InsertTheLoaiPhuIntoPhim(tl.MaTheLoai, MaPhim_edit))
-                                    MessageBox.Show($"Cập nhật thể loại phụ cho phim không thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
-                        if (listRemoveTheLoaiPhu.Count() != 0)
-                        {
-                            foreach (TheLoai tl in listRemoveTheLoaiPhu)
-                                if (!TheLoaiDAO.Instance.DeleteTheLoaiPhuFromPhim(tl.MaTheLoai, MaPhim_edit))
-                                    MessageBox.Show($"Cập nhật thể loại phụ cho phim không thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
+                    #region
+                    //Phim film = new Phim(MaPhim_edit, TenPhim_edit, MaTheLoaiChinh_edit, ThoiLuong_edit);
+                    //if (PhimDAO.Instance.UpdateInfoPhim(film))
+                    //{
+                    //    IEnumerable<TheLoai> listAddTheLoaiPhu = ListTheLoaiPhu_edit.Where(theloai => !_listTheLoaiPhu_curr_edit.Contains(theloai));
+                    //    IEnumerable<TheLoai> listRemoveTheLoaiPhu = _listTheLoaiPhu_curr_edit.Where(theloai => !ListTheLoaiPhu_edit.Contains(theloai));
+                    //    if (listAddTheLoaiPhu.Count() != 0)
+                    //    {
+                    //        foreach (TheLoai tl in listAddTheLoaiPhu)
+                    //            if (!TheLoaiDAO.Instance.InsertTheLoaiPhuIntoPhim(tl.MaTheLoai, MaPhim_edit))
+                    //                MessageBox.Show($"Cập nhật thể loại phụ cho phim không thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                    //    }
+                    //    if (listRemoveTheLoaiPhu.Count() != 0)
+                    //    {
+                    //        foreach (TheLoai tl in listRemoveTheLoaiPhu)
+                    //            if (!TheLoaiDAO.Instance.DeleteTheLoaiPhuFromPhim(tl.MaTheLoai, MaPhim_edit))
+                    //                MessageBox.Show($"Cập nhật thể loại phụ cho phim không thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                    //    }
 
-                        tenPhim_curr_edit = TenPhim_edit;
-                        maTheLoaiChinh_curr_edit = MaTheLoaiChinh_edit;
-                        thoiLuong_curr_edit = ThoiLuong_edit;
-                        listTheLoaiPhu_curr_edit.Clear();
-                        foreach (TheLoai tl in ListTheLoaiPhu_edit.ToList())
-                            listTheLoaiPhu_curr_edit.Add(tl);
+                    //    _tenPhim_curr_edit = TenPhim_edit;
+                    //    _maTheLoaiChinh_curr_edit = MaTheLoaiChinh_edit;
+                    //    _thoiLuong_curr_edit = ThoiLuong_edit;
+                    //    _listTheLoaiPhu_curr_edit.Clear();
+                    //    foreach (TheLoai tl in ListTheLoaiPhu_edit.ToList())
+                    //        _listTheLoaiPhu_curr_edit.Add(tl);
 
-                        ListPhim = PhimDAO.Instance.GetListPhims();
-                    }
-                    else MessageBox.Show($"Cập nhật thông tin không thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                    //    ListPhim = PhimDAO.Instance.GetListPhims();
+                    //}
+                    //else MessageBox.Show($"Cập nhật thông tin không thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                    #endregion
+
+                    Phim film = DataProvider.Instance.Database.Phims.Where(phim => phim.MaPhim == MaPhim_edit).FirstOrDefault();
+                    film.TenPhim = TenPhim_edit;
+                    film.MaTheLoaiChinh = MaTheLoaiChinh_edit;
+                    film.ThoiLuong = ThoiLuong_edit;
+                    DataProvider.Instance.Database.SaveChanges();
+                    IEnumerable<TheLoai> listAddTheLoaiPhu = ListTheLoaiPhu_edit.Where(theloai => !_listTheLoaiPhu_curr_edit.Contains(theloai));
+                    IEnumerable<TheLoai> listRemoveTheLoaiPhu = _listTheLoaiPhu_curr_edit.Where(theloai => !ListTheLoaiPhu_edit.Contains(theloai));
+                    if (listAddTheLoaiPhu.Count() != 0)
+                        foreach (TheLoai tl in listAddTheLoaiPhu)
+                            film.TheLoais.Add(tl);
+                    if (listRemoveTheLoaiPhu.Count() != 0)
+                        foreach (TheLoai tl in listRemoveTheLoaiPhu)
+                            film.TheLoais.Remove(tl);
+                    DataProvider.Instance.Database.SaveChanges();
+                    ListFilmDTO = FilmDAO.Instance.GetMoreDetailListFilmFromListPhim(ListPhim);
+
+                    _tenPhim_curr_edit = TenPhim_edit;
+                    _maTheLoaiChinh_curr_edit = MaTheLoaiChinh_edit;
+                    _thoiLuong_curr_edit = ThoiLuong_edit;
+                    _listTheLoaiPhu_curr_edit.Clear();
+                    foreach (TheLoai tl in ListTheLoaiPhu_edit.ToList())
+                        _listTheLoaiPhu_curr_edit.Add(tl);
+
+                    TenPhim_delete = SelectedItem.TenPhim;
+                    MaTheLoaiChinh_delete = SelectedItem.MaTheLoaiChinh;
+                    ThoiLuong_delete = (int)SelectedItem.ThoiLuong;
+                    //TenTheLoaiChinh_delete = TheLoaiDAO.Instance.GetTheLoaiByMaTheLoaiChinh(MaTheLoaiChinh_delete).TenTheLoai;
+                    //ListTheLoaiPhu_delete = TheLoaiDAO.Instance.GetListTheLoaiPhusByMaPhim(MaPhim_delete);
+                    //ChuoiTenTheLoaiPhu_delete = string.Join(", ", TheLoaiDAO.Instance.GetListTenTheLoaisByListTheLoais(ListTheLoaiPhu_delete));
+                    TenTheLoaiChinh_delete = ListTheLoai.FirstOrDefault(theLoai => theLoai.MaTheLoai == MaTheLoaiChinh_delete).TenTheLoai;
+                    ListTheLoaiPhu_delete = ListPhim.FirstOrDefault(phim => phim.MaPhim == MaPhim_delete).TheLoais;
+                    ChuoiTenTheLoaiPhu_delete = string.Join(", ", CategoryDAO.Instance.GetListTenTheLoaisFromListTheLoais(ListTheLoaiPhu_delete));
                 }
             );
             #endregion
@@ -386,46 +455,95 @@ namespace Project_PTUD_Desktop.ViewModel
                 },
                 para =>
                 {
-                    if (KeHoachDAO.Instance.GetListKeHoachsByMaPhim(MaPhim_delete).Count() != 0)
+                    #region
+                    //if (KeHoachDAO.Instance.GetListKeHoachsByMaPhim(MaPhim_delete).Count() != 0)
+                    //{
+                    //    MessageBox.Show($"Chỉ có thể xóa các phim đang không có kế hoạch chiếu", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                    //    return;
+                    //}
+                    //if (LichChieuDAO.Instance.GetListLichChieusByMaPhim(MaPhim_delete).Count() != 0)
+                    //{
+                    //    MessageBox.Show($"Chỉ có thể xóa các phim đang không có lịch chiếu", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                    //    return;
+                    //}
+                    //if (MessageBox.Show($"Bạn có chắc muốn xóa phim {SelectedItem.TenPhim}", "Xác nhận xóa?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    //{
+
+                    //    var film = PhimDAO.Instance.GetPhimByMaPhim(MaPhim_delete);
+                    //    if (film != null)
+                    //    {
+                    //        foreach (TheLoai tl in ListTheLoaiPhu_delete)
+                    //        {
+                    //            if (!TheLoaiDAO.Instance.DeleteTheLoaiPhuFromPhim(tl.MaTheLoai, MaPhim_delete))
+                    //                MessageBox.Show($"Đã xảy ra lỗi khi xóa thể loại phụ khỏi phim", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                    //        }
+                    //        if (PhimDAO.Instance.DeletePhim(MaPhim_delete))
+                    //        {
+                    //            ListPhim = PhimDAO.Instance.GetListPhims();
+                    //            SelectedItem = ListPhim.First();
+                    //        }
+                    //        else MessageBox.Show($"Xóa phim không thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                    //    }
+                    //}
+                    #endregion
+
+                    if (SelectedItem.KeHoaches.Count != 0)
                     {
                         MessageBox.Show($"Chỉ có thể xóa các phim đang không có kế hoạch chiếu", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
-                    if (LichChieuDAO.Instance.GetListLichChieusByMaPhim(MaPhim_delete).Count() != 0)
+                    if (SelectedItem.LichChieux.Count != 0)
                     {
                         MessageBox.Show($"Chỉ có thể xóa các phim đang không có lịch chiếu", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
-                    if (MessageBox.Show($"Bạn có chắc muốn xóa phim {SelectedItem.TenPhim}", "Xác nhận xóa?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    if (MessageBox.Show($"Bạn có chắc muốn xóa phim \"{SelectedItem.TenPhim}\"", "Xác nhận xóa?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
-
-                        var film = PhimDAO.Instance.GetPhimByMaPhim(MaPhim_delete);
+                        Phim film = DataProvider.Instance.Database.Phims.Where(phim => phim.MaPhim == MaPhim_delete).FirstOrDefault();
                         if (film != null)
                         {
-                            foreach (TheLoai tl in ListTheLoaiPhu_delete)
-                            {
-                                if (!TheLoaiDAO.Instance.DeleteTheLoaiPhuFromPhim(tl.MaTheLoai, MaPhim_delete))
-                                    MessageBox.Show($"Đã xảy ra lỗi khi xóa thể loại phụ khỏi phim", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
-                            }
-                            if (PhimDAO.Instance.DeletePhim(MaPhim_delete))
-                            {
-                                ListPhim = PhimDAO.Instance.GetListPhims();
-                                SelectedItem = ListPhim.First();
-                            }
-                            else MessageBox.Show($"Xóa phim không thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                            SelectedItem.TheLoais.Clear();
+                            DataProvider.Instance.Database.Phims.Remove(film);
+                            DataProvider.Instance.Database.SaveChanges();
+                            ListPhim.Remove(film);
+                            ListFilmDTO = FilmDAO.Instance.GetMoreDetailListFilmFromListPhim(ListPhim);
+                            SelectedItem = ListPhim.First();
                         }
                     }
                 }
             );
 
 
-            CheckCommand = new RelayCommand<object>(para => true, para =>
-            {
-                MessageBox.Show($"ListTheLoaiPhu_edit: {string.Join(", ", TheLoaiDAO.Instance.GetListTenTheLoaisByListTheLoais(ListTheLoaiPhu_edit))}\n" +
-                        $"listTheLoaiPhu_curr_edit: {string.Join(", ", TheLoaiDAO.Instance.GetListTenTheLoaisByListTheLoais(listTheLoaiPhu_curr_edit))}\n" +
-                        $"{listTheLoaiPhu_curr_edit.Except(ListTheLoaiPhu_edit).Count()}\n" +
-                        $"{ListTheLoaiPhu_edit.Except(listTheLoaiPhu_curr_edit).Count()}\n");
-            });
+            //CheckCommand = new RelayCommand<object>(para => true, para =>
+            //{
+            //    MessageBox.Show($"ListTheLoaiPhu_edit: {string.Join(", ", CategoryDAO.Instance.GetListTenTheLoaisFromListTheLoais(ListTheLoaiPhu_edit))}\n" +
+            //            $"listTheLoaiPhu_curr_edit: {string.Join(", ", CategoryDAO.Instance.GetListTenTheLoaisFromListTheLoais(_listTheLoaiPhu_curr_edit))}\n" +
+            //            $"{_listTheLoaiPhu_curr_edit.Except(ListTheLoaiPhu_edit).Count()}\n" +
+            //            $"{ListTheLoaiPhu_edit.Except(_listTheLoaiPhu_curr_edit).Count()}\n");
+            //});
+            #endregion
+
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListFilmDTO);
+            view.Filter = UserFilter;
+
+            SearchFilmCommand = new RelayCommand<object>(
+                para =>
+                {
+                    return true;
+                },
+                para =>
+                {
+                    CollectionViewSource.GetDefaultView(ListFilmDTO).Refresh();
+                }
+            );
+
+
+        }
+        private bool UserFilter(object item)
+        {
+            if (string.IsNullOrEmpty(SearchString)) return true;
+            else 
+                return ((item as FilmDTO).TenPhim.IndexOf(SearchString, System.StringComparison.OrdinalIgnoreCase) >= 0);
         }
     }
 }

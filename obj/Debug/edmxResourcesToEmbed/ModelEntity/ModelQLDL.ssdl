@@ -1,0 +1,233 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="QLDLRapPhimModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CumRap">
+    <Key>
+      <PropertyRef Name="MaCum" />
+    </Key>
+    <Property Name="MaCum" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="TenCum" Type="nvarchar" MaxLength="50" />
+    <Property Name="DiaChi" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="KeHoach">
+    <Key>
+      <PropertyRef Name="MaPhim" />
+      <PropertyRef Name="MaCum" />
+      <PropertyRef Name="NgayKhoiChieu" />
+      <PropertyRef Name="NgayKetThuc" />
+    </Key>
+    <Property Name="MaPhim" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="MaCum" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="NgayKhoiChieu" Type="date" Nullable="false" />
+    <Property Name="NgayKetThuc" Type="date" Nullable="false" />
+    <Property Name="GhiChu" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'QLDLRapPhim.dbo.LichChieu' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="LichChieu">
+    <Key>
+      <PropertyRef Name="MaPhim" />
+      <PropertyRef Name="MaRap" />
+      <PropertyRef Name="NgayChieu" />
+    </Key>
+    <Property Name="MaPhim" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="MaRap" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="NgayChieu" Type="date" Nullable="false" />
+    <Property Name="ChuoiMaSuat" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Phim">
+    <Key>
+      <PropertyRef Name="MaPhim" />
+    </Key>
+    <Property Name="MaPhim" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="TenPhim" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="MaTheLoaiChinh" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="ThoiLuong" Type="int" />
+  </EntityType>
+  <EntityType Name="PhimTheLoaiPhu">
+    <Key>
+      <PropertyRef Name="MaPhim" />
+      <PropertyRef Name="MaTheLoai" />
+    </Key>
+    <Property Name="MaPhim" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="MaTheLoai" Type="varchar" MaxLength="5" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Rap">
+    <Key>
+      <PropertyRef Name="MaRap" />
+    </Key>
+    <Property Name="MaRap" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="TongGhe" Type="int" />
+    <Property Name="MaCum" Type="varchar" MaxLength="5" />
+  </EntityType>
+  <EntityType Name="SuatChieu">
+    <Key>
+      <PropertyRef Name="MaSuat" />
+    </Key>
+    <Property Name="MaSuat" Type="varchar" MaxLength="3" Nullable="false" />
+    <Property Name="GioBatDau" Type="int" />
+    <Property Name="PhutBatDau" Type="int" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="TheLoai">
+    <Key>
+      <PropertyRef Name="MaTheLoai" />
+    </Key>
+    <Property Name="MaTheLoai" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="TenTheLoai" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_KeHoach_CumRap">
+    <End Role="CumRap" Type="Self.CumRap" Multiplicity="1" />
+    <End Role="KeHoach" Type="Self.KeHoach" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CumRap">
+        <PropertyRef Name="MaCum" />
+      </Principal>
+      <Dependent Role="KeHoach">
+        <PropertyRef Name="MaCum" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_KeHoach_Phim">
+    <End Role="Phim" Type="Self.Phim" Multiplicity="1" />
+    <End Role="KeHoach" Type="Self.KeHoach" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Phim">
+        <PropertyRef Name="MaPhim" />
+      </Principal>
+      <Dependent Role="KeHoach">
+        <PropertyRef Name="MaPhim" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LichChieu_Phim">
+    <End Role="Phim" Type="Self.Phim" Multiplicity="1" />
+    <End Role="LichChieu" Type="Self.LichChieu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Phim">
+        <PropertyRef Name="MaPhim" />
+      </Principal>
+      <Dependent Role="LichChieu">
+        <PropertyRef Name="MaPhim" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LichChieu_Rap">
+    <End Role="Rap" Type="Self.Rap" Multiplicity="1" />
+    <End Role="LichChieu" Type="Self.LichChieu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rap">
+        <PropertyRef Name="MaRap" />
+      </Principal>
+      <Dependent Role="LichChieu">
+        <PropertyRef Name="MaRap" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Phim_TheLoai">
+    <End Role="TheLoai" Type="Self.TheLoai" Multiplicity="1" />
+    <End Role="Phim" Type="Self.Phim" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TheLoai">
+        <PropertyRef Name="MaTheLoai" />
+      </Principal>
+      <Dependent Role="Phim">
+        <PropertyRef Name="MaTheLoaiChinh" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PhimTheLoaiPhu_Phim">
+    <End Role="Phim" Type="Self.Phim" Multiplicity="1" />
+    <End Role="PhimTheLoaiPhu" Type="Self.PhimTheLoaiPhu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Phim">
+        <PropertyRef Name="MaPhim" />
+      </Principal>
+      <Dependent Role="PhimTheLoaiPhu">
+        <PropertyRef Name="MaPhim" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PhimTheLoaiPhu_TheLoai">
+    <End Role="TheLoai" Type="Self.TheLoai" Multiplicity="1" />
+    <End Role="PhimTheLoaiPhu" Type="Self.PhimTheLoaiPhu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TheLoai">
+        <PropertyRef Name="MaTheLoai" />
+      </Principal>
+      <Dependent Role="PhimTheLoaiPhu">
+        <PropertyRef Name="MaTheLoai" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Rap_CumRap">
+    <End Role="CumRap" Type="Self.CumRap" Multiplicity="0..1" />
+    <End Role="Rap" Type="Self.Rap" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CumRap">
+        <PropertyRef Name="MaCum" />
+      </Principal>
+      <Dependent Role="Rap">
+        <PropertyRef Name="MaCum" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="QLDLRapPhimModelStoreContainer">
+    <EntitySet Name="CumRap" EntityType="Self.CumRap" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="KeHoach" EntityType="Self.KeHoach" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Phim" EntityType="Self.Phim" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PhimTheLoaiPhu" EntityType="Self.PhimTheLoaiPhu" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Rap" EntityType="Self.Rap" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SuatChieu" EntityType="Self.SuatChieu" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TheLoai" EntityType="Self.TheLoai" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LichChieu" EntityType="Self.LichChieu" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [LichChieu].[MaPhim] AS [MaPhim], 
+    [LichChieu].[MaRap] AS [MaRap], 
+    [LichChieu].[NgayChieu] AS [NgayChieu], 
+    [LichChieu].[ChuoiMaSuat] AS [ChuoiMaSuat]
+    FROM [dbo].[LichChieu] AS [LichChieu]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_KeHoach_CumRap" Association="Self.FK_KeHoach_CumRap">
+      <End Role="CumRap" EntitySet="CumRap" />
+      <End Role="KeHoach" EntitySet="KeHoach" />
+    </AssociationSet>
+    <AssociationSet Name="FK_KeHoach_Phim" Association="Self.FK_KeHoach_Phim">
+      <End Role="Phim" EntitySet="Phim" />
+      <End Role="KeHoach" EntitySet="KeHoach" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LichChieu_Phim" Association="Self.FK_LichChieu_Phim">
+      <End Role="Phim" EntitySet="Phim" />
+      <End Role="LichChieu" EntitySet="LichChieu" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LichChieu_Rap" Association="Self.FK_LichChieu_Rap">
+      <End Role="Rap" EntitySet="Rap" />
+      <End Role="LichChieu" EntitySet="LichChieu" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Phim_TheLoai" Association="Self.FK_Phim_TheLoai">
+      <End Role="TheLoai" EntitySet="TheLoai" />
+      <End Role="Phim" EntitySet="Phim" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PhimTheLoaiPhu_Phim" Association="Self.FK_PhimTheLoaiPhu_Phim">
+      <End Role="Phim" EntitySet="Phim" />
+      <End Role="PhimTheLoaiPhu" EntitySet="PhimTheLoaiPhu" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PhimTheLoaiPhu_TheLoai" Association="Self.FK_PhimTheLoaiPhu_TheLoai">
+      <End Role="TheLoai" EntitySet="TheLoai" />
+      <End Role="PhimTheLoaiPhu" EntitySet="PhimTheLoaiPhu" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Rap_CumRap" Association="Self.FK_Rap_CumRap">
+      <End Role="CumRap" EntitySet="CumRap" />
+      <End Role="Rap" EntitySet="Rap" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

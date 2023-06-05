@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Project_PTUD_Desktop.Model.DTO
 {
-    public class SuatChieu
+    public class SuatChieuDTO
     {
         private string maSuat;
         private int gioBatDau;
@@ -17,13 +17,13 @@ namespace Project_PTUD_Desktop.Model.DTO
         public int GioBatDau { get => gioBatDau; set => gioBatDau = value; }
         public int PhutBatDau { get => phutBatDau; set => phutBatDau = value; }
 
-        public SuatChieu(string maSuat, int gioBatDau, int phutBatDau)
+        public SuatChieuDTO(string maSuat, int gioBatDau, int phutBatDau)
         {
             this.maSuat = maSuat;
             this.gioBatDau = gioBatDau;
             this.phutBatDau = phutBatDau;
         }
-        public SuatChieu(DataRow row)
+        public SuatChieuDTO(DataRow row)
         {
             maSuat = row["MaSuat"].ToString();
             gioBatDau = (int)row["GioBatDau"];

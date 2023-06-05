@@ -62,7 +62,7 @@
                                         materialDesign:HintAssist.Hint="Tổng ghế"
                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                         Text="{Binding TongGhe_add, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" />
-                                    <ComboBox MinWidth="120" Margin="0 0 30 0"
+                                    <ComboBox x:Name="comboBox_add" MinWidth="120" Margin="0 0 30 0"
                                         materialDesign:HintAssist.Hint="Mã cụm"
                                         ItemsSource="{Binding ListCumRap, Source={StaticResource TheaterClusterVM}}"
                                         DisplayMemberPath="MaCum"
@@ -99,18 +99,18 @@
                                         VerticalAlignment="Center" MinWidth="120" MaxLength="5" Margin="0 0 40 0"
                                         materialDesign:HintAssist.Hint="Mã rạp" IsEnabled="False"
                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                        Text="{Binding MaRap_edit, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" />
+                                        Text="{Binding MaRap_edit, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
                                     <TextBox
                                         VerticalAlignment="Center" MinWidth="120" Margin="0 0 40 0"
                                         materialDesign:HintAssist.Hint="Tổng ghế"
                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                        Text="{Binding TongGhe_edit, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" />
+                                        Text="{Binding TongGhe_edit, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                                     <ComboBox MinWidth="120" Margin="0 0 30 0"
                                         materialDesign:HintAssist.Hint="Mã cụm"
-                                        ItemsSource="{Binding ListCumRap, Source={StaticResource TheaterClusterVM}}"
+                                        ItemsSource="{Binding ElementName=comboBox_add, Path=ItemsSource}"
                                         DisplayMemberPath="MaCum"
                                         Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                        SelectedItem="{Binding SelectedCumRap_edit, Mode=OneWayToSource}" />
+                                        SelectedItem="{Binding SelectedCumRap_edit, Mode=TwoWay}" />
                                 </StackPanel>
                             </Grid>
                         </Grid>
@@ -142,48 +142,42 @@
                     </TabItem.Header>
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="70"></RowDefinition>
                             <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid Grid.Row="0" Margin="0 10 0 10">
-                                <StackPanel Orientation="Horizontal" Width="Auto" Margin="25 0 25 0">
+                            <Grid>
+                                <StackPanel Orientation="Horizontal" Width="Auto" Margin="25 5 25 5" VerticalAlignment="Top">
                                     <TextBox
                                         VerticalAlignment="Center" MinWidth="120" MaxLength="5" Margin="0 0 40 0"
-                                        materialDesign:HintAssist.Hint="Mã cụm" IsEnabled="False"
+                                        materialDesign:HintAssist.Hint="Mã rạp" IsEnabled="False"
                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                        Text="{Binding MaCum_delete, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+                                        Text="{Binding MaRap_delete}" />
                                     <TextBox
-                                        VerticalAlignment="Center" MinWidth="200"
-                                        materialDesign:HintAssist.Hint="Tên cụm" IsEnabled="False"
+                                        VerticalAlignment="Center" MinWidth="120" Margin="0 0 40 0"
+                                        materialDesign:HintAssist.Hint="Tổng ghế" IsEnabled="False"
                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                        Text="{Binding TenCum_delete, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+                                        Text="{Binding TongGhe_delete}" />
+                                    <TextBox
+                                        VerticalAlignment="Center" MinWidth="120" Margin="0 0 40 0"
+                                        materialDesign:HintAssist.Hint="Tổng ghế" IsEnabled="False"
+                                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                        Text="{Binding MaCum_delete}" />
                                 </StackPanel>
-                            </Grid>
-                            <Grid Grid.Row="1" Margin="25 10 25 10">
-                                <TextBox
-                                    VerticalAlignment="Center" MinWidth="400"
-                                    materialDesign:HintAssist.Hint="Địa chỉ" TextWrapping="Wrap" IsEnabled="False"
-                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                    Text="{Binding DiaChi_delete, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
                             </Grid>
                         </Grid>
                         <Grid Grid.Row="1">
-                            <Button Command="{Binding DeleteCommand}" IsDefault="True"
-                                    Width="160" HorizontalAlignment="Center" VerticalAlignment="Center" >Xoá rạp</Button>
+                            <Button Command="{Binding DeleteCommand}" IsDefault="True" Margin="0 5 0 5"
+                                    Width="160" HorizontalAlignment="Center" VerticalAlignment="Center" >Xóa rạp</Button>
                         </Grid>
                         <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                            <ListView ItemsSource="{Binding ListCumRap}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}">
+                            <ListView ItemsSource="{Binding ListRap}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}">
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn Header="Mã Rạp" DisplayMemberBinding="{Binding MaCum}"></GridViewColumn>
-                                        <GridViewColumn Header="Tên Rạp" DisplayMemberBinding="{Binding TenCum}"></GridViewColumn>
-                                        <GridViewColumn Header="Địa Chỉ" DisplayMemberBinding="{Binding DiaChi}"></GridViewColumn>
+                                        <GridViewColumn Header="Mã Rạp" DisplayMemberBinding="{Binding MaRap}"></GridViewColumn>
+                                        <GridViewColumn Header="Tổng Ghế" DisplayMemberBinding="{Binding TongGhe}"></GridViewColumn>
+                                        <GridViewColumn Header="Mã Cụm" DisplayMemberBinding="{Binding MaCum}"></GridViewColumn>
                                     </GridView>
                                 </ListView.View>
                             </ListView>

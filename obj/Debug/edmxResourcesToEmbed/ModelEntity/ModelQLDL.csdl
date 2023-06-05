@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="QLDLRapPhimModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="CumRap">
+    <Key>
+      <PropertyRef Name="MaCum" />
+    </Key>
+    <Property Name="MaCum" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TenCum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DiaChi" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="KeHoaches" Relationship="Self.FK_KeHoach_CumRap" FromRole="CumRap" ToRole="KeHoach" />
+    <NavigationProperty Name="Raps" Relationship="Self.FK_Rap_CumRap" FromRole="CumRap" ToRole="Rap" />
+  </EntityType>
+  <EntityType Name="KeHoach">
+    <Key>
+      <PropertyRef Name="MaPhim" />
+      <PropertyRef Name="MaCum" />
+      <PropertyRef Name="NgayKhoiChieu" />
+      <PropertyRef Name="NgayKetThuc" />
+    </Key>
+    <Property Name="MaPhim" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MaCum" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NgayKhoiChieu" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="NgayKetThuc" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="GhiChu" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="CumRap" Relationship="Self.FK_KeHoach_CumRap" FromRole="KeHoach" ToRole="CumRap" />
+    <NavigationProperty Name="Phim" Relationship="Self.FK_KeHoach_Phim" FromRole="KeHoach" ToRole="Phim" />
+  </EntityType>
+  <EntityType Name="Phim">
+    <Key>
+      <PropertyRef Name="MaPhim" />
+    </Key>
+    <Property Name="MaPhim" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TenPhim" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MaTheLoaiChinh" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ThoiLuong" Type="Int32" />
+    <NavigationProperty Name="KeHoaches" Relationship="Self.FK_KeHoach_Phim" FromRole="Phim" ToRole="KeHoach" />
+    <NavigationProperty Name="LichChieux" Relationship="Self.FK_LichChieu_Phim" FromRole="Phim" ToRole="LichChieu" />
+    <NavigationProperty Name="TheLoai" Relationship="Self.FK_Phim_TheLoai" FromRole="Phim" ToRole="TheLoai" />
+    <NavigationProperty Name="TheLoais" Relationship="Self.PhimTheLoaiPhu" FromRole="Phim" ToRole="TheLoai" />
+  </EntityType>
+  <EntityType Name="Rap">
+    <Key>
+      <PropertyRef Name="MaRap" />
+    </Key>
+    <Property Name="MaRap" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TongGhe" Type="Int32" />
+    <Property Name="MaCum" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CumRap" Relationship="Self.FK_Rap_CumRap" FromRole="Rap" ToRole="CumRap" />
+    <NavigationProperty Name="LichChieux" Relationship="Self.FK_LichChieu_Rap" FromRole="Rap" ToRole="LichChieu" />
+  </EntityType>
+  <EntityType Name="SuatChieu">
+    <Key>
+      <PropertyRef Name="MaSuat" />
+    </Key>
+    <Property Name="MaSuat" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="GioBatDau" Type="Int32" />
+    <Property Name="PhutBatDau" Type="Int32" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="TheLoai">
+    <Key>
+      <PropertyRef Name="MaTheLoai" />
+    </Key>
+    <Property Name="MaTheLoai" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TenTheLoai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Phims" Relationship="Self.FK_Phim_TheLoai" FromRole="TheLoai" ToRole="Phim" />
+    <NavigationProperty Name="Phims1" Relationship="Self.PhimTheLoaiPhu" FromRole="TheLoai" ToRole="Phim" />
+  </EntityType>
+  <EntityType Name="LichChieu">
+    <Key>
+      <PropertyRef Name="MaPhim" />
+      <PropertyRef Name="MaRap" />
+      <PropertyRef Name="NgayChieu" />
+    </Key>
+    <Property Name="MaPhim" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MaRap" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NgayChieu" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="ChuoiMaSuat" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Phim" Relationship="Self.FK_LichChieu_Phim" FromRole="LichChieu" ToRole="Phim" />
+    <NavigationProperty Name="Rap" Relationship="Self.FK_LichChieu_Rap" FromRole="LichChieu" ToRole="Rap" />
+  </EntityType>
+  <Association Name="FK_KeHoach_CumRap">
+    <End Role="CumRap" Type="Self.CumRap" Multiplicity="1" />
+    <End Role="KeHoach" Type="Self.KeHoach" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CumRap">
+        <PropertyRef Name="MaCum" />
+      </Principal>
+      <Dependent Role="KeHoach">
+        <PropertyRef Name="MaCum" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Rap_CumRap">
+    <End Role="CumRap" Type="Self.CumRap" Multiplicity="0..1" />
+    <End Role="Rap" Type="Self.Rap" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CumRap">
+        <PropertyRef Name="MaCum" />
+      </Principal>
+      <Dependent Role="Rap">
+        <PropertyRef Name="MaCum" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_KeHoach_Phim">
+    <End Role="Phim" Type="Self.Phim" Multiplicity="1" />
+    <End Role="KeHoach" Type="Self.KeHoach" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Phim">
+        <PropertyRef Name="MaPhim" />
+      </Principal>
+      <Dependent Role="KeHoach">
+        <PropertyRef Name="MaPhim" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LichChieu_Phim">
+    <End Role="Phim" Type="Self.Phim" Multiplicity="1" />
+    <End Role="LichChieu" Type="Self.LichChieu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Phim">
+        <PropertyRef Name="MaPhim" />
+      </Principal>
+      <Dependent Role="LichChieu">
+        <PropertyRef Name="MaPhim" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Phim_TheLoai">
+    <End Role="TheLoai" Type="Self.TheLoai" Multiplicity="1" />
+    <End Role="Phim" Type="Self.Phim" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TheLoai">
+        <PropertyRef Name="MaTheLoai" />
+      </Principal>
+      <Dependent Role="Phim">
+        <PropertyRef Name="MaTheLoaiChinh" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LichChieu_Rap">
+    <End Role="Rap" Type="Self.Rap" Multiplicity="1" />
+    <End Role="LichChieu" Type="Self.LichChieu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rap">
+        <PropertyRef Name="MaRap" />
+      </Principal>
+      <Dependent Role="LichChieu">
+        <PropertyRef Name="MaRap" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PhimTheLoaiPhu">
+    <End Role="Phim" Type="Self.Phim" Multiplicity="*" />
+    <End Role="TheLoai" Type="Self.TheLoai" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="QLDLRapPhimEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CumRaps" EntityType="Self.CumRap" />
+    <EntitySet Name="KeHoaches" EntityType="Self.KeHoach" />
+    <EntitySet Name="Phims" EntityType="Self.Phim" />
+    <EntitySet Name="Raps" EntityType="Self.Rap" />
+    <EntitySet Name="SuatChieux" EntityType="Self.SuatChieu" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="TheLoais" EntityType="Self.TheLoai" />
+    <EntitySet Name="LichChieux" EntityType="Self.LichChieu" />
+    <AssociationSet Name="FK_KeHoach_CumRap" Association="Self.FK_KeHoach_CumRap">
+      <End Role="CumRap" EntitySet="CumRaps" />
+      <End Role="KeHoach" EntitySet="KeHoaches" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Rap_CumRap" Association="Self.FK_Rap_CumRap">
+      <End Role="CumRap" EntitySet="CumRaps" />
+      <End Role="Rap" EntitySet="Raps" />
+    </AssociationSet>
+    <AssociationSet Name="FK_KeHoach_Phim" Association="Self.FK_KeHoach_Phim">
+      <End Role="Phim" EntitySet="Phims" />
+      <End Role="KeHoach" EntitySet="KeHoaches" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LichChieu_Phim" Association="Self.FK_LichChieu_Phim">
+      <End Role="Phim" EntitySet="Phims" />
+      <End Role="LichChieu" EntitySet="LichChieux" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Phim_TheLoai" Association="Self.FK_Phim_TheLoai">
+      <End Role="TheLoai" EntitySet="TheLoais" />
+      <End Role="Phim" EntitySet="Phims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LichChieu_Rap" Association="Self.FK_LichChieu_Rap">
+      <End Role="Rap" EntitySet="Raps" />
+      <End Role="LichChieu" EntitySet="LichChieux" />
+    </AssociationSet>
+    <AssociationSet Name="PhimTheLoaiPhu" Association="Self.PhimTheLoaiPhu">
+      <End Role="Phim" EntitySet="Phims" />
+      <End Role="TheLoai" EntitySet="TheLoais" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

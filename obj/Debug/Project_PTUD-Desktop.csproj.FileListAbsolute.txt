@@ -46,3 +46,6 @@ D:\Code\University\Dự án\Project_PTUD-Desktop\obj\Debug\CategoryWindow.g.cs
 D:\Code\University\Dự án\Project_PTUD-Desktop\obj\Debug\CategoryWindow.baml
 D:\Code\University\Dự án\Project_PTUD-Desktop\obj\Debug\TheaterWindow.g.cs
 D:\Code\University\Dự án\Project_PTUD-Desktop\obj\Debug\TheaterWindow.baml
+D:\Code\University\Dự án\Project_PTUD-Desktop\obj\Debug\Project_PTUD-Desktop_Content.g.cs
+D:\Code\University\Dự án\Project_PTUD-Desktop\obj\Debug\ShowTimesWindow.g.cs
+D:\Code\University\Dự án\Project_PTUD-Desktop\obj\Debug\ShowTimesWindow.baml

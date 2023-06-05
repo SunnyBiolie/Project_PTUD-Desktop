@@ -73,7 +73,7 @@
                                     <ComboBox SelectedItem="{Binding SelectedCategory_add, Mode=TwoWay}"
                                         Width="200" Padding="8" Margin="0 0 30 0"
                                         materialDesign:HintAssist.Hint="Thể loại chính"
-                                        ItemsSource="{Binding ListTheLoai}" DisplayMemberPath="TenTheLoai"
+                                        ItemsSource="{Binding ListTheLoai, Source={StaticResource CategoryVM}}" DisplayMemberPath="TenTheLoai"
                                         Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
                                     <TextBox
                                         VerticalAlignment="Center" MinWidth="120"
@@ -195,8 +195,8 @@
                         <Grid Grid.Row="1" Margin="0 5 0 5">
                             <Button Command="{Binding EditCommand}" IsDefault="True"
                                     Width="200" HorizontalAlignment="Center" VerticalAlignment="Center" >Cập nhật</Button>
-                            <Button HorizontalAlignment="Right" Command="{Binding CheckCommand}" IsDefault="True"
-                                    Width="200" VerticalAlignment="Center" >Check</Button>
+                            <!--<Button HorizontalAlignment="Right" Command="{Binding CheckCommand}" IsDefault="True"
+                                    Width="200" VerticalAlignment="Center" >Check</Button>-->
                         </Grid>
                         <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                             <ListView ItemsSource="{Binding ListPhim}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}">
@@ -204,8 +204,6 @@
                                     <GridView>
                                         <GridViewColumn Header="Mã Phim" DisplayMemberBinding="{Binding MaPhim}"></GridViewColumn>
                                         <GridViewColumn Header="Tên Phim" DisplayMemberBinding="{Binding TenPhim}"></GridViewColumn>
-                                        <GridViewColumn Header="Thể Loại Chính" DisplayMemberBinding="{Binding TheLoaiChinh.TenTheLoai}"></GridViewColumn>
-                                        <GridViewColumn Header="Thể Loại Phụ" DisplayMemberBinding="{Binding ChuoiTenTheLoaiPhu}"></GridViewColumn>
                                         <GridViewColumn Header="Thời Lượng" DisplayMemberBinding="{Binding ThoiLuong}"></GridViewColumn>
                                     </GridView>
                                 </ListView.View>
@@ -292,8 +290,6 @@
                                     <GridView>
                                         <GridViewColumn Header="Mã Phim" DisplayMemberBinding="{Binding MaPhim}"></GridViewColumn>
                                         <GridViewColumn Header="Tên Phim" DisplayMemberBinding="{Binding TenPhim}"></GridViewColumn>
-                                        <GridViewColumn Header="Thể Loại Chính" DisplayMemberBinding="{Binding TheLoaiChinh.TenTheLoai}"></GridViewColumn>
-                                        <GridViewColumn Header="Thể Loại Phụ" DisplayMemberBinding="{Binding ChuoiTenTheLoaiPhu}"></GridViewColumn>
                                         <GridViewColumn Header="Thời Lượng" DisplayMemberBinding="{Binding ThoiLuong}"></GridViewColumn>
                                     </GridView>
                                 </ListView.View>

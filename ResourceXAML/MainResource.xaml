@@ -9,5 +9,6 @@
     <viewmodel:CategoryViewModel x:Key="CategoryVM"></viewmodel:CategoryViewModel>
     <viewmodel:FilmViewModel x:Key="FilmVM"></viewmodel:FilmViewModel>
     <viewmodel:ScreeningsViewModel x:Key="ScreeningsVM"></viewmodel:ScreeningsViewModel>
+    <viewmodel:ShowTimesViewModel x:Key="ShowTimesVM"></viewmodel:ShowTimesViewModel>
 
 </ResourceDictionary>

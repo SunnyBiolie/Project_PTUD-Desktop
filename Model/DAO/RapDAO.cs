@@ -62,5 +62,12 @@ namespace Project_PTUD_Desktop.Model.DAO
 
             return result > 0;
         }
+        public bool UpdateInfoRap(int tongGhe, string maCum, string maRap)
+        {
+            string query = "Update Rap set TongGhe = @tongGhe , MaCum = @maCum where MaRap = @maRap";
+            int result = DataProvider.Instance.ExecuteNonQuery(query , new object[] { tongGhe, maCum, maRap });
+
+            return result > 0;
+        }
     }
 }

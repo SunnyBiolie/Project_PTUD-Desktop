@@ -15,7 +15,6 @@ namespace Project_PTUD_Desktop.ViewModel
         public ICommand OpenFilmWindowCommand { get; set; }
         public ICommand OpenScreeningsWindowCommand { get; set; }
         public ICommand OpenCategoryWindowCommand { get; set; }
-        public ICommand OpenShowTimesWindowCommand { get; set; }
 
         public MainViewModel()
         {
@@ -41,11 +40,6 @@ namespace Project_PTUD_Desktop.ViewModel
             {
                 CategoryWindow cw = new CategoryWindow();
                 cw.ShowDialog();
-            });
-            OpenShowTimesWindowCommand = new RelayCommand<object>(para => { return true; }, para =>
-            {
-                ShowTimesWindow stw = new ShowTimesWindow();
-                stw.ShowDialog();
             });
         }
     }

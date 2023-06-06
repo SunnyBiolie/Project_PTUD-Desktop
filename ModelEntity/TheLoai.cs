@@ -24,15 +24,13 @@ namespace Project_PTUD_Desktop.ModelEntity
 
         private string _maTheLoai;
         private string _tenTheLoai;
-        private ICollection<Phim> _phims;
-        private ICollection<Phim> _phims1;
 
         public string MaTheLoai { get => _maTheLoai; set { _maTheLoai = value; ; OnPropertyChanged(); } }
         public string TenTheLoai { get => _tenTheLoai; set { _tenTheLoai = value; ; OnPropertyChanged(); } }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Phim> Phims { get => _phims; set { _phims = value; ; OnPropertyChanged(); } }
+        public virtual ICollection<Phim> Phims { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Phim> Phims1 { get => _phims1; set { _phims1 = value; ; OnPropertyChanged(); } }
+        public virtual ICollection<Phim> Phims1 { get; set; }
     }
 }

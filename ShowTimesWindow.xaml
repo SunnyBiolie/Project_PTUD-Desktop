@@ -22,7 +22,8 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         
-        DataContext="{StaticResource ShowTimesVM}" >
+        DataContext="{StaticResource ShowTimesVM}"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -55,7 +56,7 @@
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
-                                <StackPanel Orientation="Horizontal" Width="Auto" Margin="25 0 25 0">
+                                <StackPanel Orientation="Horizontal" Width="Auto" Margin="35 0 35 0">
                                     <TextBox
                                         VerticalAlignment="Center" Width="120" MaxLength="5" Margin="0 0 40 0"
                                         materialDesign:HintAssist.Hint="Mã phim" IsEnabled="False"
@@ -65,37 +66,44 @@
                                                 Width="180" Padding="10" IsEnabled="False" Margin="0 0 40 0"
                                                 materialDesign:HintAssist.Hint="Ngày Chiếu"
                                                 Style="{StaticResource MaterialDesignOutlinedDatePicker}" />
-                                    <ComboBox Width="120" Margin="0 0 30 0"
-                                              materialDesign:HintAssist.Hint="Mã rạp"
-                                              ItemsSource="{Binding ListRap, Source={StaticResource TheaterVM}}"
-                                              DisplayMemberPath="MaRap"
-                                              SelectedItem="{Binding SelectedCumRap_add, Mode=OneWayToSource}"
-                                              Style="{StaticResource MaterialDesignFloatingHintComboBox}" >
-                                    </ComboBox>
+                                    <TextBox
+                                        VerticalAlignment="Center" Width="120" Margin="0 0 40 0"
+                                        materialDesign:HintAssist.Hint="Thời lượng" IsEnabled="False"
+                                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                        Text="{Binding ThoiLuongForShowTimes, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
                                 </StackPanel>
                             </Grid>
-                            <Grid Grid.Row="1" Margin="25 0 25 0">
+                            <Grid Grid.Row="1" Margin="35 0 25 0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                                     <ColumnDefinition></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
-                                <ComboBox Grid.Column="0" Width="120" Margin="0 0 30 0"
+                                <StackPanel Grid.Column="0">
+                                    <ComboBox Width="120" Margin="0 10 5 15"
+                                              materialDesign:HintAssist.Hint="Mã rạp"
+                                              ItemsSource="{Binding ListRap, Source={StaticResource TheaterVM}}"
+                                              DisplayMemberPath="MaRap"
+                                              SelectedItem="{Binding SelectedRap_add, Source={StaticResource ShowTimesVM}, Mode=OneWayToSource}"
+                                              Style="{StaticResource MaterialDesignFloatingHintComboBox}" >
+                                    </ComboBox>
+                                    <ComboBox Width="120" Margin="0 0 5 0"
                                         materialDesign:HintAssist.Hint="Suất chiếu"
                                         ItemsSource="{Binding ListSuatChieu, Source={StaticResource ScreeningsVM}}"
                                         SelectedItem="{Binding SelectedScreenings_add, Mode=OneWayToSource}"
                                         Style="{StaticResource MaterialDesignFloatingHintComboBox}">
-                                    <ComboBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="{Binding MaSuat}"></TextBlock>
-                                                <TextBlock Text=" - "></TextBlock>
-                                                <TextBlock Text="{Binding GioBatDau}"></TextBlock>
-                                                <TextBlock Text=":"></TextBlock>
-                                                <TextBlock Text="{Binding PhutBatDau}"></TextBlock>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </ComboBox.ItemTemplate>
-                                </ComboBox>
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding MaSuat}"></TextBlock>
+                                                    <TextBlock Text=" - "></TextBlock>
+                                                    <TextBlock Text="{Binding GioBatDau}"></TextBlock>
+                                                    <TextBlock Text=":"></TextBlock>
+                                                    <TextBlock Text="{Binding PhutBatDau}"></TextBlock>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                </StackPanel>
                                 <GroupBox Grid.Column="1" Margin="8" Padding="5" Header="Danh sách suất chiếu" Width="320" Height="Auto">
                                     <Grid>
                                         <Grid.RowDefinitions>
@@ -103,12 +111,12 @@
                                             <RowDefinition Height="Auto"></RowDefinition>
                                         </Grid.RowDefinitions>
                                         <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
-                                            <TextBlock TextWrapping="Wrap" Text="{Binding ChuoiTenTheLoaiPhu_edit, Mode=OneWay}" />
+                                            <TextBlock TextWrapping="Wrap" Text="{Binding ListDisplaySuatChieu_add, Mode=OneWay}" />
                                         </ScrollViewer>
                                         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                                            <Button Command="{Binding AddSubCategory_Edit}" Width="70" Height="30" FontSize="12" FontWeight="Light" Margin="0 0 10 0">Thêm</Button>
-                                            <Button Command="{Binding RemoveSubCategory_Edit}" Width="70" Height="30" FontSize="12" FontWeight="Light" Margin="0 0 10 0">Xóa</Button>
-                                            <Button Command="{Binding ClearAllSubCategory_Edit}" Width="70" Height="30" FontSize="12" FontWeight="Light">Clear</Button>
+                                            <Button Command="{Binding AddScreenings_add}" Width="70" Height="30" FontSize="12" FontWeight="Light" Margin="0 0 10 0" Content="Thêm"></Button>
+                                            <Button Command="{Binding RemoveScreenings_add}" Width="70" Height="30" FontSize="12" FontWeight="Light" Margin="0 0 10 0">Xóa</Button>
+                                            <Button Command="{Binding ClearScreenings_add}" Width="70" Height="30" FontSize="12" FontWeight="Light">Clear</Button>
                                         </StackPanel>
                                     </Grid>
                                 </GroupBox>
@@ -144,15 +152,19 @@
                             <Grid Grid.Row="0" Margin="10">
                                 <StackPanel Orientation="Horizontal" Width="Auto" Margin="20 0 20 0">
                                     <TextBox
-                                        VerticalAlignment="Center" MinWidth="100" MaxLength="5" Margin="0 0 30 0"
+                                        VerticalAlignment="Center" Width="120" MaxLength="5" Margin="0 0 40 0"
                                         materialDesign:HintAssist.Hint="Mã phim" IsEnabled="False"
                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                        Text="{Binding MaPhim_edit, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                        Text="{Binding MaPhimForShowTimes, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+                                    <DatePicker SelectedDate="{Binding NgayChieuForShowTimes, Mode=OneWay}"
+                                                Width="180" Padding="10" IsEnabled="False" Margin="0 0 40 0"
+                                                materialDesign:HintAssist.Hint="Ngày Chiếu"
+                                                Style="{StaticResource MaterialDesignOutlinedDatePicker}" />
                                     <TextBox
-                                        VerticalAlignment="Center" MinWidth="380"
-                                        materialDesign:HintAssist.Hint="Tên phim" TextWrapping="Wrap"
+                                        VerticalAlignment="Center" Width="120" Margin="0 0 40 0"
+                                        materialDesign:HintAssist.Hint="Thời lượng" IsEnabled="False"
                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                        Text="{Binding TenPhim_edit, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                        Text="{Binding ThoiLuongForShowTimes, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
                                 </StackPanel>
                             </Grid>
                             <Grid Grid.Row="1">
@@ -162,38 +174,44 @@
                                 </Grid.ColumnDefinitions>
                                 <Grid Grid.Column="0" Margin="10 0 10 0">
                                     <StackPanel Orientation="Vertical" Width="Auto" Margin="20 10 20 10" >
-                                        <!--<DatePicker SelectedDate="{Binding NgayChieuForShowTimes, Mode=OneWay}"
-                                                                Width="180" Padding="10"
-                                                                materialDesign:HintAssist.HelperText="Chọn ngày để xem lịch chiếu"
-                                                                materialDesign:HintAssist.Hint="Ngày Chiếu"
-                                                                Style="{StaticResource MaterialDesignOutlinedDatePicker}" />-->
                                         <TextBox
-                                            HorizontalAlignment="Left" Width="120"
-                                            materialDesign:HintAssist.Hint="Thời lượng" TextWrapping="Wrap"
+                                            VerticalAlignment="Center" Width="120" Margin="0 0 5 10"
+                                            materialDesign:HintAssist.Hint="Mã rạp" IsEnabled="False"
                                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                            Text="{Binding ThoiLuong_edit, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                                        <ComboBox HorizontalAlignment="Left"
-                                            SelectedItem="{Binding SelectedSubCategory_edit, Mode=TwoWay}"
-                                            Width="200" Padding="8" Margin="0 10 15 0"
-                                            materialDesign:HintAssist.Hint="Thể loại phụ"
-                                            ItemsSource="{ Binding ListTheLoai}" DisplayMemberPath="TenTheLoai"
-                                            Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
+                                            Text="{Binding MaRap_edit, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+                                        <ComboBox Width="120" Margin="0 0 5 0"
+                                                materialDesign:HintAssist.Hint="Suất chiếu"
+                                                ItemsSource="{Binding ListSuatChieu, Source={StaticResource ScreeningsVM}}"
+                                                SelectedItem="{Binding SelectedScreenings_edit, Mode=TwoWay}"
+                                                Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="{Binding MaSuat}"></TextBlock>
+                                                        <TextBlock Text=" - "></TextBlock>
+                                                        <TextBlock Text="{Binding GioBatDau}"></TextBlock>
+                                                        <TextBlock Text=":"></TextBlock>
+                                                        <TextBlock Text="{Binding PhutBatDau}"></TextBlock>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
                                     </StackPanel>
                                 </Grid>
-                                <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="0 0 30 0" Height="Auto">
-                                    <GroupBox Margin="8" Padding="5" Header="Danh sách thể loại phụ (nếu có)" Width="320" Height="Auto">
+                                <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="30 0 30 0" Height="Auto">
+                                    <GroupBox Margin="8" Padding="5" Header="Danh sách giờ chiếu" Width="350" Height="Auto">
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition></RowDefinition>
                                                 <RowDefinition Height="Auto"></RowDefinition>
                                             </Grid.RowDefinitions>
                                             <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
-                                                <TextBlock TextWrapping="Wrap" Text="{Binding ChuoiTenTheLoaiPhu_edit, Mode=OneWay}" />
+                                                <TextBlock TextWrapping="Wrap" Text="{Binding ListDisplaySuatChieu_edit, Mode=OneWay}" />
                                             </ScrollViewer>
                                             <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                                                <Button Command="{Binding AddSubCategory_Edit}" Width="70" Height="30" FontSize="12" FontWeight="Light" Margin="0 0 10 0">Thêm</Button>
-                                                <Button Command="{Binding RemoveSubCategory_Edit}" Width="70" Height="30" FontSize="12" FontWeight="Light" Margin="0 0 10 0">Xóa</Button>
-                                                <Button Command="{Binding ClearAllSubCategory_Edit}" Width="70" Height="30" FontSize="12" FontWeight="Light">Clear</Button>
+                                                <Button Command="{Binding AddScreenings_edit}" Width="70" Height="30" FontSize="12" FontWeight="Light" Margin="0 0 10 0">Thêm</Button>
+                                                <Button Command="{Binding RemoveScreenings_edit}" Width="70" Height="30" FontSize="12" FontWeight="Light" Margin="0 0 10 0">Xóa</Button>
+                                                <Button Command="{Binding ClearScreenings_edit}" Width="70" Height="30" FontSize="12" FontWeight="Light">Clear</Button>
                                             </StackPanel>
                                         </Grid>
                                     </GroupBox>
@@ -207,12 +225,12 @@
                                     Width="200" VerticalAlignment="Center" >Check</Button>-->
                         </Grid>
                         <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                            <ListView ItemsSource="{Binding ListLichChieu}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}">
+                            <ListView ItemsSource="{Binding ListShowTimesDTO}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="Mã Rạp" DisplayMemberBinding="{Binding MaRap}"></GridViewColumn>
-                                        <GridViewColumn Header="Ngày Chiếu" DisplayMemberBinding="{Binding NgayChieu}"></GridViewColumn>
                                         <GridViewColumn Header="Chuỗi Mã Suất" DisplayMemberBinding="{Binding ChuoiMaSuat}"></GridViewColumn>
+                                        <GridViewColumn Header="Giờ Chiếu" DisplayMemberBinding="{Binding DisplayChuoiMaSuat}"></GridViewColumn>
                                     </GridView>
                                 </ListView.View>
                             </ListView>
@@ -230,7 +248,75 @@
                         </StackPanel>
                     </TabItem.Header>
                     <Grid>
-
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0" Margin="10">
+                                <StackPanel Orientation="Horizontal" Width="Auto" Margin="20 0 20 0">
+                                    <TextBox
+                                        VerticalAlignment="Center" Width="120" MaxLength="5" Margin="0 0 40 0"
+                                        materialDesign:HintAssist.Hint="Mã phim" IsEnabled="False"
+                                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                        Text="{Binding MaPhimForShowTimes, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+                                    <DatePicker SelectedDate="{Binding NgayChieuForShowTimes, Mode=OneWay}"
+                                                Width="180" Padding="10" IsEnabled="False" Margin="0 0 40 0"
+                                                materialDesign:HintAssist.Hint="Ngày Chiếu"
+                                                Style="{StaticResource MaterialDesignOutlinedDatePicker}" />
+                                    <TextBox
+                                            VerticalAlignment="Center" Width="120" Margin="0 0 5 10"
+                                            materialDesign:HintAssist.Hint="Mã rạp" IsEnabled="False"
+                                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                            Text="{Binding MaRap_delete, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+                                </StackPanel>
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0">
+                                    
+                                </Grid>
+                                <Grid Grid.Column="1" Margin="30 0 30 0" Height="Auto">
+                                    <GroupBox Margin="10" Padding="5" Header="Danh sách giờ chiếu" Width="350" Height="Auto">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition></RowDefinition>
+                                                <RowDefinition Height="Auto"></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+                                                <TextBlock MinHeight="60" TextWrapping="Wrap" Text="{Binding ListDisplaySuatChieu_delete, Mode=OneWay}" />
+                                            </ScrollViewer>
+                                        </Grid>
+                                    </GroupBox>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        <Grid Grid.Row="1" Margin="0 5 0 5">
+                            <Button Command="{Binding DeleteCommand}" IsDefault="True"
+                                    Width="200" HorizontalAlignment="Center" VerticalAlignment="Center" >Xóa lịch chiếu</Button>
+                            <!--<Button HorizontalAlignment="Right" Command="{Binding CheckCommand}" IsDefault="True"
+                                    Width="200" VerticalAlignment="Center" >Check</Button>-->
+                        </Grid>
+                        <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                            <ListView ItemsSource="{Binding ListShowTimesDTO}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="Mã Rạp" DisplayMemberBinding="{Binding MaRap}"></GridViewColumn>
+                                        <GridViewColumn Header="Chuỗi Mã Suất" DisplayMemberBinding="{Binding ChuoiMaSuat}"></GridViewColumn>
+                                        <GridViewColumn Header="Giờ Chiếu" DisplayMemberBinding="{Binding DisplayChuoiMaSuat}"></GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </ScrollViewer>
                     </Grid>
                 </TabItem>
             </TabControl>

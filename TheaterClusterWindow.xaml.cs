@@ -22,8 +22,6 @@ namespace Project_PTUD_Desktop
         public TheaterClusterWindow()
         {
             InitializeComponent();
-
-            string some = "hg";
         }
     }
 }

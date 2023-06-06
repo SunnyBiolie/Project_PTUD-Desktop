@@ -92,8 +92,12 @@
     </Compile>
     <Compile Include="ModelEntity\DataProvider.cs" />
     <Compile Include="ModelEntity\EntityDAO\CategoryDAO.cs" />
+    <Compile Include="ModelEntity\EntityDAO\DataProviderDirect.cs" />
     <Compile Include="ModelEntity\EntityDAO\FilmDAO.cs" />
+    <Compile Include="ModelEntity\EntityDAO\ScreeningsDAO.cs" />
+    <Compile Include="ModelEntity\EntityDAO\ShowTimesDAO.cs" />
     <Compile Include="ModelEntity\EntityDTO\FilmDTO.cs" />
+    <Compile Include="ModelEntity\EntityDTO\ShowTimesDTO.cs" />
     <Compile Include="ModelEntity\KeHoach.cs">
       <DependentUpon>ModelQLDL.tt</DependentUpon>
     </Compile>

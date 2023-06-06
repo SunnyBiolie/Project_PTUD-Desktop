@@ -9,13 +9,10 @@
 
 namespace Project_PTUD_Desktop.ModelEntity
 {
-    using Project_PTUD_Desktop.Model.DTO;
-    using Project_PTUD_Desktop.ModelEntity.EntityDAO;
     using Project_PTUD_Desktop.ViewModel;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-
+    
     public partial class Phim : BaseViewModel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -29,22 +26,19 @@ namespace Project_PTUD_Desktop.ModelEntity
         private string _maPhim;
         private string _tenPhim;
         private string _maTheLoaiChinh;
-        private Nullable<int> _thoiLuong;
-        private  ICollection<KeHoach> _keHoaches;
-        private  ICollection<LichChieu> _lichChieux;
-        private  ICollection<TheLoai> _theLoais;
+        private int _thoiLuong;
 
         public string MaPhim { get => _maPhim; set { _maPhim = value; OnPropertyChanged(); } }
         public string TenPhim { get => _tenPhim; set { _tenPhim = value; OnPropertyChanged(); } }
         public string MaTheLoaiChinh { get => _maTheLoaiChinh; set { _maTheLoaiChinh = value; OnPropertyChanged(); } }
-        public Nullable<int> ThoiLuong { get => _thoiLuong; set { _thoiLuong = value; OnPropertyChanged(); } }
-    
+        public int ThoiLuong { get => _thoiLuong; set { _thoiLuong = value; OnPropertyChanged(); } }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<KeHoach> KeHoaches { get => _keHoaches; set { _keHoaches = value; OnPropertyChanged(); } }
+        public virtual ICollection<KeHoach> KeHoaches { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LichChieu> LichChieux { get => _lichChieux; set { _lichChieux = value; OnPropertyChanged(); } }
+        public virtual ICollection<LichChieu> LichChieux { get; set; }
         public virtual TheLoai TheLoai { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TheLoai> TheLoais { get => _theLoais; set { _theLoais = value; OnPropertyChanged(); } }
+        public virtual ICollection<TheLoai> TheLoais { get; set; }
     }
 }

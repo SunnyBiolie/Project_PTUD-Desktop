@@ -22,7 +22,6 @@ namespace Project_PTUD_Desktop.ModelEntity.EntityDAO
         }
         private FilmDAO() { }
 
-
         public ObservableCollection<FilmDTO> GetMoreDetailListFilmFromListPhim(ObservableCollection<Phim> phims)
         {
             ObservableCollection<FilmDTO> list = new ObservableCollection<FilmDTO>();
@@ -34,6 +33,11 @@ namespace Project_PTUD_Desktop.ModelEntity.EntityDAO
             }
 
             return list;
+        }
+
+        public int GetThoiLuongByMaPhim(string MaPhim)
+        {
+            return DataProvider.Instance.Database.Phims.FirstOrDefault(p => p.MaPhim == MaPhim).ThoiLuong;
         }
     }
 }

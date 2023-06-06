@@ -20,7 +20,8 @@
         TextElement.FontWeight="Regular"
         Background="{DynamicResource MaterialDesignPaper}"
         
-        DataContext="{StaticResource FilmVM}" >
+        DataContext="{StaticResource FilmVM}" 
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" >
 
     <Grid>
         <Grid.RowDefinitions>

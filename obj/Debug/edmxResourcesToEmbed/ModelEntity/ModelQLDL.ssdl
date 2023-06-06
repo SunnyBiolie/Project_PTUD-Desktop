@@ -5,8 +5,8 @@
       <PropertyRef Name="MaCum" />
     </Key>
     <Property Name="MaCum" Type="varchar" MaxLength="5" Nullable="false" />
-    <Property Name="TenCum" Type="nvarchar" MaxLength="50" />
-    <Property Name="DiaChi" Type="nvarchar" MaxLength="200" />
+    <Property Name="TenCum" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="DiaChi" Type="nvarchar" MaxLength="200" Nullable="false" />
   </EntityType>
   <EntityType Name="KeHoach">
     <Key>
@@ -28,11 +28,12 @@ warning 6002: The table/view 'QLDLRapPhim.dbo.LichChieu' does not have a primary
       <PropertyRef Name="MaPhim" />
       <PropertyRef Name="MaRap" />
       <PropertyRef Name="NgayChieu" />
+      <PropertyRef Name="ChuoiMaSuat" />
     </Key>
     <Property Name="MaPhim" Type="varchar" MaxLength="10" Nullable="false" />
     <Property Name="MaRap" Type="varchar" MaxLength="5" Nullable="false" />
     <Property Name="NgayChieu" Type="date" Nullable="false" />
-    <Property Name="ChuoiMaSuat" Type="nvarchar" MaxLength="100" />
+    <Property Name="ChuoiMaSuat" Type="nvarchar" MaxLength="100" Nullable="false" />
   </EntityType>
   <EntityType Name="Phim">
     <Key>
@@ -41,7 +42,7 @@ warning 6002: The table/view 'QLDLRapPhim.dbo.LichChieu' does not have a primary
     <Property Name="MaPhim" Type="varchar" MaxLength="10" Nullable="false" />
     <Property Name="TenPhim" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="MaTheLoaiChinh" Type="varchar" MaxLength="5" Nullable="false" />
-    <Property Name="ThoiLuong" Type="int" />
+    <Property Name="ThoiLuong" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="PhimTheLoaiPhu">
     <Key>
@@ -56,16 +57,16 @@ warning 6002: The table/view 'QLDLRapPhim.dbo.LichChieu' does not have a primary
       <PropertyRef Name="MaRap" />
     </Key>
     <Property Name="MaRap" Type="varchar" MaxLength="5" Nullable="false" />
-    <Property Name="TongGhe" Type="int" />
-    <Property Name="MaCum" Type="varchar" MaxLength="5" />
+    <Property Name="TongGhe" Type="int" Nullable="false" />
+    <Property Name="MaCum" Type="varchar" MaxLength="5" Nullable="false" />
   </EntityType>
   <EntityType Name="SuatChieu">
     <Key>
       <PropertyRef Name="MaSuat" />
     </Key>
     <Property Name="MaSuat" Type="varchar" MaxLength="3" Nullable="false" />
-    <Property Name="GioBatDau" Type="int" />
-    <Property Name="PhutBatDau" Type="int" />
+    <Property Name="GioBatDau" Type="int" Nullable="false" />
+    <Property Name="PhutBatDau" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -82,7 +83,7 @@ warning 6002: The table/view 'QLDLRapPhim.dbo.LichChieu' does not have a primary
       <PropertyRef Name="MaTheLoai" />
     </Key>
     <Property Name="MaTheLoai" Type="varchar" MaxLength="5" Nullable="false" />
-    <Property Name="TenTheLoai" Type="nvarchar" MaxLength="50" />
+    <Property Name="TenTheLoai" Type="nvarchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <Association Name="FK_KeHoach_CumRap">
     <End Role="CumRap" Type="Self.CumRap" Multiplicity="1" />
@@ -169,7 +170,7 @@ warning 6002: The table/view 'QLDLRapPhim.dbo.LichChieu' does not have a primary
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Rap_CumRap">
-    <End Role="CumRap" Type="Self.CumRap" Multiplicity="0..1" />
+    <End Role="CumRap" Type="Self.CumRap" Multiplicity="1" />
     <End Role="Rap" Type="Self.Rap" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="CumRap">

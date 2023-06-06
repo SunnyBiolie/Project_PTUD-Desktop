@@ -16,11 +16,11 @@ namespace Project_PTUD_Desktop.ModelEntity
     public partial class SuatChieu : BaseViewModel
     {
         private string _maSuat;
-        private Nullable<int> _gioBatDau;
-        private Nullable<int> _phutBatDau;
+        private int _gioBatDau;
+        private int _phutBatDau;
 
         public string MaSuat { get => _maSuat; set { _maSuat = value; OnPropertyChanged(); } }
-        public Nullable<int> GioBatDau { get => _gioBatDau; set { _gioBatDau = value; OnPropertyChanged(); } }
-        public Nullable<int> PhutBatDau { get => _phutBatDau; set { _phutBatDau = value; OnPropertyChanged(); } }
+        public int GioBatDau { get => _gioBatDau; set { _gioBatDau = value; OnPropertyChanged(); } }
+        public int PhutBatDau { get => _phutBatDau; set { _phutBatDau = value; OnPropertyChanged(); } }
     }
 }

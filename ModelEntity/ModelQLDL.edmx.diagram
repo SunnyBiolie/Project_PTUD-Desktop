@@ -5,21 +5,21 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="44f1729d28764e98a62d90b5ad0eff57" Name="Diagram1">
-        <EntityTypeShape EntityType="QLDLRapPhimModel.CumRap" Width="1.5" PointX="1.5" PointY="11.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDLRapPhimModel.KeHoach" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDLRapPhimModel.Phim" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDLRapPhimModel.Rap" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDLRapPhimModel.SuatChieu" Width="1.5" PointX="5.75" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDLRapPhimModel.sysdiagram" Width="1.5" PointX="5.75" PointY="4.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDLRapPhimModel.TheLoai" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDLRapPhimModel.LichChieu" Width="1.5" PointX="3" PointY="1.625" IsExpanded="true" />
-        <AssociationConnector Association="QLDLRapPhimModel.FK_KeHoach_CumRap" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDLRapPhimModel.FK_Rap_CumRap" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDLRapPhimModel.FK_KeHoach_Phim" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDLRapPhimModel.FK_LichChieu_Phim" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDLRapPhimModel.FK_Phim_TheLoai" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDLRapPhimModel.FK_LichChieu_Rap" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDLRapPhimModel.PhimTheLoaiPhu" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="QLDLRapPhimModel.CumRap" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="QLDLRapPhimModel.KeHoach" Width="1.5" PointX="3" PointY="1.5" />
+        <EntityTypeShape EntityType="QLDLRapPhimModel.Phim" Width="1.5" PointX="0.75" PointY="4.5" />
+        <EntityTypeShape EntityType="QLDLRapPhimModel.Rap" Width="1.5" PointX="0.75" PointY="8.75" />
+        <EntityTypeShape EntityType="QLDLRapPhimModel.SuatChieu" Width="1.5" PointX="5.75" PointY="1.375" />
+        <EntityTypeShape EntityType="QLDLRapPhimModel.sysdiagram" Width="1.5" PointX="5.75" PointY="4.375" />
+        <EntityTypeShape EntityType="QLDLRapPhimModel.TheLoai" Width="1.5" PointX="3" PointY="10.875" />
+        <EntityTypeShape EntityType="QLDLRapPhimModel.LichChieu" Width="1.5" PointX="3" PointY="4.625" />
+        <AssociationConnector Association="QLDLRapPhimModel.FK_KeHoach_CumRap" />
+        <AssociationConnector Association="QLDLRapPhimModel.FK_Rap_CumRap" />
+        <AssociationConnector Association="QLDLRapPhimModel.FK_KeHoach_Phim" />
+        <AssociationConnector Association="QLDLRapPhimModel.FK_LichChieu_Phim" />
+        <AssociationConnector Association="QLDLRapPhimModel.FK_Phim_TheLoai" />
+        <AssociationConnector Association="QLDLRapPhimModel.FK_LichChieu_Rap" />
+        <AssociationConnector Association="QLDLRapPhimModel.PhimTheLoaiPhu" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

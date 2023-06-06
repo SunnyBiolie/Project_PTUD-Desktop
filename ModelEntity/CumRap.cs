@@ -25,16 +25,14 @@ namespace Project_PTUD_Desktop.ModelEntity
         private string _maCum;
         private string _tenCum;
         private string _diaChi;
-        private ICollection<KeHoach> _keHoaches;
-        private ICollection<Rap> _raps;
 
         public string MaCum { get => _maCum; set { _maCum = value; OnPropertyChanged(); } }
         public string TenCum { get => _tenCum; set { _tenCum = value; OnPropertyChanged(); } }
         public string DiaChi { get => _diaChi; set { _diaChi = value; OnPropertyChanged(); } }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<KeHoach> KeHoaches { get => _keHoaches; set { _keHoaches = value; OnPropertyChanged(); } }
+        public virtual ICollection<KeHoach> KeHoaches { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Rap> Raps { get => _raps; set { _raps = value; OnPropertyChanged(); } }
+        public virtual ICollection<Rap> Raps { get; set; }
     }
 }

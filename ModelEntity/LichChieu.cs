@@ -24,7 +24,7 @@ namespace Project_PTUD_Desktop.ModelEntity
         public string MaRap { get => _maRap; set { _maRap = value; OnPropertyChanged(); } }
         public System.DateTime NgayChieu { get => _ngayChieu; set { _ngayChieu = value; OnPropertyChanged(); } }
         public string ChuoiMaSuat { get => _chuoiMaSuat; set { _chuoiMaSuat = value; OnPropertyChanged(); } }
-    
+
         public virtual Phim Phim { get; set; }
         public virtual Rap Rap { get; set; }
     }

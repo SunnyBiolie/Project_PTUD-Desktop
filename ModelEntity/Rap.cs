@@ -22,17 +22,15 @@ namespace Project_PTUD_Desktop.ModelEntity
         }
 
         private string _maRap;
-        private Nullable<int> _tongGhe;
+        private int _tongGhe;
         private string _maCum;
-        private CumRap _cumRap;
-        private ICollection<LichChieu> _lichChieux;
-    
+
         public string MaRap { get => _maRap; set { _maRap = value; OnPropertyChanged(); } }
-        public Nullable<int> TongGhe { get => _tongGhe; set { _tongGhe = value; OnPropertyChanged(); } }
+        public int TongGhe { get => _tongGhe; set { _tongGhe = value; OnPropertyChanged(); } }
         public string MaCum { get => _maCum; set { _maCum = value; OnPropertyChanged(); } }
-    
-        public virtual CumRap CumRap { get => _cumRap; set { _cumRap = value; OnPropertyChanged(); } }
+
+        public virtual CumRap CumRap { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LichChieu> LichChieux { get => _lichChieux; set { _lichChieux = value; OnPropertyChanged(); } }
+        public virtual ICollection<LichChieu> LichChieux { get; set; }
     }
 }

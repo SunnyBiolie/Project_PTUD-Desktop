@@ -311,7 +311,7 @@
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition MinWidth="320"></ColumnDefinition>
                                             <ColumnDefinition Width="Auto"></ColumnDefinition>
-                                            <ColumnDefinition MinWidth="320"></ColumnDefinition>
+                                            <ColumnDefinition MinWidth="380"></ColumnDefinition>
                                         </Grid.ColumnDefinitions>
                                         <Grid Grid.Column="0">
                                             <Grid.RowDefinitions>
@@ -327,15 +327,22 @@
                                                                          HorizontalAlignment="Center"
                                                                          VerticalAlignment="Bottom"/>
                                                 </Button>
-                                                <TextBox Panel.ZIndex="1" 
-                                                materialDesign:HintAssist.Hint="Tim kiếm"
-                                                Style="{StaticResource MaterialDesignOutlinedTextBox}" 
-                                                Width="300px" HorizontalAlignment="Left" VerticalAlignment="Center"
-                                                Margin="10 10 0 10" Padding="10 12 10 12" />
+                                                <TextBox Panel.ZIndex="1" DataContext="{StaticResource FilmVM}"
+                                                         Text="{Binding SearchStringFilmForShowTimes, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"
+                                                        materialDesign:HintAssist.Hint="Tim kiếm"
+                                                        Style="{StaticResource MaterialDesignOutlinedTextBox}" 
+                                                        Width="300px" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                        Margin="10 10 0 10" Padding="10 12 10 12" >
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="TextChanged">
+                                                            <i:InvokeCommandAction Command="{Binding SearchFilmForShowTimes}"></i:InvokeCommandAction>
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
+                                                </TextBox>
                                             </Canvas>
                                             <Grid Grid.Row="1">
                                                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                                                    <ListView ItemsSource="{Binding ListPhim, Source={StaticResource FilmVM}}"  d:ItemsSource="{d:SampleData ItemCount=5}"
+                                                    <ListView ItemsSource="{Binding ListPhimForShowTimes, Source={StaticResource FilmVM}}"  d:ItemsSource="{d:SampleData ItemCount=5}"
                                                               SelectedItem="{Binding SelectedFilmForShowTimes, Mode=OneWayToSource}">
                                                         <ListView.View>
                                                             <GridView>
@@ -389,12 +396,25 @@
                                                 </Grid>
                                             </Grid>
                                             <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                                                <ListView ItemsSource="{Binding ListLichChieu}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}">
+                                                <ListView ItemsSource="{Binding ListShowTimesDTO}">
                                                     <ListView.View>
                                                         <GridView>
                                                             <GridViewColumn Header="Mã Rạp" DisplayMemberBinding="{Binding MaRap}"></GridViewColumn>
-                                                            <GridViewColumn Header="Ngày Chiếu" DisplayMemberBinding="{Binding NgayChieu}"></GridViewColumn>
+                                                            <GridViewColumn Header="Ngày Chiếu">
+                                                                <GridViewColumn.CellTemplate>
+                                                                    <DataTemplate>
+                                                                        <StackPanel Orientation="Horizontal">
+                                                                            <TextBlock Text="{Binding NgayChieu.Day}"></TextBlock>
+                                                                            <TextBlock Text="/"></TextBlock>
+                                                                            <TextBlock Text="{Binding NgayChieu.Month}"></TextBlock>
+                                                                            <TextBlock Text="/"></TextBlock>
+                                                                            <TextBlock Text="{Binding NgayChieu.Year}"></TextBlock>
+                                                                        </StackPanel>
+                                                                    </DataTemplate>
+                                                                </GridViewColumn.CellTemplate>
+                                                            </GridViewColumn>
                                                             <GridViewColumn Header="Chuỗi Mã Suất" DisplayMemberBinding="{Binding ChuoiMaSuat}"></GridViewColumn>
+                                                            <GridViewColumn Header="Chuỗi Mã Suất" DisplayMemberBinding="{Binding DisplayChuoiMaSuat}"></GridViewColumn>
                                                         </GridView>
                                                     </ListView.View>
                                                 </ListView>
@@ -402,7 +422,7 @@
                                             <Grid Grid.Row="2">
                                                 <Button Width="Auto" MaxWidth="350" MinWidth="200" Margin="0 20 0 20"
                                                         Content="Chỉnh sửa lịch chiếu"
-                                                        Command="{Binding OpenShowTimesWindowCommand, Source={StaticResource MainVM}}" />
+                                                        Command="{Binding OpenShowTimesWindowCommand}" />
                                             </Grid>
                                         </Grid>
                                     </Grid>

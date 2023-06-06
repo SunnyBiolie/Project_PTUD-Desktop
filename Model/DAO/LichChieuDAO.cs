@@ -69,5 +69,13 @@ namespace Project_PTUD_Desktop.Model.DAO
 
             return list;
         }
+    
+        public bool InsertLichChieu(ModelEntity.LichChieu lc)
+        {
+            string query = "insert LichChieu (Maphim, MaRap, NgayChieu, ChuoiMaSuat) values ( @maphim , @marap , @ngaychieu , @chuoimasuat )";
+            int result = DataProvider.Instance.ExecuteNonQuery(query, new object[] { lc.MaPhim, lc.MaRap, lc.NgayChieu, lc.ChuoiMaSuat });
+
+            return result > 0;
+        }
     }
 }

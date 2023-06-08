@@ -158,6 +158,45 @@ namespace Project_PTUD_Desktop.ViewModel
 
                     //    LoadListRap();
                     //}
+                    List<LichChieu> listLCtoCheckUpdateMaCum = DataProvider.Instance.Database.LichChieux.Where(lc => lc.MaRap == MaRap_edit && lc.NgayChieu > DateTime.Today).ToList();
+                    if (listLCtoCheckUpdateMaCum.Count > 0)
+                    {
+                        MessageBox.Show($"Sắp tới đang có {listLCtoCheckUpdateMaCum.Count} lịch chiếu của rạp này theo kế hoạch chiếu của cụm rạp \'{MaCum_edit}\', không thể thay đổi mã cụm", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    string mc = DataProvider.Instance.Database.Raps.Find(MaRap_delete).CumRap.MaCum;
+                    ObservableCollection<KeHoach> ListKeHoachToCheck = new ObservableCollection<KeHoach>(DataProvider.Instance.Database.KeHoaches.Where(kh => kh.MaCum == mc && kh.NgayKetThuc > DateTime.Today));
+                    int RapCount = DataProvider.Instance.Database.Raps.Where(r => r.MaCum == mc).Count();
+                    if (ListKeHoachToCheck.Count != 0)
+                    {
+                        DateTime minDateS = ListKeHoachToCheck[0].NgayKhoiChieu;
+                        DateTime maxDateE = ListKeHoachToCheck[0].NgayKetThuc;
+                        foreach (KeHoach kh in ListKeHoachToCheck)
+                        {
+                            if (kh.NgayKhoiChieu < minDateS) minDateS = kh.NgayKhoiChieu;
+                            if (kh.NgayKetThuc > maxDateE) maxDateE = kh.NgayKetThuc;
+                        }
+                        TimeSpan length = maxDateE - minDateS;
+                        int[] count = new int[(int)length.TotalDays + 1];
+                        foreach (KeHoach kh in ListKeHoachToCheck)
+                        {
+                            for (int i = 0; i < count.Length; i++)
+                            {
+                                if ((count.Length - (maxDateE - kh.NgayKhoiChieu).TotalDays) - 1 <= i &&
+                                    (count.Length - (maxDateE - kh.NgayKetThuc).TotalDays) - 1 >= i) count[i]++;
+                            }
+                        }
+
+                        foreach (var c in count)
+                        {
+                            if (c >= RapCount)
+                            {
+                                MessageBox.Show($"Trong thời tương lai, có thời điểm tổng số kế hoạch({c}) bằng với số rạp của cụm, thay đổi mã cụm của rạp sẽ gây ra sự mất cân bằng, xin vui lòng kiểm tra lại", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
+                            }
+                        }
+                    }
 
                     Rap theater = DataProvider.Instance.Database.Raps.Where(rap => rap.MaRap == MaRap_edit).FirstOrDefault();
                     theater.TongGhe = TongGhe_edit;
@@ -167,6 +206,7 @@ namespace Project_PTUD_Desktop.ViewModel
                     _tongGhe_curr_edit = TongGhe_edit;
                     _maCum_curr_edit = MaCum_edit;
 
+                    LoadListRap();
                     //LoadListCumRap();
                 }
             );
@@ -188,7 +228,6 @@ namespace Project_PTUD_Desktop.ViewModel
 
                     string mc = DataProvider.Instance.Database.Raps.Find(MaRap_delete).CumRap.MaCum;
                     ObservableCollection<KeHoach> ListKeHoachToCheck = new ObservableCollection<KeHoach>(DataProvider.Instance.Database.KeHoaches.Where(kh => kh.MaCum == mc && kh.NgayKetThuc > DateTime.Today));
-                    MessageBox.Show($"{mc}:{ListKeHoachToCheck.Count}");
                     int RapCount = DataProvider.Instance.Database.Raps.Where(r => r.MaCum == mc).Count();
                     if (ListKeHoachToCheck.Count != 0)
                     {

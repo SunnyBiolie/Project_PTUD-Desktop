@@ -24,6 +24,11 @@
         
         DataContext="{StaticResource ShowTimesVM}"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" >
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closed">
+            <i:InvokeCommandAction Command="{Binding ShowTimesWindowClosed}"></i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -79,14 +84,23 @@
                                     <ColumnDefinition></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0">
-                                    <ComboBox Width="120" Margin="0 10 5 15"
-                                              materialDesign:HintAssist.Hint="Mã rạp"
-                                              ItemsSource="{Binding ListRap, Source={StaticResource TheaterVM}}"
-                                              DisplayMemberPath="MaRap"
-                                              SelectedItem="{Binding SelectedRap_add, Source={StaticResource ShowTimesVM}, Mode=OneWayToSource}"
+                                    <StackPanel Orientation="Horizontal">
+                                        <ComboBox Width="100" Margin="0 10 10 15"
+                                              materialDesign:HintAssist.Hint="Mã cụm"
+                                              ItemsSource="{Binding ListCRForFilterRap}"
+                                              DisplayMemberPath="MaCum"
+                                              SelectedItem="{Binding SelectedCRForFilterRap, Mode=OneWayToSource}"
                                               Style="{StaticResource MaterialDesignFloatingHintComboBox}" >
-                                    </ComboBox>
-                                    <ComboBox Width="120" Margin="0 0 5 0"
+                                        </ComboBox>
+                                        <ComboBox Width="100" Margin="0 10 5 15"
+                                              materialDesign:HintAssist.Hint="Mã rạp" IsEnabled="{Binding IsSelectedCRForFilterRap}"
+                                              ItemsSource="{Binding ListRap}"
+                                              DisplayMemberPath="MaRap"
+                                              SelectedItem="{Binding SelectedRap_add, Mode=OneWayToSource}"
+                                              Style="{StaticResource MaterialDesignFloatingHintComboBox}" >
+                                        </ComboBox>
+                                    </StackPanel>
+                                    <ComboBox Width="120" Margin="0 0 5 0" HorizontalAlignment="Left"
                                         materialDesign:HintAssist.Hint="Suất chiếu"
                                         ItemsSource="{Binding ListSuatChieu, Source={StaticResource ScreeningsVM}}"
                                         SelectedItem="{Binding SelectedScreenings_add, Mode=OneWayToSource}"
@@ -128,6 +142,7 @@
                         </Grid>
                     </Grid>
                 </TabItem>
+                    
                 <!--XAML for tab edit-->
                 <TabItem Width="80" Height="50" x:Name="tabEdit">
                     <TabItem.Header>

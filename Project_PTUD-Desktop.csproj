@@ -94,8 +94,10 @@
     <Compile Include="ModelEntity\EntityDAO\CategoryDAO.cs" />
     <Compile Include="ModelEntity\EntityDAO\DataProviderDirect.cs" />
     <Compile Include="ModelEntity\EntityDAO\FilmDAO.cs" />
+    <Compile Include="ModelEntity\EntityDAO\PlanDAO.cs" />
     <Compile Include="ModelEntity\EntityDAO\ScreeningsDAO.cs" />
     <Compile Include="ModelEntity\EntityDAO\ShowTimesDAO.cs" />
+    <Compile Include="ModelEntity\EntityDAO\TheaterClusterDAO.cs" />
     <Compile Include="ModelEntity\EntityDTO\FilmDTO.cs" />
     <Compile Include="ModelEntity\EntityDTO\ShowTimesDTO.cs" />
     <Compile Include="ModelEntity\KeHoach.cs">
@@ -152,6 +154,9 @@
     <Compile Include="MyUserControls\MyControlBar.xaml.cs">
       <DependentUpon>MyControlBar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PlanWindow.xaml.cs">
+      <DependentUpon>PlanWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ScreeningsWindow.xaml.cs">
       <DependentUpon>ScreeningsWindow.xaml</DependentUpon>
     </Compile>
@@ -169,6 +174,7 @@
     <Compile Include="ViewModel\ControlBarViewModel.cs" />
     <Compile Include="ViewModel\FilmViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\PlanViewModel.cs" />
     <Compile Include="ViewModel\ScreeningsViewModel.cs" />
     <Compile Include="ViewModel\ShowTimesViewModel.cs" />
     <Compile Include="ViewModel\TheaterClusterViewModel.cs" />
@@ -194,6 +200,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="MyUserControls\MyControlBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PlanWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

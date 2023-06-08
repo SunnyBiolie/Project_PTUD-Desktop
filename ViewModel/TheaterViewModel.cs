@@ -175,6 +175,7 @@ namespace Project_PTUD_Desktop.ViewModel
                 para =>
                 {
                     if (string.IsNullOrEmpty(MaRap_delete)) return false;
+                   
                     return true;
                 },
                 para =>
@@ -184,6 +185,41 @@ namespace Project_PTUD_Desktop.ViewModel
                         MessageBox.Show($"Chỉ có thể xóa các rạp không có lịch chiếu", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
+
+                    string mc = DataProvider.Instance.Database.Raps.Find(MaRap_delete).CumRap.MaCum;
+                    ObservableCollection<KeHoach> ListKeHoachToCheck = new ObservableCollection<KeHoach>(DataProvider.Instance.Database.KeHoaches.Where(kh => kh.MaCum == mc && kh.NgayKetThuc > DateTime.Today));
+                    MessageBox.Show($"{mc}:{ListKeHoachToCheck.Count}");
+                    int RapCount = DataProvider.Instance.Database.Raps.Where(r => r.MaCum == mc).Count();
+                    if (ListKeHoachToCheck.Count != 0)
+                    {
+                        DateTime minDateS = ListKeHoachToCheck[0].NgayKhoiChieu;
+                        DateTime maxDateE = ListKeHoachToCheck[0].NgayKetThuc;
+                        foreach (KeHoach kh in ListKeHoachToCheck)
+                        {
+                            if (kh.NgayKhoiChieu < minDateS) minDateS = kh.NgayKhoiChieu;
+                            if (kh.NgayKetThuc > maxDateE) maxDateE = kh.NgayKetThuc;
+                        }
+                        TimeSpan length = maxDateE - minDateS;
+                        int[] count = new int[(int)length.TotalDays + 1];
+                        foreach (KeHoach kh in ListKeHoachToCheck)
+                        {
+                            for (int i = 0; i < count.Length; i++)
+                            {
+                                if ((count.Length - (maxDateE - kh.NgayKhoiChieu).TotalDays) - 1 <= i &&
+                                    (count.Length - (maxDateE - kh.NgayKetThuc).TotalDays) - 1 >= i) count[i]++;
+                            }
+                        }
+
+                        foreach (var c in count)
+                        {
+                            if (c >= RapCount)
+                            {
+                                MessageBox.Show($"Trong thời tương lai, có thời điểm tổng số kế hoạch({c}) bằng với số rạp của cụm, xóa rạp sẽ gây ra sự mất cân bằng, xin vui lòng kiểm tra lại", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
+                            }
+                        }
+                    }
+
                     if (MessageBox.Show($"Bạn có chắc muốn xóa rạp có mã {SelectedItem.MaRap}", "Xác nhận xóa?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
                         Rap theater = DataProvider.Instance.Database.Raps.Where(rap => rap.MaRap == MaRap_delete).FirstOrDefault();

@@ -23,6 +23,8 @@ namespace Project_PTUD_Desktop.ViewModel
         private string _searchStringFilmForShowTimes;
         public string SearchStringFilmForShowTimes { get => _searchStringFilmForShowTimes; set { _searchStringFilmForShowTimes = value; OnPropertyChanged(); } }
 
+    
+
         //public ICommand CheckCommand { get; set; }
 
         #region For FilmWindow 
@@ -223,12 +225,21 @@ namespace Project_PTUD_Desktop.ViewModel
         public string TenTheLoaiChinh_delete { get => tenTheLoaiChinh_delete; set { tenTheLoaiChinh_delete = value; OnPropertyChanged(); } }
         #endregion
 
+        #endregion
         private ObservableCollection<FilmDTO> _listFilmDTO;
         public ObservableCollection<FilmDTO> ListFilmDTO { get => _listFilmDTO; set { _listFilmDTO = value; OnPropertyChanged(); } }
 
         private ObservableCollection<Phim> _listPhimForShowTimes;
         public ObservableCollection<Phim> ListPhimForShowTimes { get => _listPhimForShowTimes; set { _listPhimForShowTimes = value; OnPropertyChanged(); } }
-        #endregion
+
+
+
+        public ICommand SearchPhimForPlan { get; set; }
+        private string _searchStringPhimForPlan;
+        public string SearchStringPhimForPlan { get => _searchStringPhimForPlan; set { _searchStringPhimForPlan = value; OnPropertyChanged(); } }
+        private ObservableCollection<Phim> _listPhimForPlan;
+        public ObservableCollection<Phim> ListPhimForPlan { get => _listPhimForPlan; set { _listPhimForPlan = value; OnPropertyChanged(); } }
+
 
         public FilmViewModel()
         {
@@ -238,8 +249,9 @@ namespace Project_PTUD_Desktop.ViewModel
             ListPhim = new ObservableCollection<Phim>(DataProvider.Instance.Database.Phims);
             ListTheLoai = new ObservableCollection<TheLoai>(DataProvider.Instance.Database.TheLoais);
 
-            ListFilmDTO = FilmDAO.Instance.GetMoreDetailListFilmFromListPhim(ListPhim);
-            ListPhimForShowTimes = ListPhim;
+            LoadListFilmDTO();
+            ListPhimForShowTimes = ListPhim;    // display list phim in MainWindow/tab LichChieu
+            LoadListPhimForPlan();
 
             ListTheLoaiPhu_add = new ObservableCollection<TheLoai>();
             ListTheLoaiPhu_edit = new ObservableCollection<TheLoai>();
@@ -293,7 +305,7 @@ namespace Project_PTUD_Desktop.ViewModel
             AddCommand = new RelayCommand<object>(
                 para =>
                 {
-                    if (string.IsNullOrEmpty(MaPhim_add) && string.IsNullOrEmpty(TenPhim_add)) return false;
+                    if (string.IsNullOrEmpty(MaPhim_add) || string.IsNullOrEmpty(TenPhim_add) || SelectedCategory_add == null || string.IsNullOrEmpty(ThoiLuong_add.ToString())) return false;
                     var listMaPhim = from phim in ListPhim
                                      where phim.MaPhim.ToUpper() == MaPhim_add.ToUpper()
                                      select phim;
@@ -321,7 +333,8 @@ namespace Project_PTUD_Desktop.ViewModel
                         film.TheLoais.Add(theLoai);
                     DataProvider.Instance.Database.SaveChanges();
                     ListPhim.Add(film);
-                    ListFilmDTO = FilmDAO.Instance.GetMoreDetailListFilmFromListPhim(ListPhim);
+                    LoadListFilmDTO();
+                    LoadListPhimForPlan();
                 }
             );
             #endregion
@@ -434,7 +447,8 @@ namespace Project_PTUD_Desktop.ViewModel
                         foreach (TheLoai tl in listRemoveTheLoaiPhu)
                             film.TheLoais.Remove(tl);
                     DataProvider.Instance.Database.SaveChanges();
-                    ListFilmDTO = FilmDAO.Instance.GetMoreDetailListFilmFromListPhim(ListPhim);
+                    LoadListFilmDTO();
+                    LoadListPhimForPlan();
 
                     _tenPhim_curr_edit = TenPhim_edit;
                     _maTheLoaiChinh_curr_edit = MaTheLoaiChinh_edit;
@@ -515,7 +529,9 @@ namespace Project_PTUD_Desktop.ViewModel
                             DataProvider.Instance.Database.Phims.Remove(film);
                             DataProvider.Instance.Database.SaveChanges();
                             ListPhim.Remove(film);
-                            ListFilmDTO = FilmDAO.Instance.GetMoreDetailListFilmFromListPhim(ListPhim);
+                            LoadListFilmDTO();
+                            LoadListPhimForPlan();
+
                             SelectedItem = ListPhim.First();
                         }
                     }
@@ -532,6 +548,22 @@ namespace Project_PTUD_Desktop.ViewModel
             //});
             #endregion
 
+            CollectionView viewFilmForShowTimes = (CollectionView)CollectionViewSource.GetDefaultView(ListPhimForShowTimes);
+            viewFilmForShowTimes.Filter = FilterFilmForShowTimes;
+            SearchFilmForShowTimes = new RelayCommand<object>(
+                param =>
+                {
+                    return true;
+                },
+                param =>
+                {
+                    CollectionViewSource.GetDefaultView(ListPhimForShowTimes).Refresh();
+                }
+            );
+        }
+        private void LoadListFilmDTO()
+        {
+            ListFilmDTO = FilmDAO.Instance.GetMoreDetailListFilmFromListPhim(ListPhim);
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListFilmDTO);
             view.Filter = UserFilter;
 
@@ -543,19 +575,6 @@ namespace Project_PTUD_Desktop.ViewModel
                 para =>
                 {
                     CollectionViewSource.GetDefaultView(ListFilmDTO).Refresh();
-                }
-            );
-
-            CollectionView viewFilmForShowTimes = (CollectionView)CollectionViewSource.GetDefaultView(ListPhimForShowTimes);
-            viewFilmForShowTimes.Filter = FilterFilmForShowTimes;
-            SearchFilmForShowTimes = new RelayCommand<object>(
-                param =>
-                {
-                    return true;
-                },
-                param =>
-                {
-                    CollectionViewSource.GetDefaultView(ListPhimForShowTimes).Refresh();
                 }
             );
         }
@@ -570,6 +589,28 @@ namespace Project_PTUD_Desktop.ViewModel
             if (string.IsNullOrEmpty(SearchStringFilmForShowTimes)) return true;
             else
                 return ((item as Phim).TenPhim.IndexOf(SearchStringFilmForShowTimes, System.StringComparison.OrdinalIgnoreCase) >= 0);
+        }
+        private void LoadListPhimForPlan()
+        {
+            ListPhimForPlan = new ObservableCollection<Phim>(DataProvider.Instance.Database.Phims);     // display list phim in MainWindow/tab KeHoach
+            CollectionView viewPhimForPlan = (CollectionView)CollectionViewSource.GetDefaultView(ListPhimForPlan);
+            viewPhimForPlan.Filter = FilterListPhimForPlan;
+            SearchPhimForPlan = new RelayCommand<object>(
+                param =>
+                {
+                    return true;
+                },
+                param =>
+                {
+                    CollectionViewSource.GetDefaultView(ListPhimForPlan).Refresh();
+                }
+            );
+        }
+        private bool FilterListPhimForPlan(object item)
+        {
+            if (string.IsNullOrEmpty(SearchStringPhimForPlan)) return true;
+            else
+                return ((item as Phim).TenPhim.IndexOf(SearchStringPhimForPlan, System.StringComparison.OrdinalIgnoreCase) >= 0);
         }
     }
 }

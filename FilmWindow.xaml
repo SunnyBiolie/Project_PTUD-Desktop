@@ -8,7 +8,7 @@
         
         xmlns:uc="clr-namespace:Project_PTUD_Desktop.MyUserControls"
         Name="filmWindow"
-        Title="Film" Height="550" Width="650"
+        Title="Phim" Height="550" Width="650"
         ResizeMode="NoResize"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"

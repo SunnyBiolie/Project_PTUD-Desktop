@@ -16,6 +16,7 @@ namespace Project_PTUD_Desktop.ViewModel
 {
     public class ShowTimesViewModel : BaseViewModel
     {
+        public ICommand ShowTimesWindowClosed { get; set; }
         #region for tab LichChieu in MainWindow
         public ICommand OpenShowTimesWindowCommand { get; set; }
         public ICommand SelectedDateChanged { get; set; }
@@ -48,7 +49,30 @@ namespace Project_PTUD_Desktop.ViewModel
                     NgayChieuForShowTimes = DateTime.Today;
                     ThoiLuongForShowTimes = DataProvider.Instance.Database.Phims.FirstOrDefault(p => p.MaPhim == MaPhimForShowTimes).ThoiLuong;
 
+                    LoadListShowTimesDTO();
                     CollectionViewSource.GetDefaultView(ListShowTimesDTO).Refresh();
+                }
+            }
+        }
+
+        private string _maCum;
+        private ObservableCollection<CumRap> _listCRForFilterRap;
+        public ObservableCollection<CumRap> ListCRForFilterRap { get => _listCRForFilterRap; set { _listCRForFilterRap = value; OnPropertyChanged(); } }
+        private bool _isSelectedCRForFilterRap;
+        public bool IsSelectedCRForFilterRap { get => _isSelectedCRForFilterRap; set { _isSelectedCRForFilterRap = value; OnPropertyChanged(); } }
+        private CumRap _selectedCRForFilterRap;
+        public CumRap SelectedCRForFilterRap
+        {
+            get => _selectedCRForFilterRap;
+            set
+            {
+                _selectedCRForFilterRap = value;
+                OnPropertyChanged();
+                if (SelectedCRForFilterRap != null)
+                {
+                    IsSelectedCRForFilterRap = true;
+                    _maCum = SelectedCRForFilterRap.MaCum;
+                    CollectionViewSource.GetDefaultView(ListRap).Refresh();
                 }
             }
         }
@@ -200,7 +224,6 @@ namespace Project_PTUD_Desktop.ViewModel
             ListSuatChieu_add = new ObservableCollection<SuatChieu>();
             ListSuatChieu_edit = new ObservableCollection<SuatChieu>();
 
-            ListRap = new ObservableCollection<Rap>(DataProvider.Instance.Database.Raps);
             //ListSuatChieu = new ObservableCollection<SuatChieu>(DataProvider.Instance.Database.SuatChieux);
             ListLichChieu = new ObservableCollection<LichChieu>(DataProvider.Instance.Database.LichChieux);
             LoadListShowTimesDTO();
@@ -264,12 +287,21 @@ namespace Project_PTUD_Desktop.ViewModel
                 },
                 param =>
                 {
+                    ObservableCollection<LichChieu> check = new ObservableCollection<LichChieu>(DataProvider.Instance.Database.LichChieux.Where(lichchieu => lichchieu.NgayChieu == NgayChieuForShowTimes && lichchieu.MaRap == MaRap_add));
+                    if (check.Count() != 0)
+                    {
+                        MessageBox.Show($"Vào ngày \'{NgayChieuForShowTimes.ToShortDateString()}\' tại rạp \'{MaRap_add}\' đã có phim có mã \'{check[0].MaPhim}\' được chiếu", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
                     List<string> list = new List<string>();
                     foreach (SuatChieu sc in ListSuatChieu_add)
                         list.Add(sc.MaSuat);
                     ChuoiMaSuat_add = string.Join(" ", list);
                     LichChieu lc = new LichChieu() { MaPhim = MaPhimForShowTimes, MaRap = MaRap_add, NgayChieu = NgayChieuForShowTimes, ChuoiMaSuat = ChuoiMaSuat_add };
                     ShowTimesDAO.Instance.InsertLichChieu(lc);
+                    ListSuatChieu_add.Clear();
+                    DisplaySuatChieu_add = "";
                     ListLichChieu.Add(lc);
                     LoadListShowTimesDTO();
                 }
@@ -379,6 +411,38 @@ namespace Project_PTUD_Desktop.ViewModel
                 },
                 param =>
                 {
+                    ObservableCollection<KeHoach> check = new ObservableCollection<KeHoach>(DataProvider.Instance.Database.KeHoaches.Where(kh => kh.MaPhim == MaPhimForShowTimes));
+
+                    if (check.Count() == 0)
+                    {
+                        MessageBox.Show($"Phim hiện đang chọn không có kế hoạch chiếu", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                    ListCRForFilterRap = new ObservableCollection<CumRap>();
+                    
+                    bool IsExists = false;
+                    foreach (KeHoach kehoach in check)
+                    {
+                        if (kehoach.NgayKhoiChieu <= NgayChieuForShowTimes && kehoach.NgayKetThuc >= NgayChieuForShowTimes)
+                        {
+                            IsExists = true;
+                            CumRap cumrap = DataProvider.Instance.Database.CumRaps.FirstOrDefault(cr => kehoach.MaCum == cr.MaCum);
+                            ListCRForFilterRap.Add(cumrap);
+                        }
+                    }
+
+                    if (!IsExists)
+                    {
+                        MessageBox.Show($"Ngày đang chọn không nằm trong kế hoạch chiếu nào, vui lòng xem lại", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    ListRap = new ObservableCollection<Rap>(DataProvider.Instance.Database.Raps);
+                    CollectionView viewListRap = (CollectionView)CollectionViewSource.GetDefaultView(ListRap);
+                    IsSelectedCRForFilterRap = false;
+                    //SelectedCRForFilterRap = ListCRForFilterRap.First();
+                    viewListRap.Filter = FilterByMaCum;
+
                     ShowTimesWindow stw = new ShowTimesWindow();
                     stw.ShowDialog();
                 }
@@ -393,6 +457,21 @@ namespace Project_PTUD_Desktop.ViewModel
                     CollectionViewSource.GetDefaultView(ListShowTimesDTO).Refresh();
                 }
             );
+            ShowTimesWindowClosed = new RelayCommand<object>(
+                param =>
+                {
+                    return true;
+                },
+                param =>
+                {
+                    ListSuatChieu_add.Clear();
+                    DisplaySuatChieu_add = "";
+                    MaRap_add = "";
+
+                    ListRap.Clear();
+                    ListCRForFilterRap.Clear();
+                }
+            );
         }
         private void LoadListShowTimesDTO()
         {
@@ -404,6 +483,14 @@ namespace Project_PTUD_Desktop.ViewModel
         {
             return
                 (item as ShowTimesDTO).MaPhim == MaPhimForShowTimes && (item as ShowTimesDTO).NgayChieu == NgayChieuForShowTimes;
+        }
+        private bool FilterByMaCum(object item)
+        {
+            return (item as Rap).MaCum == _maCum;
+        }
+        public void DeleteLichChieu(LichChieu lc)
+        {
+
         }
     }
 }

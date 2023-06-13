@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\Code\University\Dự án\Project_PTUD-Desktop\obj\Debug\
+D:\Code\University\Dự án\Project nhóm 4\Project_PTUD-Desktop\obj\Debug\
 Project_PTUD_Desktop
 none
 false
 DEBUG;TRACE
-D:\Code\University\Dự án\Project_PTUD-Desktop\App.xaml
-10-1134856186
+D:\Code\University\Dự án\Project nhóm 4\Project_PTUD-Desktop\App.xaml
+10-229827108
 2-2074571817
-59-1427805364
-23-1008494314
-CategoryWindow.xaml;FilmWindow.xaml;MainWindow.xaml;MyUserControls\MyControlBar.xaml;PlanWindow.xaml;ResourceXAML\MainResource.xaml;ScreeningsWindow.xaml;ShowTimesWindow.xaml;TheaterClusterWindow.xaml;TheaterWindow.xaml;
+44-1928230712
+23-864217507
+View\CategoryWindow.xaml;View\FilmWindow.xaml;View\MainWindow.xaml;MyUserControls\MyControlBar.xaml;View\PlanWindow.xaml;ResourceXAML\MainResource.xaml;View\ScreeningsWindow.xaml;View\ShowTimesWindow.xaml;View\TheaterClusterWindow.xaml;View\TheaterWindow.xaml;
 
 False
 

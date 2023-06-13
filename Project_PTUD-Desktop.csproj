@@ -81,10 +81,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CategoryWindow.xaml.cs">
+    <Compile Include="View\CategoryWindow.xaml.cs">
       <DependentUpon>CategoryWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FilmWindow.xaml.cs">
+    <Compile Include="View\FilmWindow.xaml.cs">
       <DependentUpon>FilmWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ModelEntity\CumRap.cs">
@@ -136,37 +136,22 @@
     <Compile Include="ModelEntity\TheLoai.cs">
       <DependentUpon>ModelQLDL.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\DAO\CumRapDAO.cs" />
-    <Compile Include="Model\DAO\DataProvider.cs" />
-    <Compile Include="Model\DAO\KeHoachDAO.cs" />
-    <Compile Include="Model\DAO\LichChieuDAO.cs" />
-    <Compile Include="Model\DAO\PhimDAO.cs" />
-    <Compile Include="Model\DAO\RapDAO.cs" />
-    <Compile Include="Model\DAO\SuatChieuDAO.cs" />
-    <Compile Include="Model\DAO\TheLoaiDAO.cs" />
-    <Compile Include="Model\DTO\CumRap.cs" />
-    <Compile Include="Model\DTO\KeHoach.cs" />
-    <Compile Include="Model\DTO\LichChieu.cs" />
-    <Compile Include="Model\DTO\SuatChieuDTO.cs" />
-    <Compile Include="Model\DTO\Phim.cs" />
-    <Compile Include="Model\DTO\Rap.cs" />
-    <Compile Include="Model\DTO\TheLoai.cs" />
     <Compile Include="MyUserControls\MyControlBar.xaml.cs">
       <DependentUpon>MyControlBar.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PlanWindow.xaml.cs">
+    <Compile Include="View\PlanWindow.xaml.cs">
       <DependentUpon>PlanWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ScreeningsWindow.xaml.cs">
+    <Compile Include="View\ScreeningsWindow.xaml.cs">
       <DependentUpon>ScreeningsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ShowTimesWindow.xaml.cs">
+    <Compile Include="View\ShowTimesWindow.xaml.cs">
       <DependentUpon>ShowTimesWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TheaterClusterWindow.xaml.cs">
+    <Compile Include="View\TheaterClusterWindow.xaml.cs">
       <DependentUpon>TheaterClusterWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TheaterWindow.xaml.cs">
+    <Compile Include="View\TheaterWindow.xaml.cs">
       <DependentUpon>TheaterWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\BaseViewModel.cs" />
@@ -179,15 +164,15 @@
     <Compile Include="ViewModel\ShowTimesViewModel.cs" />
     <Compile Include="ViewModel\TheaterClusterViewModel.cs" />
     <Compile Include="ViewModel\TheaterViewModel.cs" />
-    <Page Include="CategoryWindow.xaml">
+    <Page Include="View\CategoryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FilmWindow.xaml">
+    <Page Include="View\FilmWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -195,7 +180,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -203,7 +188,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PlanWindow.xaml">
+    <Page Include="View\PlanWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -211,19 +196,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ScreeningsWindow.xaml">
+    <Page Include="View\ScreeningsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ShowTimesWindow.xaml">
+    <Page Include="View\ShowTimesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TheaterClusterWindow.xaml">
+    <Page Include="View\TheaterClusterWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TheaterWindow.xaml">
+    <Page Include="View\TheaterWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

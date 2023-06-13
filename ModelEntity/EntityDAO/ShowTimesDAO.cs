@@ -1,5 +1,4 @@
-﻿using Project_PTUD_Desktop.Model.DTO;
-using Project_PTUD_Desktop.ModelEntity.EntityDTO;
+﻿using Project_PTUD_Desktop.ModelEntity.EntityDTO;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

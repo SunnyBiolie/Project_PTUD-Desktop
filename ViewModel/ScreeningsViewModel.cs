@@ -1,7 +1,4 @@
-﻿//using Project_PTUD_Desktop.Model.DAO;
-//using Project_PTUD_Desktop.Model.DTO;
-using Project_PTUD_Desktop.ModelEntity;
-using Project_PTUD_Desktop.Model;
+﻿using Project_PTUD_Desktop.ModelEntity;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
